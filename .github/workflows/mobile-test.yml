@@ -41,7 +41,7 @@ jobs:
           script: adb devices
           avd-name: "nexus"
 
-      - name: Install test dependencies
+      - name: Run mobile app tests
         run: |
           cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
       - uses: actions/upload-artifact@v4
