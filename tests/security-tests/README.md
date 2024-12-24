@@ -1,4 +1,5 @@
-### Security and Logical Vulnerabilities
+### Security and Logical Vulnerabilities 
+## Target is Python Flask backend api running from backend folder
 
 1. **SQL Injection**
    - **Description**: SQL queries are constructed using string concatenation, making the application vulnerable to SQL injection.
