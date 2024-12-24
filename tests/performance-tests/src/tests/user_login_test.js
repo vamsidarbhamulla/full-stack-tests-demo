@@ -46,14 +46,14 @@ function testOptions(testType) {
           preAllocatedVUs: 500,
           maxVUs: 1000,
           stages: [
-            { duration: '2m', target: 5000 }, // below normal load
-            { duration: '5m', target: 5000 },
-            { duration: '2m', target: 10000 }, // normal load
-            { duration: '5m', target: 10000 },
-            { duration: '2m', target: 15000 }, // around the breaking point
-            { duration: '5m', target: 15000 },
-            { duration: '2m', target: 20000 }, // beyond the breaking point
-            { duration: '5m', target: 20000 },
+            { duration: '2m', target: 500 }, // below normal load
+            { duration: '5m', target: 500 },
+            { duration: '2m', target: 1000 }, // normal load
+            { duration: '5m', target: 1000 },
+            { duration: '2m', target: 1500 }, // around the breaking point
+            { duration: '5m', target: 1500 },
+            { duration: '2m', target: 2000 }, // beyond the breaking point
+            { duration: '5m', target: 2000 },
             { duration: '2m', target: 0 }, // scale down. Recovery stage.
           ],
           gracefulStop: '2m',

@@ -7,24 +7,7 @@ import { testSummary } from "../libs/k6_core_utils.js";
 import { describe, expect } from "../libs/remote_modules.js";
 import { currentDateInUtc } from "../libs/date_utils.js";
 
-// export const options = {
-//     thresholds: {
-//         http_req_failed: ["rate<0.01"], // http errors should be less than 1%
-//         http_req_duration: ["p(95)<122"], // 95% of requests should be below 1.9s
-//     },
-//     scenarios: {
-//         health_check: {
-//             executor: "constant-arrival-rate",
-//             duration: "1s",
-//             rate: 1,
-//             timeUnit: "1s",
-//             preAllocatedVUs: 1000,
-//             maxVUs: 1500,
-//         },
-//     },
-// };
-
-const requestName = __ENV.REQUEST_NAME || "registeration";
+const requestName = __ENV.REQUEST_NAME || "registration";
 const TestType = {
   hp: 'hp',
   std: 'std',
@@ -55,15 +38,15 @@ function testOptions(testType) {
           preAllocatedVUs: 500,
           maxVUs: 1000,
           stages: [
-            { duration: '2m', target: 5000 }, // below normal load
-            { duration: '5m', target: 5000 },
-            { duration: '2m', target: 10000 }, // normal load
-            { duration: '5m', target: 10000 },
-            { duration: '2m', target: 15000 }, // around the breaking point
-            { duration: '5m', target: 15000 },
-            { duration: '2m', target: 20000 }, // beyond the breaking point
-            { duration: '5m', target: 20000 },
-            { duration: '2m', target: 0 }, // scale down. Recovery stage.
+            { duration: '1m', target: 50 }, // below normal load
+            { duration: '2m', target: 50 },
+            { duration: '1m', target: 100 }, // normal load
+            { duration: '2m', target: 100 },
+            { duration: '1m', target: 150 }, // around the breaking point
+            { duration: '2m', target: 150 },
+            { duration: '1m', target: 200 }, // beyond the breaking point
+            { duration: '2m', target: 200 },
+            { duration: '1m', target: 0 }, // scale down. Recovery stage.
           ],
           gracefulStop: '2m',
         },

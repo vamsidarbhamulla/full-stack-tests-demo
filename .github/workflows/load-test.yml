@@ -10,10 +10,11 @@ on:
 
 env:
   TEST_ENV: local
-  TEST_TYPE: ci
+  TEST_TYPE: hp
   TEST_NAME: user_login_test
   CI: true  
   FLASK_APP: task.py
+  BASE_URL: http://localhost:5500
 
 jobs:
   run-load-tests:
@@ -37,14 +38,14 @@ jobs:
           python-version: '3.13' 
       - run: cd backend && pip install -r requirments.txt && FLASK_APP=task.py flask run -h localhost -p 5500 &
                 
-      - name: Set up Node.js
+      - name: Set up Node.js & Install Dependencies
         uses: actions/setup-node@v3
         with:
             node-version: "16"
             registry-url: "https://registry.npmjs.org"
-      - run: cd tests/performance-tests && pwd && ls -la && npm install && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+      - run: cd tests/performance-tests  && npm ci && pwd && ls -la
               
-      - name: Run k6 extension test
+      - name: Run k6 user registration load test
         run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -52,3 +53,16 @@ jobs:
           name: performance-tests-report
           path: tests/performance-tests/test-results/
           retention-days: 30 
+        env:
+          TEST_TYPE: ci
+      
+      - name: Run k6 user login stress test
+        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: performance-tests-report
+          path: tests/performance-tests/test-results/
+          retention-days: 30
+        env:
+          TEST_TYPE: std
