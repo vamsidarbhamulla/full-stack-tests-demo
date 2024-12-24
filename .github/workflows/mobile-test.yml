@@ -19,7 +19,7 @@ env:
   DEVICE: nexus
 
 jobs:
-  test:
+  run-mobile-tests:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout

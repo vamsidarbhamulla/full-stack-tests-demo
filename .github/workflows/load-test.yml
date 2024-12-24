@@ -16,7 +16,7 @@ env:
   FLASK_APP: task.py
 
 jobs:
-  run-extension-test:
+  run-load-tests:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout

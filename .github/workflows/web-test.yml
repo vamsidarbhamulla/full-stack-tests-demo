@@ -13,7 +13,7 @@ env:
   CI: true
 
 jobs:
-  test:
+  run-web-test:
     timeout-minutes: 60
     runs-on: ubuntu-22.04
     steps:
