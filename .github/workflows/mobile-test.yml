@@ -39,8 +39,8 @@ jobs:
 
       - name: Launch emulator
         run: |
-          cd tests/mobile-tests/scripts && chmod +x ./start_emu_headless.sh
-          EMULATOR_TIMEOUT=$EMULATOR_TIMEOUT EMULATOR_NAME=$EMULATOR_NAME ./start_emu_headless.sh
+          cd tests/mobile-tests/scripts && chmod +x ./start_emulator.sh
+          EMULATOR_TIMEOUT=$EMULATOR_TIMEOUT EMULATOR_NAME=$EMULATOR_NAME ./start_emulator.sh
 
       - name: Install test dependencies
         run: |
