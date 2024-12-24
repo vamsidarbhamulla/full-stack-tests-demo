@@ -26,6 +26,6 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: tests/web-tests/playwright-report
+        name: web-tests-report
         path: tests/web-tests/playwright-report/
         retention-days: 30
