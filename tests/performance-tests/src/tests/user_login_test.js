@@ -127,9 +127,13 @@ export function setup() {
         `${dirName}/${testStartTime.replace(/[ :]/g, "-")}.log`,
         `testStartTime=${testStartTime}`,
     );
-    let rows = db.query(
+    const rows = describe("Load test for user login", () => {
+        console.log("Load test for user login");
+        return db.query(
         "SELECT userName, email, password FROM users LIMIT 10000",
-    );
+      );
+    });
+    
 
     const resultFiles = {
         defaultDirName,

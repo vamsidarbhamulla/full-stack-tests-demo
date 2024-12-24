@@ -26,6 +26,10 @@ chromeDriver
 **/playwright-report/
 **/blob-report/
 **/playwright/.cache/
+**/web-tests-report
+**/web-tests-report.*
+
+
 
 # performance-tests
 **/performance-tests/bin

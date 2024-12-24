@@ -49,6 +49,7 @@ jobs:
           # target: google_apis_playstore
           # arch: x86_64
           # profile: Nexus 6
+          shell: bash
           script: |
             adb devices 
             cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
