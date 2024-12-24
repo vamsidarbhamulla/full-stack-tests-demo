@@ -45,4 +45,4 @@ jobs:
 
       - name: Install test dependencies
         run: |
-          cd .. && npm ci && mkdir -p test-results && chmod -R 777 test-results
+          cd tests/mobile-tests && npm ci && mkdir -p test-results && chmod -R 777 test-results
