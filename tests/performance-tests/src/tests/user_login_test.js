@@ -98,7 +98,7 @@ export function setup() {
     // console.log('setup', __ENV);
     const defaultDirName = "test-results/user-login";
     const testStartTime = currentDateInUtc();
-    const dirName = `${defaultDirName}/${testStartTime.replace(/ /g, "_")}`;
+    const dirName = `${defaultDirName}/${testStartTime.replace(/ /g, "_").replace(/:/g, '-')}`;
     const filePath = "req-res.json"; 
     const errorFilePath = "http-error.csv";
     const compareFilePath = "http-responses.csv";
