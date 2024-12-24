@@ -42,7 +42,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: run tests
+      - name: run mobile tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -52,7 +52,7 @@ jobs:
           shell: bash
           script: |
             adb devices 
-            cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
+            cd tests/mobile-tests && npm ci && ./scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
           avd-name: emulator-5554
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
