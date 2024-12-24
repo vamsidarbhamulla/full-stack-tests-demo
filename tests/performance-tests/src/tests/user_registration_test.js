@@ -152,7 +152,7 @@ export default function testSuite() {
                 },
             });
 
-            console.log("res:", data.email, data.userName, response.json());
+            console.log("res:", data?.email, data?.userName, response?.json());
 
             check(response, {
                 "is status 200": (r) => r.status === 200,
@@ -166,7 +166,7 @@ export default function testSuite() {
             // expect(response, 'response').to.have.validJsonBody();
             // expect(response.json(), 'response body').to.have.validJsonBody();
             expect(
-                response.json().msg,
+                response?.json()?.msg,
                 "user registration api response",
             ).to.equal("User Registered");
         });
@@ -174,7 +174,7 @@ export default function testSuite() {
 }
 
 export async function tearDown(data) {
-  console.log('testStartTime:', data.testStartTime);
+  console.log('testStartTime:', data?.testStartTime);
   file.appendString(`${data.resultFiles.dirName}/${data.resultFiles.filePath}`, '\n]');
 }
 

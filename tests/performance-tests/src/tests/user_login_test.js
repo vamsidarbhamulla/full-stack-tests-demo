@@ -153,7 +153,7 @@ export function setup() {
 }
 
 export default function testSuite(setupData) {
-    const currentIterData = randomItem(setupData.rows);
+    const currentIterData = randomItem(setupData?.rows);
     const resultFiles = setupData.resultFiles;
     // console.log('setupData:', setupData);
     // console.log('currentIterData:', currentIterData);
@@ -176,35 +176,35 @@ export default function testSuite(setupData) {
                 isJsonBody: false,
                 ...resultFiles,
                 mockFlexible: false,
-                testStartTime: setupData.testStartTime,
+                testStartTime: setupData?.testStartTime,
             });
 
             const responseMessage = httpResponseBody(response);
             totalCounter.add(1);
 
-            if (response.status > 400 || response.status < 200) {
+            if (response?.status > 400 || response?.status < 200) {
                 errorCounter.add(1);
                 file.appendString(
                     `${resultFiles.dirName}/${resultFiles.errorFilePath}`,
-                    `${currentIterData.email}|${currentIterData.userName}|${response.status}|${responseMessage}\n`,
+                    `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
                 );
             } else {
                 successCounter.add(1);
                 file.appendString(
                     `${resultFiles.dirName}/${resultFiles.successFilePath}`,
-                    `${currentIterData.email}|${currentIterData.userName}|${response.status}|${responseMessage}\n`,
+                    `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
                 );
             }
 
             // console.log('res:', response);
 
             // Check if the response body contains "User Registered"
-            expect(response.status, "response status").to.equal(200);
+            expect(response?.status, "response status").to.equal(200);
             expect(
                 response,
                 "response is in json format",
             ).to.have.validJsonBody();
-            expect(response.json().token, "user login api auth token").to.not.be
+            expect(response?.json()?.token, "user login api auth token").to.not.be
                 .null;
         });
     });
