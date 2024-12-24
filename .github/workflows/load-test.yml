@@ -7,6 +7,12 @@ on:
       - .github/workflows/load-test.yml 
   pull_request:
     branches: [ main, master ]
+
+env:
+  TEST_ENV: local
+  TEST_TYPE: hp
+  TEST_NAME: user_login_test
+  CI: true    
 jobs:
   test:
     runs-on: ubuntu-22.04
