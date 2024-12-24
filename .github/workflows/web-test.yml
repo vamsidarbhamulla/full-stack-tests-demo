@@ -26,7 +26,7 @@ jobs:
         curl -fsSL https://get.docker.com -o get-docker.sh
         sudo sh get-docker.sh
     - name: Start Local Dev Server
-      run: cd web-app && start-server.sh &        
+      run: cd web-app && source start-server.sh &        
     - name: Install dependencies
       run: cd tests/web-tests && npm ci
     - name: Install Playwright Browsers
