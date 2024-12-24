@@ -21,6 +21,14 @@ env:
 jobs:
   run-mobile-tests:
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level:
+          - 21
+          - 24
+          - 26
+          - 29
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -34,19 +42,32 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
-          target: google_apis_playstore
-          arch: x86_64
-          profile: Nexus 6
-          script: adb devices
-          avd-name: "nexus"
-
-      - name: Run mobile app tests
-        run: |
-          cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
+          api-level: ${{ matrix.api-level }}
+          # target: google_apis_playstore
+          # arch: x86_64
+          # profile: Nexus 6
+          script: |
+            adb devices 
+            cd tests/mobile-tests 
+            npm ci 
+            source scripts/connected_device_id.sh 
+            echo $DEVICE_ID 
+            DEVICE_ID=$DEVICE_ID npm run android.app 
+            npm run allure-report
+          avd-name: emulator-5554
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: mobile-tests-report
           path: tests/mobile-tests/allure-report/
-          retention-days: 30  
+          retention-days: 30    
+
+      # - name: Run mobile app tests
+      #   run: |
+      #     cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
+      # - uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: mobile-tests-report
+      #     path: tests/mobile-tests/allure-report/
+      #     retention-days: 30  
