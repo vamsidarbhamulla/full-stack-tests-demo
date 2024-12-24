@@ -93,17 +93,18 @@ RUN apt-get update && apt-get install -y software-properties-common gcc && \
 COPY --from=go-builder /bin/k6 /usr/repo/bin/k6
 
 COPY backend/ backend/
-RUN chmod -R u+w /backend/database.db
+# install load test dependencies
+RUN chmod -R u+w /backend/database.db && \
+    cd /backend && \
+    pip3 install --no-cache-dir -r requirments.txt
 
-WORKDIR /usr/repo
-COPY tests/performance-tests/package*.json ./ 
-COPY tests/performance-tests/env/*.env* ./env/*
+COPY tests/performance-tests/package.json ./
+COPY tests/performance-tests/env ./env
 COPY tests/performance-tests/src ./src
 
-# install load test dependencies
-# install load test dependencies
-RUN cd /backend && pip3 install --no-cache-dir -r requirments.txt \
-    && cd /usr/repo && npm install
+RUN cd /usr/repo && npm install
+
+WORKDIR /usr/repo
 
 # finish all the required dependencies installation before this step 
 # we might get permission issues for new folder creation with fixuid post USER construct in Dockerfile
