@@ -12,26 +12,38 @@ env:
   TEST_ENV: local
   TEST_TYPE: hp
   TEST_NAME: user_login_test
-  CI: true    
+  CI: true  
+  FLASK_APP: task.py
+
 jobs:
-  test:
+  run-extension-test:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Docker using Docker's official script
-        run: |
-          curl -fsSL https://get.docker.com -o get-docker.sh
-          sudo sh get-docker.sh
-      - name: Install Docker Compose
-        run: |
-            sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            docker-compose --version
-      - name: Build & Test
-        run: docker-compose up -d --build --force-recreate
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+
+      - name: Install xk6
+        run: go install go.k6.io/xk6/cmd/xk6@latest
+
+      - name: Build xk6-plugins binary
+        run: CGO_ENABLED=1 xk6 build --output 'tests/performance-tests/bin/k6' --with github.com/grafana/xk6-faker@v0.3.2 --with github.com/grafana/xk6-browser --with github.com/avitalique/xk6-file@v1.4.0 --with github.com/szkiba/xk6-csv@v0.1.4 --with github.com/grafana/xk6-sql@v1.0.1 --with github.com/grafana/xk6-sql-driver-sqlite3@v0.1.0 --with github.com/grafana/xk6-exec@v0.4.1
+
+      - name: Run xk6 test
+        uses: actions/setup-python@v5
         with:
-          name: performance-tests-report
-          path: tests/performance-tests/test-results/
-          retention-days: 30  
+          python-version: '3.13' 
+      - run: cd backend && pip install -r requirments.txt && FLASK_APP=task.py flask run -h localhost -p 5500 &
+        
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+            node-version: "16"
+            registry-url: "https://registry.npmjs.org"
+      - run: cd tests/performance-tests && npm install && npx dotenv -e env/.local.env ./bin/k6 run user_login_test.js
+              
+      - name: Run k6 extension test
+        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run user_login_test.js

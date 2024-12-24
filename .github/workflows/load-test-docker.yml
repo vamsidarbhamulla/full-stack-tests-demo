@@ -1,0 +1,37 @@
+name: Performance Tests with Docker
+on:
+  push:
+    paths:
+      - backend/**
+      # - tests/performance-tests/** 
+      # - .github/workflows/load-test-docker.yml 
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  TEST_ENV: local
+  TEST_TYPE: hp
+  TEST_NAME: user_login_test
+  CI: true    
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Docker using Docker's official script
+        run: |
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+      - name: Install Docker Compose
+        run: |
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker-compose --version
+      - name: Build & Test
+        run: docker-compose up -d --build --force-recreate
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: performance-tests-report
+          path: tests/performance-tests/test-results/
+          retention-days: 30  
