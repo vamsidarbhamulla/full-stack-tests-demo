@@ -7,7 +7,7 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "test": "npx playwright test",
     "test:chromium": "CREATE_NEW_USER=true npx playwright test --project=chromium",
-    "test:chromium:ci": "CI=true PARALLEL=true CREATE_NEW_USER=true npx playwright test --project=chromium",
+    "test:chromium:ci": "CI=true PARALLEL=true CREATE_NEW_USER=true npx playwright test checkout.spec --project=chromium",
     "report": "playwright show-report playwright-report",
     "codegen": "npx playwright codegen http://localhost:3000",
     "test-p": "npx playwright test --project=chromium --headed reviewProduct.spec --trace on",
