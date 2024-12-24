@@ -7,8 +7,8 @@
 - Inclduing Acceptance and Edge Cases
 - Test runs
 
-1. ![1.single-session-allowed](./1.single-session-allowed)
-2. ![2.upgrade-to-premium-account](./2.upgrade-to-premium-account)
-3. ![3.loan-requester-receive-status-notifications](./3.loan-requester-receive-status-notifications)
-4. ![4.department-staff-can-review-and-approval](./4.department-staff-can-review-and-approval)
-5. ![5.corporate-investor-registration-verification](./5.corporate-investor-registration-verification)
+1. ![1.single-session-allowed](./1.single-session-allowed)<br />
+2. ![2.upgrade-to-premium-account](./2.upgrade-to-premium-account)<br />
+3. ![3.loan-requester-receive-status-notifications](./3.loan-requester-receive-status-notifications)<br />
+4. ![4.department-staff-can-review-and-approval](./4.department-staff-can-review-and-approval)<br />
+5. ![5.corporate-investor-registration-verification](./5.corporate-investor-registration-verification)<br />
