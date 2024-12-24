@@ -21,6 +21,12 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*    
+    - name: Install Docker using Docker's official script
+      run: |
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+    - name: Start Local Dev Server
+      run: cd web-app && start-server.sh &        
     - name: Install dependencies
       run: cd tests/web-tests && npm ci
     - name: Install Playwright Browsers
