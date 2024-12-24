@@ -50,7 +50,7 @@ The repo structure is shown below:
 [2. web-tests](./tests/web-tests/README.md)<br />
 [3. performance-tests](./tests/performance-tests/README.md)<br />
 [4. security-tests](./tests/security-tests/README.md)<br />
-[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/wikipedia-sample-app-performance-result.md)<br />
+[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
 [6. web-app-bug-reports](./tests/docs/web-app/Web-app-observations.md)<br />
 [7. mobile-app-bug-reports](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
 [8. test-plan](./tests/docs/test-scenarios/README.md)<br />
