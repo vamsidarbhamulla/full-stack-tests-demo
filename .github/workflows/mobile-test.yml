@@ -49,7 +49,7 @@ jobs:
           script: |
             adb devices 
             cd tests/mobile-tests 
-            npm ci 
+            npm install 
             source scripts/connected_device_id.sh 
             echo $DEVICE_ID 
             DEVICE_ID=$DEVICE_ID npm run android.app 
