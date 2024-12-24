@@ -96,8 +96,8 @@ COPY backend/ backend/
 RUN chmod -R u+w /backend/database.db
 
 WORKDIR /usr/repo
-COPY tests/performance-tests/package*.json ./ 
-COPY tests/performance-tests/env/*.env* ./env/*
+COPY tests/performance-tests/package.json ./ 
+COPY tests/performance-tests/env ./env
 COPY tests/performance-tests/src ./src
 
 # install load test dependencies
