@@ -32,6 +32,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: performance-tests-report
-          path: tests/performance-tests/test-results/
+          name: performance-tests-report-docker
+          path: tests/performance-tests/docker_data/results/
           retention-days: 30  

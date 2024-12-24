@@ -7,21 +7,100 @@ import { testSummary } from "../libs/k6_core_utils.js";
 import { describe, expect } from "../libs/remote_modules.js";
 import { currentDateInUtc } from "../libs/date_utils.js";
 
+// export const options = {
+//     thresholds: {
+//         http_req_failed: ["rate<0.01"], // http errors should be less than 1%
+//         http_req_duration: ["p(95)<122"], // 95% of requests should be below 1.9s
+//     },
+//     scenarios: {
+//         health_check: {
+//             executor: "constant-arrival-rate",
+//             duration: "1s",
+//             rate: 1,
+//             timeUnit: "1s",
+//             preAllocatedVUs: 1000,
+//             maxVUs: 1500,
+//         },
+//     },
+// };
+
+const requestName = __ENV.REQUEST_NAME || "registeration";
+const TestType = {
+  hp: 'hp',
+  std: 'std',
+  ci: 'ci'
+};
+
+const scenario = __ENV.TEST_TYPE || 'hp';
+
+function testOptions(testType) {
+  let executionOptions = {};
+  switch (testType) {
+    case TestType.hp:
+      executionOptions = {
+          [`user_login_${TestType.hp}_test`]: {
+            executor: 'per-vu-iterations',
+            vus: 1,
+            iterations: 1,
+            maxDuration: '10m',
+          },
+        };
+      break;
+    case TestType.std:
+      executionOptions = {
+        [`user_login_${TestType.std}_stress_test`]: {
+          executor: 'ramping-arrival-rate',
+          startRate: 1,
+          timeUnit: __ENV.REQUEST_DURATION || '1s', 
+          preAllocatedVUs: 500,
+          maxVUs: 1000,
+          stages: [
+            { duration: '2m', target: 5000 }, // below normal load
+            { duration: '5m', target: 5000 },
+            { duration: '2m', target: 10000 }, // normal load
+            { duration: '5m', target: 10000 },
+            { duration: '2m', target: 15000 }, // around the breaking point
+            { duration: '5m', target: 15000 },
+            { duration: '2m', target: 20000 }, // beyond the breaking point
+            { duration: '5m', target: 20000 },
+            { duration: '2m', target: 0 }, // scale down. Recovery stage.
+          ],
+          gracefulStop: '2m',
+        },
+      };
+      break;
+    case TestType.ci:
+    default:
+      executionOptions = {
+        [`user_login_${TestType.ci}_load_test`]: {
+          executor: 'constant-arrival-rate',
+          duration: '1m',
+          rate: 500,
+          timeUnit:  '1s',
+          // Logic to calculate preAllocatedVUs
+          // preAllocatedVUs = [median_iteration_duration * rate] + constant_for_variance
+          // preAllocatedVUs = [60 sec * 10] + 50 = 600 + 50 = 650
+          preAllocatedVUs: 200,
+          maxVUs: 500,
+          gracefulStop: '5m',
+        },
+      };
+      break;
+  }
+  const currOptions = {
+    ...executionOptions,
+  };
+  return currOptions;
+}
+
 export const options = {
-    thresholds: {
+   thresholds: {
         http_req_failed: ["rate<0.01"], // http errors should be less than 1%
         http_req_duration: ["p(95)<122"], // 95% of requests should be below 1.9s
     },
-    scenarios: {
-        health_check: {
-            executor: "constant-arrival-rate",
-            duration: "1s",
-            rate: 1,
-            timeUnit: "1s",
-            preAllocatedVUs: 1000,
-            maxVUs: 1500,
-        },
-    },
+  setupTimeout: '5m',
+  teardownTimeout: '5m',
+  scenarios: testOptions(scenario),
 };
 
 export function setup() {

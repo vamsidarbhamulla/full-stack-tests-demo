@@ -43,28 +43,10 @@ jobs:
 
       - name: Install test dependencies
         run: |
-          cd tests/mobile-tests && npm ci && npm run android.app && npm run allure-report
-      
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
+          cd tests/mobile-tests && npm ci && source scripts/connected_device_id.sh && echo $DEVICE_ID && DEVICE_ID=$DEVICE_ID npm run android.app && npm run allure-report
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: allure-results
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history 
+          name: mobile-tests-report
+          path: tests/mobile-tests/allure-report/
+          retention-days: 30  

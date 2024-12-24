@@ -10,7 +10,7 @@ on:
 
 env:
   TEST_ENV: local
-  TEST_TYPE: hp
+  TEST_TYPE: ci
   TEST_NAME: user_login_test
   CI: true  
   FLASK_APP: task.py
@@ -42,7 +42,13 @@ jobs:
         with:
             node-version: "16"
             registry-url: "https://registry.npmjs.org"
-      - run: cd tests/performance-tests && pwd && ls -la && npm install && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+      - run: cd tests/performance-tests && pwd && ls -la && npm install && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_register_test.js && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
               
       - name: Run k6 extension test
         run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: performance-tests-report
+          path: tests/performance-tests/test-results/
+          retention-days: 30 
