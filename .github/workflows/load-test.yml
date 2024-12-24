@@ -1,4 +1,4 @@
-name: docker-compose-actions-workflow
+name: Performance Tests
 on:
   push:
     paths:

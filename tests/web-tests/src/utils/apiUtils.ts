@@ -7,18 +7,18 @@ export async function createAccountApi(apiContext: APIRequestContext): Promise<N
   const securityAnswer = process.env.DEFAULT_SECURITY_ANSWER ?? 'tester';
   const dateTime = `${new Date().toISOString().split('T')[0]}T19:04:13.448Z`;
   const securityQuestionId = 2;
-  const data= ({
-      email: randEmail(),
-      password,
-      passwordRepeat: password,
-      securityQuestion: {
-        id: securityQuestionId,
-        question: "Mother's maiden name?",
-        createdAt: dateTime,
-        updatedAt: dateTime,
-      },
-      securityAnswer,
-    });
+  const data = {
+    email: randEmail(),
+    password,
+    passwordRepeat: password,
+    securityQuestion: {
+      id: securityQuestionId,
+      question: "Mother's maiden name?",
+      createdAt: dateTime,
+      updatedAt: dateTime,
+    },
+    securityAnswer,
+  };
   const newUserResponse = await apiContext.post(`/api/Users/`, {
     data,
   });

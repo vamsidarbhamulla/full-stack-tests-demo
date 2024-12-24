@@ -18,18 +18,15 @@ test.describe('verify account login', () => {
     await apiContext.dispose();
   });
 
-  test('should be able to login with a new user created from api', async ({ }) => {
+  test('should be able to login with a new user created from api', async ({}) => {
     await loginPage.open();
 
     let email = process.env.DEFAULT_EMAIL!;
-    let username = process.env.DEFAULT_USERNAME!;
     // create new user for each test using rest api based on environment variable from cli
     const newUser = await createAccountApi(apiContext);
     email = newUser?.data?.email ?? process.env.DEFAULT_EMAIL!;
-    username = newUser?.data?.username ?? process.env.DEFAULT_USERNAME!;
     // console.log('new user created with email:', email, username)
     const password = process.env.DEFAULT_PASSWORD!;
     await loginPage.login(email, password);
-
   });
 });

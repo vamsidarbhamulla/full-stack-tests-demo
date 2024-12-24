@@ -2,7 +2,7 @@ import exec from "k6/x/exec";
 import file from "k6/x/file";
 import http from "k6/http";
 import { testSummary, httpLog } from "../libs/k6_core_utils.js";
-import { httpResponseBody, buildMetrics } from "../libs/api_utils.js";
+import { httpResponseBody } from "../libs/api_utils.js";
 import { describe, expect, randomItem } from "../libs/remote_modules.js";
 import { currentDateInUtc } from "../libs/date_utils.js";
 import sql from "k6/x/sql";

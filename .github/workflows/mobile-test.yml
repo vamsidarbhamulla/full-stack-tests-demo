@@ -1,4 +1,4 @@
-name: Android emulator Tests
+name: Android Emulator Tests
 on:
   push:
     paths:

@@ -6,6 +6,6 @@ const SELECTORS = () => ({
 
 export async function validateOrder() {
   await SELECTORS().confirmOrderText.waitFor({ state: 'visible', timeout: 2000 });
-  await SELECTORS().confirmOrderText.isVisible;
+  await SELECTORS().confirmOrderText.isVisible();
   await waitForPageLoad();
 }

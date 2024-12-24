@@ -54,7 +54,7 @@ export function getMetrics() {
 
 export function buildMetrics(data, res, storeResponseError) {
   const status = res.status;
-//   const req = data.requestJson;
+  const req = data.requestJson;
   const metrics = getMetrics(data);
   metrics.httpResTotalCounter.add(1, { tag: `${metrics.httpResTotalCounter.name}` });
 

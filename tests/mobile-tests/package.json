@@ -18,7 +18,8 @@
     "type": "module",
     "scripts": {
         "android.app": "wdio run config/wdio.android.app.conf.ts",
-        "lint": "eslint config tests"
+        "lint": "eslint ./**/*.ts --config eslint.config.mjs --fix",
+        "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^8.2.0",

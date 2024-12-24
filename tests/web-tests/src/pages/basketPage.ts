@@ -2,7 +2,6 @@ import { extractNumberFromText } from '@utils/coreUtils';
 import { getPage, openPage, waitForPageLoad } from '@utils/pageUtils';
 import { expect } from '@playwright/test';
 import { productListFromApi } from '@testdata/productData';
-import { test } from '@setup/pageSetup';
 
 const SELECTORS = () => ({
   checkoutButton: getPage().getByRole('button', { name: 'Checkout' }),

@@ -18,16 +18,16 @@ const SELECTORS = () => ({
 
 export async function selectCreditCardPaymentOption() {
   await test.step('add new credit card to payment option', async () => {
-  await SELECTORS().headerTitle.waitFor({ state: 'visible', timeout: 2000 });
-  await SELECTORS().addNewCreditCardButton.click();
-  await addCreditCard();
+    await SELECTORS().headerTitle.waitFor({ state: 'visible', timeout: 2000 });
+    await SELECTORS().addNewCreditCardButton.click();
+    await addCreditCard();
   });
 
   await test.step('select newly added credit card payment option', async () => {
-  await SELECTORS().creditCardSelectRadioButton.click();
-  await SELECTORS().continueButton.scrollIntoViewIfNeeded();
-  await SELECTORS().continueButton.click();
-  await waitForPageLoad();
+    await SELECTORS().creditCardSelectRadioButton.click();
+    await SELECTORS().continueButton.scrollIntoViewIfNeeded();
+    await SELECTORS().continueButton.click();
+    await waitForPageLoad();
   });
 }
 

@@ -7,6 +7,7 @@ const testEnv = process.env.TEST_ENV || 'local';
 const isCi = process.env.CI === 'true';
 // dotenv.config({ path: path.resolve(__dirname, './env', `.${testEnv}.env`)  });
 dotenv.config({ path: `./env/.${testEnv}.env`  });
+console.log(`Running tests in ${testEnv} environment with ${isCi ? 'CI' : 'local'} settings`);
 
 const startLocalHost = testEnv === 'local' && process.env.IS_LOCAL_WEB_APP === 'true';
 
@@ -36,7 +37,7 @@ export default defineConfig({
   globalSetup: require.resolve('./src/setup/globalSetup.ts'),
   globalTeardown: require.resolve('./src/setup/globalTeardown.ts'),  
   use: {
-    headless: isCi ? false : process.env.HEADLESS === 'true' || false,
+    headless: isCi ? true : process.env.HEADLESS === 'true' || false,
     ignoreHTTPSErrors: true,
     acceptDownloads: true,
     // video: 'on',
@@ -46,7 +47,7 @@ export default defineConfig({
      */
     baseURL: process.env.BASE_URL,
     /* Records traces after each test failure for debugging purposes. */
-    trace: process.env.TRACE === 'true' ? 'on' : 'retain-on-failure',
+    trace: isCi ? 'on' : (process.env.TRACE === 'true' ? 'on' : 'retain-on-failure'),
     /* Captures screenshots after each test failure to provide visual context. */
     screenshot: 'only-on-failure',
     /* Sets a timeout for actions like click, fill, select to prevent long-running operations. */
