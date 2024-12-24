@@ -7,7 +7,11 @@ on:
       - .github/workflows/web-test.yml 
   pull_request:
     branches: [ main, master ]
-    
+
+env:
+  TEST_ENV: test
+  CI: true
+
 jobs:
   test:
     timeout-minutes: 60
