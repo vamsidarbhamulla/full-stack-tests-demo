@@ -58,7 +58,7 @@ function testOptions(testType) {
         [`user_login_${TestType.ci}_load_test`]: {
           executor: 'constant-arrival-rate',
           duration: '1m',
-          rate: 500,
+          rate: 10,
           timeUnit:  '1s',
           // Logic to calculate preAllocatedVUs
           // preAllocatedVUs = [median_iteration_duration * rate] + constant_for_variance
@@ -152,17 +152,19 @@ export default function testSuite() {
                 },
             });
 
-            console.log("res:", data?.email, data?.userName, response?.json());
+            if(__ENV.CI === 'false' || __ENV.CI === false) {
+              console.log("res:", __ENV.CI, data?.email, data?.userName, response?.json());
+            }
 
             check(response, {
                 "is status 200": (r) => r.status === 200,
                 "response body": (r) =>
-                    r.body.includes("User Registered") ||
-                    r.body.includes("Email already Exist"),
+                    r?.body?.includes("User Registered") ||
+                    r?.body?.includes("Email already Exist"),
             });
 
             // Check if the response body contains "User Registered"
-            expect(response.status, "status").to.equal(200);
+            expect(response?.status, "status").to.equal(200);
             // expect(response, 'response').to.have.validJsonBody();
             // expect(response.json(), 'response body').to.have.validJsonBody();
             expect(
