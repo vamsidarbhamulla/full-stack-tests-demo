@@ -3,7 +3,8 @@ on:
   push:
     paths:
       - backend/**
-      - tests/performance-tests/**  
+      - tests/performance-tests/** 
+      - .github/workflows/load-test.yml 
   pull_request:
     branches: [ main, master ]
 jobs:

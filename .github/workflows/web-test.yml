@@ -3,7 +3,8 @@ on:
   push:
     paths:
       - web-app/**
-      - tests/web-tests/**  
+      - tests/web-tests/** 
+      - .github/workflows/web-test.yml 
   pull_request:
     branches: [ main, master ]
     

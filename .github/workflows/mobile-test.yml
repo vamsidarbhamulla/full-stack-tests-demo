@@ -4,6 +4,7 @@ on:
     paths:
       - web-app/**
       - tests/web-tests/**  
+      - .github/workflows/mobile-test.yml
   pull_request:
     branches: [ main, master ]
     
