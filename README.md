@@ -46,11 +46,11 @@ The repo structure is shown below:
 ````
 
 ##### Table of Contents  
-[1. mobile-tests](./tests/mobile-tests/README.md)  
-[2. web-tests](./tests/web-tests/README.md)  
-[3. performance-tests](./tests/performance-tests/README.md) 
-[4. security-tests](./tests/security-tests/README.md) 
-[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/wikipedia-sample-app-performance-result.md)  
-[6. mobile-app-bug-reports](./tests/docs/web-app/Web-app-observations.md) 
-[7. web-app-bug-reports](./tests/docs/mobile-app/Mobile-app-observations.md) 
-[8. test-plan](./tests/docs/test-scenarios/ReadMe.md) 
+[1. mobile-tests](./tests/mobile-tests/README.md)<br />
+[2. web-tests](./tests/web-tests/README.md)<br />
+[3. performance-tests](./tests/performance-tests/README.md)<br />
+[4. security-tests](./tests/security-tests/README.md)<br />
+[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/wikipedia-sample-app-performance-result.md)<br />
+[6. mobile-app-bug-reports](./tests/docs/web-app/Web-app-observations.md)<br />   
+[7. web-app-bug-reports](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
+[8. test-plan](./tests/docs/test-scenarios/ReadMe.md)<br />
