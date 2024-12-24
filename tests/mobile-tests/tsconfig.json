@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "sourceMap": false,
+        "target": "es2020",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "noImplicitAny": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true,
+        "types": [
+            "node",
+            "@wdio/types",
+            "@wdio/globals/types",
+            "@wdio/mocha-framework",
+            "expect-webdriverio",
+        ],
+        "baseUrl": "./",
+        "paths": { 
+            "@screenobjects/*": ["./screenobjects/*"], 
+            "@components/*": ["./components/*"], 
+            "@helpers/*": ["./helpers/*"],
+        }
+    },
+    "include": [
+        "./config/**/*.ts",
+        "./tests/**/*.ts"
+    ]
+}

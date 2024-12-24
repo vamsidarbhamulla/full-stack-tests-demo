@@ -1,0 +1,15 @@
+name: docker-compose-actions-workflow
+on:
+  push:
+    paths:
+      - backend/**
+      - tests/performance-tests/**  
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build & Test
+        run: cd tests/performance-tests && docker-compose up -d --build --force-recreate

