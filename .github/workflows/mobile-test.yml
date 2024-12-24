@@ -1,9 +1,9 @@
-name: Android Emulator Tests
+name: Run Mobile Tests on Android Emulator
 on:
   push:
     paths:
-      - web-app/**
-      - tests/web-tests/**  
+      - mobile-app/**
+      - tests/mobile-tests/**  
       - .github/workflows/mobile-test.yml
   pull_request:
     branches: [ main, master ]
@@ -19,33 +19,31 @@ env:
   DEVICE: nexus
 
 jobs:
-  mobile-tests-on-emulator:
-    timeout-minutes: 20
-    runs-on: macos-latest
+  test:
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-        
-      - name: Add avdmanager and sdkmanager to system PATH
-        run: |
-            echo "$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/${{ env.ANDROID_BUILD_TOOLS_VERSION }}" >> $GITHUB_PATH
+      - name: checkout
+        uses: actions/checkout@v4
 
-      - name: Install Sdk
+      - name: Enable KVM
         run: |
-           yes Y | sdkmanager --licenses
-           sdkmanager --install ${ANDROID_SDK_PACKAGES}
-  
-      - name: Build emulator
-        run: |
-            echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
-      - name: Launch emulator
-        run: |
-          cd tests/mobile-tests/scripts && chmod +x ./start_emulator.sh
-          EMULATOR_TIMEOUT=$EMULATOR_TIMEOUT EMULATOR_NAME=$EMULATOR_NAME ./start_emulator.sh
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis_playstore
+          arch: x86_64
+          profile: Nexus 6
+          script: ./gradlew connectedCheck
+          avd-name: "nexus"
 
       - name: Install test dependencies
         run: |
-          cd tests/mobile-tests && npm ci && mkdir -p test-results && chmod -R 777 test-results
+          cd tests/mobile-tests && npm ci && npm run android.app && npm run allure-report
       
       - name: Load test report history
         uses: actions/checkout@v3
@@ -69,4 +67,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history    
+          publish_dir: allure-history 

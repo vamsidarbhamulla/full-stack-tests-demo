@@ -1,7 +1,7 @@
 import exec from "k6/x/exec";
 import file from "k6/x/file";
 import http from "k6/http";
-import { testSummary, httpLog } from "../libs/k6_core_utils.js";
+import { testSummary, httpLog, testJSON } from "../libs/k6_core_utils.js";
 import { httpResponseBody } from "../libs/api_utils.js";
 import { describe, expect, randomItem } from "../libs/remote_modules.js";
 import { currentDateInUtc } from "../libs/date_utils.js";
@@ -14,62 +14,6 @@ const successCounter = new Counter('_response_success_cnt');
 const totalCounter = new Counter('_response_total_cnt');
 
 const db = sql.open(driver, "../../backend/database.db");
-
-// export const options = {
-//     thresholds: {
-//         http_req_failed: ["rate<0.01"], // http errors should be less than 1%
-//         http_req_duration: ["p(95)<122"], // 95% of requests should be below 1.9s
-//     },
-//     scenarios: {
-//       contacts: {
-//         executor: 'ramping-arrival-rate',
-//         // Start iterations per `timeUnit`
-//         startRate: 1000,
-//         // Start `startRate` iterations per minute
-//         timeUnit: '1m',
-//         // Pre-allocate necessary VUs.
-//         preAllocatedVUs: 500,
-//         stages: [
-//           { duration: '2m', target: 2000 }, // below normal load
-//           { duration: '5m', target: 2000 },
-//           { duration: '2m', target: 3000 }, // normal load
-//           { duration: '5m', target: 3000 },
-//           { duration: '2m', target: 3000 }, // around the breaking point
-//           { duration: '5m', target: 3000 },
-//           { duration: '2m', target: 4000 }, // beyond the breaking point
-//           { duration: '5m', target: 4000 },
-//           { duration: '10m', target: 0 }, // scale down. Recovery stage.
-//         ],
-//       },
-//         // spike_test: {
-//         //     executor: "constant-arrival-rate",
-//         //     duration: "60s",
-//         //     rate: 5000,
-//         //     timeUnit: "1s",
-//         //     preAllocatedVUs: 1000,
-//         //     maxVUs: 1500,
-//         // },
-//         // stress_test: {
-//         //     executor: "constant-arrival-rate",
-//         //     duration: "60s",
-//         //     rate: 5000,
-//         //     timeUnit: "1s",
-//         //     preAllocatedVUs: 1000,
-//         //     maxVUs: 1500,
-//         //     stages: [
-//         //         { duration: "2m", target: 100 }, // below normal load
-//         //         { duration: "5m", target: 100 },
-//         //         { duration: "2m", target: 200 }, // normal load
-//         //         { duration: "5m", target: 200 },
-//         //         { duration: "2m", target: 300 }, // around the breaking point
-//         //         { duration: "5m", target: 300 },
-//         //         { duration: "2m", target: 400 }, // beyond the breaking point
-//         //         { duration: "5m", target: 400 },
-//         //         { duration: "10m", target: 0 }, // scale down. Recovery stage.
-//         //     ],
-//         // },
-//     },
-// };
 
 const requestName = __ENV.REQUEST_NAME || "login";
 const TestType = {
@@ -255,10 +199,6 @@ export default function testSuite(setupData) {
             expect(
                 response,
                 "response is in json format",
-            ).to.have.validJsonBody();
-            expect(
-                response.json(),
-                "response body is in json format",
             ).to.have.validJsonBody();
             expect(response.json().token, "user login api auth token").to.not.be
                 .null;
