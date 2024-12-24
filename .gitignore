@@ -10,6 +10,8 @@
 #
 **/node_modules/
 **/npm-debug.log
+**/allure-results/
+**/allure-report/
 
 # mobile-tests
 **/logs/

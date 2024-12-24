@@ -1,4 +1,5 @@
 import type { Options } from '@wdio/types';
+import allureReporter from '@wdio/allure-reporter'
 
 /**
  * All not needed configurations, for this boilerplate, are removed.
@@ -109,7 +110,13 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec','dot',
+        ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: true,
+    }]
+    ],
     // Options to be passed to Mocha.
     mochaOpts: {
         ui: 'bdd',

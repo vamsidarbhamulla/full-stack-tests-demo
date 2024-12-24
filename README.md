@@ -25,7 +25,7 @@ The repo structure is shown below:
             - including bugs + screenshots
         + mobile-performance-tests
             - apptim desktop performance test-results
-        + test-scenarios
+        + functional-test-plan
             - 5 different scenarios detailed test approach 
         + web-app
             - exploratory testing observations for owasp web app
@@ -51,6 +51,6 @@ The repo structure is shown below:
 [3. performance-tests](./tests/performance-tests/README.md)<br />
 [4. security-tests](./tests/security-tests/README.md)<br />
 [5. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
-[6. web-app-bug-reports](./tests/docs/web-app/Web-app-observations.md)<br />
-[7. mobile-app-bug-reports](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
-[8. test-plan](./tests/docs/test-scenarios/README.md)<br />
+[6. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
+[7. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
+[8. test-plan](./tests/docs/functional-test-plan/README.md)<br />
