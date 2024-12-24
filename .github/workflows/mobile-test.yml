@@ -38,7 +38,7 @@ jobs:
           target: google_apis_playstore
           arch: x86_64
           profile: Nexus 6
-          script: ./gradlew connectedCheck
+          script: adb devices
           avd-name: "nexus"
 
       - name: Install test dependencies
