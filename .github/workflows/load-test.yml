@@ -46,18 +46,12 @@ jobs:
       - run: cd tests/performance-tests  && npm install && pwd && ls -la
               
       - name: Run k6 user registration load test
-        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: performance-tests-report
-          path: tests/performance-tests/test-results/
-          retention-days: 30 
+        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
         env:
           TEST_TYPE: ci
       
       - name: Run k6 user login stress test
-        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+        run: cd tests/performance-tests && TEST_TYPE=stdnpx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
