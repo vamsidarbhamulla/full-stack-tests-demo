@@ -6,6 +6,9 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 
 [![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)
 
+[![Performance Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml)
+
+[![Performance Tests with Docker](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml)
 
 ## repo structure 
 The repo structure is shown below:
@@ -42,3 +45,12 @@ The repo structure is shown below:
     shell script to start a clean docker container for owasp juice shop
 ````
 
+##### Table of Contents  
+[1. mobile-tests](./tests/mobile-tests/README.md)  
+[2. web-tests](./tests/web-tests/README.md)  
+[3. performance-tests](./tests/performance-tests/README.md) 
+[4. security-tests](./tests/security-tests/README.md) 
+[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/wikipedia-sample-app-performance-result.md) 
+[6. mobile-app-bug-reports](./tests/docs/web-app/Web-app-observations.md)
+[7. web-app-bug-reports](./tests/docs/mobile-app/Mobile-app-observations.md)
+[8. test-plan](./tests/docs/test-scenarios/ReadMe.md)
