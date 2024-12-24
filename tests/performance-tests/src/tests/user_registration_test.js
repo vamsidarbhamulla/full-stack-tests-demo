@@ -89,7 +89,7 @@ export const options = {
 export function setup() {
     const defaultDirName = "test-results/user-registration";
     const testStartTime = currentDateInUtc();
-    const dirName = `${defaultDirName}/${testStartTime.replace(/ /g, "_").replace(/:/g, '-')}`;
+    const dirName = `${defaultDirName}/${testStartTime.replace(/[ :]/g, "-")}`;
     const filePath = "req-res.json"; // create-request
     const errorFilePath = "http-error.csv";
     const compareFilePath = "http-responses.csv";
@@ -116,7 +116,7 @@ export function setup() {
         JSON.stringify({ testStartTime }),
     );
     file.writeString(
-        `${dirName}/${testStartTime}.log`,
+        `${dirName}/${testStartTime.replace(/[ :]/g, "-")}.log`,
         `testStartTime=${testStartTime}`,
     );
     const resultFiles = {
