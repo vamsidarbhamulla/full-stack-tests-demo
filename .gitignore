@@ -28,4 +28,3 @@ chromeDriver
 # performance-tests
 **/performance-tests/bin
 **/performance-tests/**/req-res.json
-**/performance-tests/**/*.json

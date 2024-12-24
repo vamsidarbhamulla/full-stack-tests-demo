@@ -3,8 +3,8 @@ on:
   push:
     paths:
       - backend/**
-      # - tests/performance-tests/** 
-      # - .github/workflows/load-test-docker.yml 
+      - tests/performance-tests/** 
+      - .github/workflows/load-test-docker.yml 
   pull_request:
     branches: [ main, master ]
 
@@ -28,7 +28,7 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
             docker-compose --version
       - name: Build & Test
-        run: docker-compose up -d --build --force-recreate
+        run: cd tests/performance-tests && docker-compose up -d --build --force-recreate
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

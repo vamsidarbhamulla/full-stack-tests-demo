@@ -31,13 +31,12 @@ jobs:
       - name: Build xk6-plugins binary
         run: CGO_ENABLED=1 xk6 build --output 'tests/performance-tests/bin/k6' --with github.com/grafana/xk6-faker@v0.3.2 --with github.com/grafana/xk6-browser --with github.com/avitalique/xk6-file@v1.4.0 --with github.com/szkiba/xk6-csv@v0.1.4 --with github.com/grafana/xk6-sql@v1.0.1 --with github.com/grafana/xk6-sql-driver-sqlite3@v0.1.0 --with github.com/grafana/xk6-exec@v0.4.1
 
-      - name: Run xk6 test
+      - name: Run Flask Backend Server
         uses: actions/setup-python@v5
         with:
           python-version: '3.13' 
       - run: cd backend && pip install -r requirments.txt && FLASK_APP=task.py flask run -h localhost -p 5500 &
-        
-        
+                
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
