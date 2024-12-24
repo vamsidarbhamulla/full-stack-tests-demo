@@ -43,7 +43,7 @@ jobs:
         with:
             node-version: "16"
             registry-url: "https://registry.npmjs.org"
-      - run: cd tests/performance-tests && npm install && npx dotenv -e env/.local.env ./bin/k6 run user_login_test.js
+      - run: cd tests/performance-tests && npm install && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
               
       - name: Run k6 extension test
         run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
