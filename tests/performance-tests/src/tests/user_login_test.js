@@ -50,10 +50,10 @@ function testOptions(testType) {
             { duration: '2m', target: 300 },
             { duration: '1m', target: 600 }, // normal load
             { duration: '2m', target: 600 },
-            { duration: '1m', target: 1200 }, // around the breaking point
-            { duration: '2m', target: 1200 },
-            { duration: '1m', target: 1800 }, // beyond the breaking point
-            { duration: '2m', target: 1800 },
+            { duration: '1m', target: 3000 }, // around the breaking point 
+            { duration: '2m', target: 3000 }, // peak load 5 times more load than normal load
+            { duration: '1m', target: 6000 }, // beyond the breaking point
+            { duration: '2m', target: 6000 }, // 10 times more than normal load
             { duration: '2m', target: 0 }, // scale down. Recovery stage.
           ],
           gracefulStop: '2m',
