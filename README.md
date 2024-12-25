@@ -2,13 +2,24 @@
 
 This is a test automation repo with web, mobile, rest-api, performance and security testing.
 
-[![Android Emulator Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml)
+##### Table of Contents
+[1. repo-structure](#repo-structure)<br />
+[2. mobile-tests](./tests/mobile-tests/README.md)<br />
+[3. web-tests](./tests/web-tests/README.md)<br />
+[4. performance-tests](./tests/performance-tests/README.md)<br />
+[5. security-tests](./tests/security-tests/README.md)<br />
+[6. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
+[7. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
+[8. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
+[9. test-plan](./tests/docs/functional-test-plan/README.md)<br />
 
-[![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)
+![](https://...Dark.png)  |  ![](https://...Ocean.png)
 
-[![Performance Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml)
+[![Android Emulator Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml) | [![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)<br />
 
-[![Performance Tests with Docker](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml)
+[![Performance Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test.yml)  |  [![Performance Tests with Docker](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/load-test-docker.yml)<br />
+
+<a name="repo-stucture"></a>
 
 ## repo structure 
 The repo structure is shown below:
@@ -44,13 +55,3 @@ The repo structure is shown below:
     owasp juice shop web-app
     shell script to start a clean docker container for owasp juice shop
 ````
-
-##### Table of Contents  
-[1. mobile-tests](./tests/mobile-tests/README.md)<br />
-[2. web-tests](./tests/web-tests/README.md)<br />
-[3. performance-tests](./tests/performance-tests/README.md)<br />
-[4. security-tests](./tests/security-tests/README.md)<br />
-[5. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
-[6. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
-[7. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
-[8. test-plan](./tests/docs/functional-test-plan/README.md)<br />

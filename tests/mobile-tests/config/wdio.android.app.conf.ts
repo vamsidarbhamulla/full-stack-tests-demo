@@ -7,7 +7,7 @@ export const config: WebdriverIO.Config = {
     // ============
     // Specs
     // ============
-    specs: ["../tests/specs/**/wiki*.spec.ts"],
+    specs: ["../tests/specs/**/wiki.*.spec.js", "../tests/specs/**/wiki.*.spec.ts"],
 
     // ============
     // Capabilities

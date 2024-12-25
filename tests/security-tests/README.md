@@ -98,9 +98,9 @@
 
 1. **SQL Injection Testing**
    ```bash
-   curl -X POST http://localhost:5000/client_registeration -d 'fullName=John Doe&userName=johndoe&email=test@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
+   curl -X POST http://localhost:5500/client_registeration -d 'fullName=John Doe&userName=johndoe&email=test@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
 
-   curl -X POST http://localhost:5000/client_login -d 'userName=spammer&email=spam@email.com"OR 1=1;--&password=pwd'
+   curl -X POST http://localhost:5500/client_login -d 'userName=spammer&email=spam@email.com"OR 1=1;--&password=pwd'
 
    jwt() { jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $1; }
 

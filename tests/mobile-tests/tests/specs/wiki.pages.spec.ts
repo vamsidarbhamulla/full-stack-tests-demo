@@ -2,17 +2,17 @@ import NativeAlert from '@components/NativeAlert';
 import FooterBar from '@components/FooterBar';
 import HomeScreen  from '@screenobjects/HomeScreen';
 import { sleep } from '@helpers/Utils';
+import AllureReporter from '@wdio/allure-reporter'
 
-describe('Interact with  Wikipidea app pages', () => {
+describe('When User interacts with  Wikipidea app pages', () => {
     beforeEach(async () => {
         // Wait for the alert and validate it
         await NativeAlert.handleEvent();
     });
     
-    it('should be able to view and navigate all the wikipedia pages', async () => {
-        // Always make sure you are on the right tab
+    it('Then he should be able to view and navigate all the wikipedia pages', async () => {
+
         await HomeScreen.checkHomeScreen();
-        
         await HomeScreen.scrollToBottom();
         await sleep(2000);
 
@@ -34,3 +34,4 @@ describe('Interact with  Wikipidea app pages', () => {
 
     
 });
+ 

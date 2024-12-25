@@ -27,7 +27,7 @@ class SearchScreen extends AppScreen {
     get closeSearch () {return $(`android=${SELECTORS.SEARCH_CLOSE_BTN}`);}
 
 
-    async checkSeachScreen(){
+    async checkSearchScreen(){
         await this.screen.waitForDisplayed();
     }
     async searchInfo({ text } = { text: 'new york' }) {

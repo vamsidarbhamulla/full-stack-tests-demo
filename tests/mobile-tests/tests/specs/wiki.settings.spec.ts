@@ -5,13 +5,13 @@ import HomeScreen  from '@screenobjects/HomeScreen';
 import { sleep } from '@helpers/Utils';
 import SettingsScreen from '@screenobjects/SettingsScreen.js';
 
-describe('When interacting with a Wikipidea app,', () => {
+describe('When User interacting with a Wikipidea Settings ,', () => {
     beforeEach(async () => {
        // Wait for the alert and validate it
        await NativeAlert.handleEvent();
     });
     
-    it('should be toggle all settings successfully', async () => {
+    it('Then he should be able to toggle all settings successfully', async () => {
         await HeaderBar.checkHeaderBar();
         await HeaderBar.tapOnMoreOptions();
         await MenuOptions.tapOnSettingsMenu();
