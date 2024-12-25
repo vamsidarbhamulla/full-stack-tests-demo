@@ -70,11 +70,11 @@ class NativeAlert {
         const isAndroidEmulator = caps?.desired?.udid?.includes('emulator') 
         || caps?.deviceName?.includes('emulator') 
         || caps?.deviceUDID?.includes('emulator')
-        if (isAndroidEmulator) {
+        if (isAndroidEmulator && (!!process.env.CI || process.env.CI == 'true')) {
             await this.waitForIsShown();
-        // Close the alert
-        await this.tapOnOkButton();
-        await this.waitForIsShown(false);
+            // Close the alert
+            await this.tapOnOkButton();
+            await this.waitForIsShown(false);
         }
     }
 }

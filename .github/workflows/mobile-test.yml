@@ -17,6 +17,7 @@ env:
   EMULATOR_TIMEOUT: 350
   EMULATOR_NAME: emulator-5554
   DEVICE: emulator-5554
+  CI: true
 
 jobs:
   run-mobile-tests:

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<testsuites tests="2" failures="0">
+  <testsuite id="0" name="Thresholds" tests="2" failures="0">
+    <testcase name="http_req_failed: rate&lt;0.01" classname="Thresholds" />
+    <testcase name="http_req_duration: p(95)&lt;122" classname="Thresholds" />
+  </testsuite>
+</testsuites>

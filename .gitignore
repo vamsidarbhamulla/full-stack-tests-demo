@@ -19,6 +19,8 @@
 chromeDriver
 .tmp
 *.mp4
+**/mobile-tests-report
+**/mobile-tests-report.*
 
 
 # web-tests

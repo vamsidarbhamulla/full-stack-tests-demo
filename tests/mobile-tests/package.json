@@ -20,7 +20,8 @@
         "lint": "eslint ./**/*.ts --config eslint.config.mjs --fix",
         "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
         "allure-report": "allure generate --clean allure-results",
-        "allure-open": "allure open allure-report"
+        "allure-open": "allure open allure-report",
+        "allure-open-ci": "allure open reports/mobile-tests-report"
     },
     "devDependencies": {
         "@stylistic/eslint-plugin": "^2.12.1",

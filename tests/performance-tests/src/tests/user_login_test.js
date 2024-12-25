@@ -127,12 +127,14 @@ export function setup() {
         `${dirName}/${testStartTime.replace(/[ :]/g, "-")}.log`,
         `testStartTime=${testStartTime}`,
     );
-    const rows = describe("Load test for user login", () => {
-        console.log("Load test for user login");
-        return db.query(
+    let rows =[];
+    describe("Given Multiple Users Can access the system", () => {
+        console.log("Read available users records from backend sqlite3 db table users");
+        rows = db.query(
         "SELECT userName, email, password FROM users LIMIT 10000",
-      );
+        );
     });
+      
     
 
     const resultFiles = {
@@ -155,17 +157,18 @@ export function setup() {
 export default function testSuite(setupData) {
     const currentIterData = randomItem(setupData?.rows);
     const resultFiles = setupData.resultFiles;
+    let response = null;
     // console.log('setupData:', setupData);
     // console.log('currentIterData:', currentIterData);
-    describe("[Auth Service]", () => {
-        describe("should be able to login successfully", () => {
+    describe("And [Auth Service] Login Endpoint is accessible", () => {  
+      describe("When more than 10 users are trying to login at the same time", () => {
             let data = {
                 userName: currentIterData.userName,
                 email: currentIterData.email,
                 password: currentIterData.password,
             };
             let url = `${__ENV.BASE_URL}/client_login`;
-            let response = http.post(url, data, {
+            response = http.post(url, data, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
@@ -179,34 +182,49 @@ export default function testSuite(setupData) {
                 testStartTime: setupData?.testStartTime,
             });
 
-            const responseMessage = httpResponseBody(response);
-            totalCounter.add(1);
+            
+      });
+        
+      describe("Then the system should be able to handle the load and respond with status 200", () => {
+          const responseMessage = httpResponseBody(response);
+          totalCounter.add(1);
 
-            if (response?.status > 400 || response?.status < 200) {
-                errorCounter.add(1);
-                file.appendString(
-                    `${resultFiles.dirName}/${resultFiles.errorFilePath}`,
-                    `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
-                );
-            } else {
-                successCounter.add(1);
-                file.appendString(
-                    `${resultFiles.dirName}/${resultFiles.successFilePath}`,
-                    `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
-                );
-            }
+          if (response?.status > 400 || response?.status < 200) {
+              errorCounter.add(1);
+              file.appendString(
+                  `${resultFiles.dirName}/${resultFiles.errorFilePath}`,
+                  `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
+              );
+          } else {
+              successCounter.add(1);
+              file.appendString(
+                  `${resultFiles.dirName}/${resultFiles.successFilePath}`,
+                  `${currentIterData?.email}|${currentIterData?.userName}|${response?.status}|${responseMessage}\n`,
+              );
+          }
 
-            // console.log('res:', response);
+          // console.log('res:', response);
 
-            // Check if the response body contains "User Registered"
-            expect(response?.status, "response status").to.equal(200);
-            expect(
-                response,
-                "response is in json format",
-            ).to.have.validJsonBody();
-            expect(response?.json()?.token, "user login api auth token").to.not.be
-                .null;
-        });
+          // Check if the response body contains "User Registered"
+          expect(response?.status, "response status").to.equal(200);
+          expect(
+              response,
+              "response is in json format",
+          ).to.have.validJsonBody();
+          expect(response?.json()?.token, "user login api auth token").to.not.be
+              .null;
+      });
+        
+      describe("And verify the load test client should find the breaking point", () => {  
+          // Check if the response body contains "User Registered"
+          expect(response?.status, "response status").to.equal(200);
+          expect(
+              response,
+              "response is in json format",
+          ).to.have.validJsonBody();
+          expect(response?.json()?.token, "user login api auth token").to.not.be
+              .null;
+      });
     });
 }
 
