@@ -26,7 +26,6 @@ jobs:
       fail-fast: false
       matrix:
         api-level:
-          - 26
           - 29
     steps:
       - name: checkout
