@@ -12,6 +12,9 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 [7. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
 [8. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
 [9. test-plan](./tests/docs/functional-test-plan/README.md)<br />
+[10. mobile-tests-results](./tests/mobile-tests/docs)<br />
+[11. web-tests-results](./tests/web-tests/docs)<br />
+[12. performance-tests-results](./tests/performance-tests/docs)<br />
 
 ![](https://...Dark.png)  |  ![](https://...Ocean.png)
 

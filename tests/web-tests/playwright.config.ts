@@ -20,13 +20,13 @@ const testTimeout = 2 * 60 * 1000;
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: process.env.PARALLEL === 'true',
+  fullyParallel: true, //||process.env.PARALLEL === 'true',
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: isCi,
   /* Retry on CI only */
   retries: isCi ? 4 : 2,
   /* Opt out of parallel tests on CI. */
-  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? undefined : 1,
+  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? undefined : 5,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }], 
