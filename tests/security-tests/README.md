@@ -134,7 +134,12 @@
    ```bash
    curl -X POST http://localhost:5500/client_login -d 'email=nonexistent@example.com&password=wrongpassword'
    ```
-
+### Start Backend Server before running pen-tests
+```bash
+cd backend # from root folder 
+pip install -r requirments.txt
+source start-server.sh
+```
 
 ### Pen Test commands with results
 ```bash
