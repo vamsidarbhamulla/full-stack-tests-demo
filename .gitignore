@@ -10,8 +10,8 @@
 #
 **/node_modules/
 **/npm-debug.log
-**/allure-results/
-**/allure-report/
+**/allure-results*/
+**/allure-report*/
 
 # mobile-tests
 **/logs/
@@ -28,7 +28,7 @@ chromeDriver
 **/playwright-report/
 **/blob-report/
 **/playwright/.cache/
-**/web-tests-report
+**/web-tests-report*
 **/web-tests-report.*
 
 
@@ -36,4 +36,4 @@ chromeDriver
 # performance-tests
 **/performance-tests/bin
 **/performance-tests/**/req-res.json
-**/test-results-old/
+**/test-results*/
