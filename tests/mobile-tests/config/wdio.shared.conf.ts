@@ -1,5 +1,5 @@
 import type { Options } from '@wdio/types';
-import allureReporter from '@wdio/allure-reporter'
+import AllureReporter from '@wdio/allure-reporter';
 
 /**
  * All not needed configurations, for this boilerplate, are removed.
@@ -68,7 +68,7 @@ export const config: Options.Testrunner = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://the-internet.herokuapp.com',
+    baseUrl: 'http://localhost:3000',
     // Default timeout for all waitFor* commands.
     /**
      * NOTE: This has been increased for more stable Appium Native app
@@ -135,7 +135,31 @@ export const config: Options.Testrunner = {
     // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
     // resolved to continue.
     //
-    /**
-     * NOTE: No Hooks are used in this project, but feel free to add them if you need them.
-     */
+    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+          if (error || !passed)
+        {
+            await browser.takeScreenshot();
+            AllureReporter.addAttachment('Screenshot', Buffer.from(await browser.takeScreenshot(), 'base64'), 'image/png');
+        }
+    },
+    // onComplete: async function() {
+    //     // eslint-disable-next-line
+    //     console.log('that\'s it')
+    //     const reportError = new Error('Could not generate Allure report');
+    //     const generation = allure(['generate', './e2e/results/allure-results', '--clean']);
+    //     return new Promise((resolve, reject) => {
+    //         const generationTimeout = setTimeout(() => reject(reportError), 50000);
+
+    //         // eslint-disable-next-line consistent-return
+    //         generation.on('exit', (exitCode) => {
+    //             clearTimeout(generationTimeout);
+
+    //             if (exitCode !== 0) {
+    //                 return reject(reportError);
+    //             }
+
+    //             resolve(1);
+    //         });
+    //     });
+    // }
 };
