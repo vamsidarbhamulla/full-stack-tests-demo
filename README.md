@@ -11,7 +11,7 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 [6. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
 [7. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
 [8. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
-[9. test-plan](./tests/docs/functional-test-plan/README.md)<br />
+[9. test-management](./tests/docs/test-management/README.md)<br />
 [10. mobile-tests-results](./tests/mobile-tests/docs)<br />
 [11. web-tests-results](./tests/web-tests/docs)<br />
 [12. performance-tests-results](./tests/performance-tests/docs)<br />
@@ -39,7 +39,7 @@ The repo structure is shown below:
             - including bugs + screenshots
         + mobile-performance-tests
             - apptim desktop performance test-results
-        + functional-test-plan
+        + test-management
             - 5 different scenarios detailed test approach 
         + web-app
             - exploratory testing observations for owasp web app

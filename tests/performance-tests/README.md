@@ -26,9 +26,6 @@
 - xk6    
 - chromium 
 - python3
-- pandas 
-- matplotlib
-- numpy
 - docker 
 - colima oci
 
@@ -67,8 +64,8 @@ script-shell = "C:\\Program Files\\git\\bin\\bash.exe"
 > **Warning**  
 > Need to create a local file named **.local.env**  for config values under env folder
 ```shell
-npm run test --file=api_test
-TEST_ENV=qa npm run src/tests/login-test # pass in TEST_ENV environment variable
+npm run test --file=user_login_test
+TEST_ENV=local npm run src/tests/user_login_test # pass in TEST_ENV environment variable
 ```
 
 
@@ -77,7 +74,7 @@ TEST_ENV=qa npm run src/tests/login-test # pass in TEST_ENV environment variable
 > Commands to run docker based tests 
 ```shell
 # docker stop $(docker -aq) && docker rm $(docker -aq)
-TEST_ENV=local TEST_NAME=user_registration_test docker-compose up --build  --force-recreate 
+TEST_ENV=local TEST_NAME=user_registration_test docker-compose up --build  --force-recreate  --abort-on-container-exit
 ```
 
 > **Note**  
