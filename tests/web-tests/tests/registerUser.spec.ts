@@ -4,7 +4,7 @@ import * as loginPage from '@pages/loginPage';
 import * as registrationPage from '@pages/registrationPage';
 import * as headerBar from '@components/headerBar';
 
-test.describe('verify user registration', () => {
+test.describe('verify user registration @ui', () => {
   test('should be able check new account created', async ({}) => {
     // user actions/steps to open user registration page
     await homePage.open();

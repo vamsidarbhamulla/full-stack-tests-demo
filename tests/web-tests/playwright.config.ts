@@ -18,9 +18,12 @@ const testTimeout = 2 * 60 * 1000;
 
 
 export default defineConfig({
+  /* Maximum time one test can run for. */
+  timeout: 5 * 60 * 1000, //this is five minutes
+
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true, //||process.env.PARALLEL === 'true',
+  fullyParallel: true, // process.env.PARALLEL === 'true',
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: isCi,
   /* Retry on CI only */
@@ -54,13 +57,20 @@ export default defineConfig({
     actionTimeout: actionTimeout,
     /* Sets a timeout for page loading navigations like goto URL, go back, reload, waitForNavigation to prevent long page loads. */
     navigationTimeout: navigationTimeout,
+    
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: ['--start-maximized', '--single-process', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox',],
+        }
+
+      },
     },
 
     {

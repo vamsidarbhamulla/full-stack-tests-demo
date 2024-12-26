@@ -2,7 +2,7 @@ import { test } from '@setup/pageSetup';
 import * as homePage from '@pages/homePage';
 import * as footerBar from '@components/footerBar';
 
-test.describe('verify the home page', () => {
+test.describe('verify the home page @pi', () => {
   test('should check all the items available on the page', async ({ page }) => {
     // intercepting network calls to fetch the actual rest api response body count to match against front-end
     const productSearchPromise = page.waitForResponse(
