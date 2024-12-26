@@ -75,8 +75,9 @@ export async function validateCurrentCartBalance() {
   if (totalBasketPriceStr) {
     const totalBasketPrice = extractNumberFromText(totalBasketPriceStr);
     const totalBasketPriceRounded = parseFloat(totalBasketPrice.toFixed(2));
-    console.log('expectedBasketTotal:', calculatedTotal);
+    const expectedBasketTotal = parseFloat(calculatedTotal.toFixed(2));
+    console.log('expectedBasketTotal:', expectedBasketTotal);
     console.log('actualBasketTotal:', totalBasketPriceRounded);
-    expect(calculatedTotal).toBe(totalBasketPriceRounded);
+    expect(totalBasketPriceRounded).toBe(expectedBasketTotal);
   }
 }

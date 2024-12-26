@@ -9,7 +9,7 @@ on:
     branches: [ main, master ]
 
 env:
-  TEST_ENV: test
+  TEST_ENV: local
   CI: true
 
 jobs:

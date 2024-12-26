@@ -12,8 +12,12 @@ import { setPage } from '@utils/pageUtils';
  * A hook that runs before each test, setting the page context.
  * @param {Page} page - The page context provided by Playwright.
  */
-baseTest.beforeEach(({ page }: { page: Page }) => {
+baseTest.beforeEach(async ({  page }: { page: Page }) => {
   setPage(page);
+});
+
+baseTest.afterEach(async ({ page }: { page: Page }) => {
+  await page.close();
 });
 
 /**

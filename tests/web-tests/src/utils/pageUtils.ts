@@ -17,6 +17,9 @@ let page: Page;
  * @returns {Page} The current Page.
  */
 export function getPage(): Page {
+  if (!page || page.isClosed()) {
+    throw new Error('Page is not initialized');
+  }
   return page;
 }
 
@@ -24,7 +27,10 @@ export function getPage(): Page {
  * Sets the current Page.
  * @param {Page} pageInstance - The Page instance to set as the current Page.
  */
-export function setPage(pageInstance: Page): void {
+export function setPage(pageInstance: Page|null): void {
+  if (!pageInstance || pageInstance?.isClosed()) {
+    throw new Error('Page is not initialized');
+  }
   page = pageInstance;
 }
 
