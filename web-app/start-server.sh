@@ -1,8 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
+# Check if the CI environment variable is set to true 
+if [ -z "${CI}" "$CI" = "false" ]; then 
+    # Execute the docker ps command 
+    docker stop $(docker ps -a -q)
+    docker rm $(docker ps -a -q) 
+else 
+    echo "CI environment always start with clean env" 
+fi
 # clean up running/stopped containers for a fresh start 
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+
 
 # pull down the latest image for owasp juice shop
 # reference: https://github.com/juice-shop/juice-shop?tab=readme-ov-file#docker-container
