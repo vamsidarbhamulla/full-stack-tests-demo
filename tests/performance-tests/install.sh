@@ -13,6 +13,5 @@ echo "export PATH=$(pyenv root)/shims:$PATH" >> ~/.zshrc
 echo "export PATH=$(pyenv root)/shims:$PATH" >> ~/.bash_profile
 (pyenv versions | grep 3.11)  && pyenv install 3.11 
 pyenv global 3.11
-python3 --version && pip3 --version && pip3 install --upgrade pip && pip3 install -r requirements.txt
-open -a chromium || brew install chromium && xattr -cr /Applications/Chromium.app
+python3 --version && pip3 --version && pip3 install --upgrade pip;
 
