@@ -4,7 +4,7 @@
  * This helps to maintain the state and context of each test independently, improving test reliability and debugging.
  * It also includes functions for switching between pages, closing pages, and reverting to the default page.
  */
-import { Page } from '@playwright/test';
+import { Page, BrowserContext } from '@playwright/test';
 
 import { dismiss as cookieMessagerDismiss } from '@components/cookieMessager';
 import { handle as welcomeBannerHandle } from '@components/welcomeBanner';
@@ -17,8 +17,17 @@ let page: Page;
  * @returns {Page} The current Page.
  */
 export function getPage(): Page {
-  if (!page || page.isClosed()) {
-    throw new Error('Page is not initialized');
+  if (!page || page?.isClosed()) {
+    console.log('getPage(): Page is not initialized from', !page, page?.isClosed())
+    throw new Error(`getPage(): Page is not initialized from, ${!page}, ${page?.isClosed()}`);
+  }
+  return page;
+}
+
+export function getPage2(): Page {
+  if (!page || page?.isClosed()) {
+    console.log('getPage(): Page is not initialized from', !page, page?.isClosed())
+    throw new Error(`getPage(): Page is not initialized from, ${!page}, ${page?.isClosed()}`);
   }
   return page;
 }
@@ -27,16 +36,37 @@ export function getPage(): Page {
  * Sets the current Page.
  * @param {Page} pageInstance - The Page instance to set as the current Page.
  */
-export function setPage(pageInstance: Page|null): void {
-  if (!pageInstance || pageInstance?.isClosed()) {
-    throw new Error('Page is not initialized');
-  }
-  page = pageInstance;
+export async function setPage({ pageInstance}: { pageInstance: Page }): Promise<Page> {
+  let newPage = pageInstance;
+  // if(!context) {
+  //   context = browser.
+  //   return pageInstance;
+  //   if (!pageInstance || pageInstance?.isClosed() ) {
+  //   //  const context =  await browser.newContext;
+  //   const pagePromise = context.waitForEvent('page');
+  //   newPage = await pagePromise;
+  //     //  const context = await browser.newContext();
+  //     // newPage = await context.newPage();
+  //   // throw new Error('setPage(): Page is not initialized');
+  //   }
+  // }
+  page = newPage;
+  console.log('setPage() pageInstance:', page.isClosed());
+  return page;
 }
 
 export async function openPage(uri: string = '') {
   const baseUrl = process.env.BASE_URL!;
   await getPage().goto(`${baseUrl}/#/${uri}`);
+  await waitForPageLoad();
+  await welcomeBannerHandle();
+  await cookieMessagerDismiss();
+}
+
+export async function openPage2(page: Page, uri: string = '') {
+  const baseUrl = process.env.BASE_URL!;
+  await setPage({ pageInstance: page });
+  await page.goto(`${baseUrl}/#/${uri}`);
   await waitForPageLoad();
   await welcomeBannerHandle();
   await cookieMessagerDismiss();
@@ -63,7 +93,7 @@ export async function switchPage(winNum: number): Promise<void> {
   }
   const pageInstance = page.context().pages()[winNum - 1];
   await pageInstance.waitForLoadState();
-  setPage(pageInstance);
+  // setPage(pageInstance);
 }
 
 /**
@@ -73,7 +103,7 @@ export async function switchToDefaultPage(): Promise<void> {
   const pageInstance = page.context().pages()[0];
   if (pageInstance) {
     await pageInstance.bringToFront();
-    setPage(pageInstance);
+    // setPage(pageInstance);
   }
 }
 

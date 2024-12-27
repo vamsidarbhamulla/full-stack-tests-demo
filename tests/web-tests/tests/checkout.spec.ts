@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test';
 import { test } from '@setup/pageSetup';
 import * as loginPage from '@pages/loginPage';
-import * as homePage from '@pages/homePage';
+// import * as homePage from '@pages/homePage';
 import * as basketPage from '@pages/basketPage';
 import * as createAddress from '@pages/createAddressPage';
 import * as headerBar from '@components/headerBar';
@@ -28,9 +28,13 @@ test.describe('verify product checkout', () => {
     await apiContext.dispose();
   });
 
-  test('should be able to checkout a product successfully', async ({}) => {
+  test('should be able to checkout a product successfully', 
+    {tag: ['@product', '@checkout']},
+    async ({homePage, page}) => {
     const { username, email, password } = await test.step('create new user and login', async () => {
-      await loginPage.open();
+        await homePage.check();
+        await page.goto('http://localhost:3000/#/login');
+      // await loginPage.open();
 
       let email = process.env.DEFAULT_EMAIL!;
       let username = process.env.DEFAULT_USERNAME!;

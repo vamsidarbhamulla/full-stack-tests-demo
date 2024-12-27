@@ -6,6 +6,7 @@
     "lint": "eslint src --config eslint.config.mjs --fix && eslint tests --config eslint.config.mjs --fix",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "test": "npx playwright test",
+    "test-ui": "npx playwright test --workers 1 --project=chromium --ui",
     "test:chromium": "CREATE_NEW_USER=true npx playwright test --project=chromium",
     "test:chromium:ci": "CI=true PARALLEL=true CREATE_NEW_USER=true npx playwright test checkout.spec --project=chromium",
     "report": "playwright show-report playwright-report",
@@ -16,7 +17,8 @@
     "test-r": "npx playwright test --project=chromium --headed registerUser.spec --trace on",
     "test-a": "npx playwright test --project=chromium --headed newUserLogin.spec --trace on",
     "test-c": "CREATE_NEW_USER=true npx playwright test --project=chromium --headed checkout.spec --trace on",
-    "test-d": "PWDEBUG=console DEBUG=pw:browser CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on"
+    "test-d": "PWDEBUG=console DEBUG=pw:browser CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on",
+    "test-e": "CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on"
   },
   "keywords": [],
   "author": "Vamsi Darbhamulla",

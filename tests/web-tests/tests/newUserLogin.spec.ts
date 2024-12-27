@@ -18,8 +18,12 @@ test.describe('verify account login', () => {
     await apiContext.dispose();
   });
 
-  test('should be able to login with a new user created from api', async ({}) => {
-    await loginPage.open();
+  test('should be able to login with a new user created from api', 
+    {tag: ['@product', '@login']},
+    async ({homePage, page}) => {
+      await homePage.check();
+    await page.goto('http://localhost:3000/#/login');
+      // await loginPage.open();
 
     let email = process.env.DEFAULT_EMAIL!;
     // create new user for each test using rest api based on environment variable from cli

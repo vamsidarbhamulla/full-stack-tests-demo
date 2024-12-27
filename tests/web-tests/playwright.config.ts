@@ -27,9 +27,9 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: isCi,
   /* Retry on CI only */
-  retries: isCi ? 4 : 2,
+  retries: isCi ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? undefined : 5,
+  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? undefined : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }], 
@@ -67,21 +67,21 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         launchOptions: {
-          args: ['--start-maximized', '--single-process', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox',],
+          args: ['--start-maximized', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox',],
         }
 
       },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
