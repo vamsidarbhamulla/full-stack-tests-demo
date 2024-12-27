@@ -5,8 +5,8 @@ on:
       - mobile-app/**
       # - tests/mobile-tests/**  
       # - .github/workflows/mobile-emulator.yml
-  pull_request:
-    branches: [ main, master ]
+  # pull_request:
+  #   branches: [ main, master ]
     
 env:
   ANDROID_ARCH: x86_64
@@ -19,7 +19,7 @@ env:
   DEVICE: nexus
 
 jobs:
-  mobile-tests-on-emulator:
+  build-emulator:
     timeout-minutes: 20
     runs-on: macos-latest
     steps:
@@ -51,18 +51,18 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: allure-results
+      # - name: Build test report
+      #   uses: simple-elf/allure-report-action@v1.7
+      #   if: always()
+      #   with:
+      #     gh_pages: gh-pages
+      #     allure_history: allure-history
+      #     allure_results: allure-results
 
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history 
+      # - name: Publish test report
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   if: always()
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_branch: gh-pages
+      #     publish_dir: allure-history 
