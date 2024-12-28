@@ -29,7 +29,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: isCi ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? undefined : 1,
+  workers: isCi ? 5 : process.env.PARALLEL === 'true' ? 5 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }], 
@@ -73,15 +73,15 @@ export default defineConfig({
       },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
 
     /* Test against mobile viewports. */
     // {

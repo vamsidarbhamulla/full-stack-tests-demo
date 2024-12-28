@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# Check if the CI environment variable is set to true 
-if [ -z "${CI}" "$CI" = "false" ]; then 
+# Check if the CI environment variable is set to false 
+if [ -n "${CI}" ] && [ "${CI}" = "false" ]; then 
     # Execute the docker ps command 
+    echo "Stopping and removing all containers"
     docker stop $(docker ps -a -q)
-    docker rm $(docker ps -a -q) 
+    docker rm $(docker ps -a -q)  || true
 else 
     echo "CI environment always start with clean env" 
 fi
