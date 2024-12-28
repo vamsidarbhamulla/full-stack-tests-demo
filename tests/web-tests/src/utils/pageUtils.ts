@@ -17,8 +17,8 @@ let page: Page;
  * @returns {Page} The current Page.
  */
 export function getPage(): Page {
-  if (!page || page.isClosed()) {
-    throw new Error('Page is not initialized');
+  if (!page || page?.isClosed()) {
+    throw new Error(`getPage(): Page is not initialized from, ${!page}, ${page?.isClosed()}`);
   }
   return page;
 }
@@ -27,22 +27,23 @@ export function getPage(): Page {
  * Sets the current Page.
  * @param {Page} pageInstance - The Page instance to set as the current Page.
  */
-export function setPage(pageInstance: Page|null): void {
-  if (!pageInstance || pageInstance?.isClosed()) {
-    throw new Error('Page is not initialized');
-  }
+export function setPage({ pageInstance }: { pageInstance: Page }) {
   page = pageInstance;
 }
 
-export async function openPage(uri: string = '') {
+export async function openPage({ page, uri, handlePopup }: { page: Page; uri: string; handlePopup: boolean }) {
   const baseUrl = process.env.BASE_URL!;
-  await getPage().goto(`${baseUrl}/#/${uri}`);
+  setPage({ pageInstance: page });
+  await page.goto(`${baseUrl}/#/${uri}`);
   await waitForPageLoad();
-  await welcomeBannerHandle();
-  await cookieMessagerDismiss();
+  if (handlePopup) {
+    await welcomeBannerHandle();
+    await cookieMessagerDismiss();
+  }
 }
 
 export async function waitForPageLoad() {
+  await getPage().waitForLoadState('load');
   await getPage().waitForLoadState('domcontentloaded');
   // eslint-disable-next-line
   await getPage().waitForLoadState('networkidle');
@@ -63,7 +64,7 @@ export async function switchPage(winNum: number): Promise<void> {
   }
   const pageInstance = page.context().pages()[winNum - 1];
   await pageInstance.waitForLoadState();
-  setPage(pageInstance);
+  // setPage(pageInstance);
 }
 
 /**
@@ -73,7 +74,7 @@ export async function switchToDefaultPage(): Promise<void> {
   const pageInstance = page.context().pages()[0];
   if (pageInstance) {
     await pageInstance.bringToFront();
-    setPage(pageInstance);
+    // setPage(pageInstance);
   }
 }
 

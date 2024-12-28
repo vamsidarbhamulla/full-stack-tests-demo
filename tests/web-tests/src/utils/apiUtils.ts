@@ -2,13 +2,14 @@ import { APIRequestContext, expect } from '@playwright/test';
 import { randEmail } from '@ngneat/falso';
 import { NewUserResponseBody } from '@models/newUserResponseBody';
 
-export async function createAccountApi(apiContext: APIRequestContext): Promise<NewUserResponseBody> {
+export async function createAccountApi(apiContext: APIRequestContext, email?: string): Promise<NewUserResponseBody> {
   const password = process.env.DEFAULT_PASSWORD!;
   const securityAnswer = process.env.DEFAULT_SECURITY_ANSWER ?? 'tester';
   const dateTime = `${new Date().toISOString().split('T')[0]}T19:04:13.448Z`;
   const securityQuestionId = 2;
+  const emailId: string = email ?? randEmail();
   const data = {
-    email: randEmail(),
+    email: emailId,
     password,
     passwordRepeat: password,
     securityQuestion: {
