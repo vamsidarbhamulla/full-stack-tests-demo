@@ -1,0 +1,36 @@
+{
+    "name": "performance-tests",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "webpack": "webpack",
+        "clean": "rm -rf results",
+        "lint": "eslint src --config eslint.config.mjs --fix",
+        "pretty": "prettier --write \"./src/**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+        "reset": "npm run clean && rm -rf build && rm -rf tmp && rm -rf node_modules",
+        "install-xk6": "GO_ENABLED=1 go install -trimpath go.k6.io/xk6/cmd/xk6@latest",
+        "install-pydeps": "pip3 install -r requirements.txt",
+        "pip-upgrade": "python -m pip3 install --upgrade pip",
+        "build-xk6": "rm -rf ./bin/k6 || true && CGO_ENABLED=1 xk6 build --output './bin/k6' --with github.com/grafana/xk6-faker@v0.3.2 --with github.com/grafana/xk6-browser --with github.com/avitalique/xk6-file@v1.4.0 --with github.com/szkiba/xk6-csv@v0.1.4 --with github.com/grafana/xk6-sql@v1.0.1 --with github.com/grafana/xk6-sql-driver-sqlite3@v0.1.0 --with github.com/grafana/xk6-exec@v0.4.1",
+        "argument": "echo \"The value of --foo is ${npm_config_foo}\"",
+        "test-e": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/\"${npm_config_file}.js\"",
+        "test:monitor": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=true K6_WEB_DASHBOARD_EXPORT=test-results/live-monitor-report-\"$(date +%F_%T)\".html K6_WEB_DASHBOARD_PERIOD=2s dotenv -e ./env/.local.env ./bin/k6 run --out 'web-dashboard=port=5556&open=true&period=2s' src/tests/\"${npm_config_file}.js\"",
+        "test": "dotenv -e ./env/.\"${TEST_ENV}\".env ./bin/k6 run src/tests/\"${npm_config_file}.js\"",
+        "login-test": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/user_login_test.js",
+        "registration-test": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/user_registration_test.js",
+        "login-test:monitor": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=true K6_WEB_DASHBOARD_EXPORT=test-results/\"${TEST_NAME}\"/live-monitor-report-\"$(date +%F_%T)\".html K6_WEB_DASHBOARD_PERIOD=2s dotenv -e ./env/.\"${TEST_ENV}\".env ./bin/k6 run src/tests/user_login_test.js",
+        "output-log": "ls 2>&1 | tee results/output.log"
+    },
+    "keywords": [],
+    "author": "Vamsi Darbhamulla",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "@ngneat/falso": "7.2.0",
+        "@types/k6": "0.54.2",
+        "dotenv-cli": "8.0.0",
+        "k6-junit": "1.2.0",
+        "prettier": "3.4.2",
+        "eslint": "9.17.0"
+    }
+}
