@@ -118,12 +118,12 @@ jobs:
           done
       - name: Output Report URL as Worfklow Annotation
         run: |
-          FULL_HTML_REPORT_URL_1=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/index.html
-          FULL_HTML_REPORT_URL_2=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/user_registration/index.html
-          FULL_HTML_REPORT_URL_3=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/index.html
-          FULL_HTML_REPORT_URL_4=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/user_login/index.html
+          FULL_HTML_REPORT_URL_1=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/user_registration/index.html
+          FULL_HTML_REPORT_URL_2=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/user_login/index.html
+          FULL_HTML_REPORT_URL_3=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/index.html
+          FULL_HTML_REPORT_URL_4=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/index.html
 
           echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_1"
           echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_2"
-          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_2"
-          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_2"
+          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_3"
+          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_4"

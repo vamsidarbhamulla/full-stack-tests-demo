@@ -15,7 +15,7 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 [9. test-management](./tests/docs/test-management/README.md)<br />
 [10. mobile-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/mobile-reports/publish-mobile-n-load-test-report/12531729051/1/)<br />
 [11. web-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/reports/main/12523798224/1/)<br />
-[12. performance-tests-results](./tests/performance-tests/docs)<br />
+[12. performance-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/user_login/index.html)<br />
 [13. mobile-tests-results-screenshots](./tests/mobile-tests/docs)<br />
 [14. web-tests-results-screeshots](./tests/web-tests/docs)<br />
 [15. performance-tests-results-screenshots](./tests/performance-tests/docs)<br />
