@@ -19,6 +19,7 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 [13. mobile-tests-results-screenshots](./tests/mobile-tests/docs)<br />
 [14. web-tests-results-screeshots](./tests/web-tests/docs)<br />
 [15. performance-tests-results-screenshots](./tests/performance-tests/docs)<br />
+[16. all-automation-tests-results](https://github.com/vamsidarbhamulla/full-stack-tests-demo/tree/gh-pages)<br />
 
 [![Android Emulator Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml) | [![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)<br />
 
@@ -55,15 +56,19 @@ The repo structure is shown below:
             - exploratory testing observations for owasp web app
             - including bugs + screenshots
     + mobile-tests
-        - webdriverio + nodejs + appium automated tests
+        - webdriverio + nodejs + appium + typescript automated tests
         - tests run against wikipedia sample android app
     + performance-tests
         - k6 + xk6 + xk6-sqlite3 driver + load tests
         - load test run against python+flask+rest-api backend client registration endpoint
-        - stress test run against python+flask+rest-api backend client login endpoiny 
+        - stress test run against python+flask+rest-api backend client login endpoint  
     + security-tests 
         - security vulnerabilities listed for python+flask+rest-api backend
         - shell script to run the tests 
+        - results text file that capture script execution 
+    + web-tests 
+        - playwright + nodejs + typescript automated tests
+        - tests run against owasp juice shop sample web-app   
 + web-app
     owasp juice shop web-app
     shell script to start a clean docker container for owasp juice shop

@@ -7,6 +7,7 @@ export class CreateAddressPage {
   readonly page: Page;
   readonly SELECTORS;
   readonly uriPath: string;
+
   constructor(page: Page) {
     this.page = page;
     this.SELECTORS = this.selectors(this.page);

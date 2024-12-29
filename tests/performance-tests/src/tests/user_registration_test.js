@@ -94,7 +94,6 @@ export function setup() {
     const errorFilePath = "http-error.csv";
     const compareFilePath = "http-responses.csv";
     const requestFilePath = "http-requests.csv";
-    const requestName = __ENV.REQUEST_NAME || "create";
     const successFilePath = `${__ENV.TEST_ENV}-${requestName}-success.csv`;
     const testStartTimeFilePath = `${__ENV.TEST_ENV}-${requestName}-test-starttime.json`;
     exec.command("mkdir", ["-p", dirName]);
@@ -142,7 +141,7 @@ export default function testSuite() {
                 fullName: faker.person.name(),
                 userName: faker.internet.username(),
                 email: faker.person.email(),
-                password: "password",
+                password: __ENV.DEFAULT_USER_PWD,
                 phone: faker.person.phone(),
             };
             let url = `${__ENV.BASE_URL}/client_registeration`;

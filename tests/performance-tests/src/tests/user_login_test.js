@@ -1,7 +1,7 @@
 import exec from "k6/x/exec";
 import file from "k6/x/file";
 import http from "k6/http";
-import { testSummary, httpLog, testJSON } from "../libs/k6_core_utils.js";
+import { testSummary, httpLog } from "../libs/k6_core_utils.js";
 import { httpResponseBody } from "../libs/api_utils.js";
 import { describe, expect, randomItem } from "../libs/remote_modules.js";
 import { currentDateInUtc } from "../libs/date_utils.js";
@@ -95,7 +95,6 @@ export const options = {
 };
 
 export function setup() {
-    // console.log('setup', __ENV);
     const defaultDirName = "test-results/user-login";
     const testStartTime = currentDateInUtc();
     const dirName = `${defaultDirName}/${testStartTime.replace(/[ :]/g, "-")}`;

@@ -13,7 +13,6 @@ const SELECTORS = () => ({
 
   creditCardSelectRadioButton: getPage().locator('span[class="mat-radio-container"]').first(),
   continueButton: getPage().locator('button[aria-label="Proceed to review"]'),
-  // continueButton: getPage().getByLabel('Proceed to delivery method'),
 });
 
 export async function selectCreditCardPaymentOption() {
