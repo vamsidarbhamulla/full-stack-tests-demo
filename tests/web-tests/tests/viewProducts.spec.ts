@@ -1,5 +1,4 @@
 import { test } from '@setup/pageSetup';
-// import * as homePage from '@pages/homePage';
 import * as footerBar from '@components/footerBar';
 import { waitForPageLoad } from '@utils/pageUtils';
 
