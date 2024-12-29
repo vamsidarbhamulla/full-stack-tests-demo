@@ -3,9 +3,9 @@
 
 Testing SQL Injection by passing default data validation to access the registration endpoint
 
-curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe23743&userName=newjohndoe13696&email=newnoname30128@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
+curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe29761&userName=newjohndoe25015&email=newnoname20920@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
 
-{"data":[["Admin"],["West3411"],["Quigley6570"],["Roberts2374"],["Osinski3384"],["Feest3028"],["Wisozk1672"],["Mertz2908"],["Harber3183"],["Yundt2536"],["Collins6952"],["Leannon7789"],["Leffler9534"],["Huels2278"],["Simonis2708"],["Stroman2539"],["McCullough2882"],["Casper8418"],["Yundt1936"],["Abshire2345"],["Rosenbaum2970"],["Thompson9184"],["Bosco5113"],["Beahan4605"],["Leffler1740"],["Harvey4860"],["Watsica7536"],["Collins3909"],["Senger1714"],["Schaden7258"],["Hamill3792"],["Smitham3405"],["Mayer2084"],["Lakin8019"],["Hane8856"],["Runolfsson7664"],["Langworth9061"],["Paucek3795"],["Pouros1125"],["Dicki4387"],["Mayer6943"],["Streich3572"],["Gislason1540"],["Rice1340"],["Waters3572"],["Champlin3284"],["Donnelly4592"],["Labadie3756"],["Johns2375"],["Roob3056"],["Daugherty6862"],["Olson1899"],["King2133"],["Daniel5174"],["Schaefer2732"],["Schneider3546"],["Pfeffer4073"],["Shanahan3439"],["Hodkiewicz7649"],["Flatley9743"],["Mante4334"],["Blick1247"],["Brown9870"],["Olson8367"],["Kreiger2115"],["Quigley1034"],["Greenholt8838"],["Kilback7330"],["Breitenberg3196"],["Reichel3394"],["Reichel3821"],["Blick4571"],["Rosenbaum5339"],["Conn3916"],["Wintheiser4828"],["Hahn7089"],["Rippin5840"],["Klocko4546"],["Gislason3405"],["Crist9554"],["Altenwerth6902"],["Feil9981"],["Hahn6028"],["Larkin9678"],["Hyatt7344"],["Streich9911"],["Rodriguez6794"],["Morissette9009"]],"msg":"Email already Exist"}
+{"msg":"Email already Exist"}
 ------------------------------------------------
 ------------------------------------------------
 
@@ -43,7 +43,7 @@ Testing Input Validation
 
 curl -X POST http://localhost:5500/client_registeration -d 'fullName=<script>alert(XSS)</script>&userName=testuser&email=test@example.com&password=test&phone=1234567890'
 
-{"msg":"User Registered"}
+{"msg":"Email already Exist"}
 ------------------------------------------------
 ------------------------------------------------
 
