@@ -19,6 +19,7 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 [13. mobile-tests-results-screenshots](./tests/mobile-tests/docs)<br />
 [14. web-tests-results-screeshots](./tests/web-tests/docs)<br />
 [15. performance-tests-results-screenshots](./tests/performance-tests/docs)<br />
+[16. all-automation-tests-results](https://github.com/vamsidarbhamulla/full-stack-tests-demo/tree/gh-pages)<br />
 
 [![Android Emulator Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml) | [![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)<br />
 
