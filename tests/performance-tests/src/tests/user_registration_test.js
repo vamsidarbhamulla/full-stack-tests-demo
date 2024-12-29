@@ -141,7 +141,7 @@ export default function testSuite() {
                 fullName: faker.person.name(),
                 userName: faker.internet.username(),
                 email: faker.person.email(),
-                password: __ENV.DEFUALT_USER_PWD,
+                password: __ENV.DEFAULT_USER_PWD,
                 phone: faker.person.phone(),
             };
             let url = `${__ENV.BASE_URL}/client_registeration`;
