@@ -15,6 +15,7 @@
         "argument": "echo \"The value of --foo is ${npm_config_foo}\"",
         "test-e": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/\"${npm_config_file}.js\"",
         "test:monitor": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=true K6_WEB_DASHBOARD_EXPORT=test-results/live-monitor-report-\"$(date +%F_%T)\".html K6_WEB_DASHBOARD_PERIOD=2s dotenv -e ./env/.local.env ./bin/k6 run --out 'web-dashboard=port=5556&open=true&period=2s' src/tests/\"${npm_config_file}.js\"",
+        "test:monitor:ci": "K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_OPEN=false K6_WEB_DASHBOARD_EXPORT=test-results/live-monitor-report.html K6_WEB_DASHBOARD_PERIOD=2s dotenv -e ./env/.local.env ./bin/k6 run --out 'web-dashboard=port=5556&open=true&period=2s' src/tests/\"${npm_config_file}.js\"",
         "test": "dotenv -e ./env/.\"${TEST_ENV}\".env ./bin/k6 run src/tests/\"${npm_config_file}.js\"",
         "login-test": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/user_login_test.js",
         "registration-test": "dotenv -e ./env/.local.env ./bin/k6 run src/tests/user_registration_test.js",

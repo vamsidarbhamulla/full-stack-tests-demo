@@ -14,7 +14,8 @@ env:
   TEST_NAME: user_login_test
   CI: true    
 jobs:
-  test:
+  run-docker-load-test:
+    name: Run Load Tests on Docker
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
