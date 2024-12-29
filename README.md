@@ -60,10 +60,11 @@ The repo structure is shown below:
     + performance-tests
         - k6 + xk6 + xk6-sqlite3 driver + load tests
         - load test run against python+flask+rest-api backend client registration endpoint
-        - stress test run against python+flask+rest-api backend client login endpoiny 
+        - stress test run against python+flask+rest-api backend client login endpoint  
     + security-tests 
         - security vulnerabilities listed for python+flask+rest-api backend
         - shell script to run the tests 
+        - results text file that capture script execution 
 + web-app
     owasp juice shop web-app
     shell script to start a clean docker container for owasp juice shop
