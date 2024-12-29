@@ -56,7 +56,7 @@ The repo structure is shown below:
             - exploratory testing observations for owasp web app
             - including bugs + screenshots
     + mobile-tests
-        - webdriverio + nodejs + appium automated tests
+        - webdriverio + nodejs + appium + typescript automated tests
         - tests run against wikipedia sample android app
     + performance-tests
         - k6 + xk6 + xk6-sqlite3 driver + load tests
@@ -66,6 +66,9 @@ The repo structure is shown below:
         - security vulnerabilities listed for python+flask+rest-api backend
         - shell script to run the tests 
         - results text file that capture script execution 
+    + web-tests 
+        - playwright + nodejs + typescript automated tests
+        - tests run against owasp juice shop sample web-app   
 + web-app
     owasp juice shop web-app
     shell script to start a clean docker container for owasp juice shop
