@@ -18,8 +18,4 @@ export async function selectItemsPerPage({ count } = { count: '48' }) {
 
 export async function checkItemsLabel({ count } = { count: '48' }) {
   await expect(SELECTORS().itemCounterLabel).toContainText(count);
-  // const text = await SELECTORS().itemCounterLabel
-  // .evaluate(el => el.textContent);
-  // assert
-  // await SELECTORS().itemCounterOptionText.filter({ hasText: count }).click();
 }

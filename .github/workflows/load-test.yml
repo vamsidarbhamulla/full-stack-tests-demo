@@ -53,14 +53,28 @@ jobs:
       - run: cd tests/performance-tests  && npm install && pwd && ls -la
               
       - name: Run k6 user registration load test
-        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
         continue-on-error: true
         env:
           TEST_TYPE: ci
+        run: |
+        export IS_CI=true
+        export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_1} 
+        export K6_WEB_DASHBOARD=true
+        mkdir -p ${K6_DASHBOARD_EXPORT_1}
+        cd tests/performance-tests
+        npm run lint
+        npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js
       
       - name: Run k6 user login stress test
-        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
         continue-on-error: true
+        run: |
+        export IS_CI=true 
+        export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} 
+        export K6_WEB_DASHBOARD=true 
+        mkdir -p ${K6_DASHBOARD_EXPORT_2}
+        cd tests/performance-tests 
+        npm run lint
+        TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

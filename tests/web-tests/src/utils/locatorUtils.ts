@@ -18,9 +18,9 @@ export async function clickWithRetry(locator: Locator, retries: number = 3) {
       await locator.click();
       return;
     } catch {
-        console.log(`click failed, retrying...attempt ${i + 1} of ${retries}`);
+      console.log(`click failed, retrying...attempt ${i + 1} of ${retries}`);
       await sleep(1000);
     }
   }
-  throw new Error(`clickWithRetry failed element ${locator} after ${retries} times`);
+  throw new Error(`clickWithRetry failed element ${JSON.stringify(locator)} after ${retries} times`);
 }

@@ -141,10 +141,10 @@ pip install -r requirments.txt
 source start-server.sh
 ```
 
-### Start Tests Script
+### Run Security/Penetration Tests 
 ```bash
 cd tests/security-tests # from root folder 
-source pen_tests.sh
+source pen_tests.sh > pen_test_results_1.txt
 ```
 
 ### Pen Test commands with results

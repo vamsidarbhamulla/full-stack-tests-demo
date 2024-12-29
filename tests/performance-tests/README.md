@@ -16,6 +16,10 @@
 - **docker** - containerization setup for ci flow
 - **colima oci + docker-compose** - containerization run for local ci
 
+### 1.1 Install OS level dependencies
+```shell
+source install.sh 
+```
 > **Warning**  
 > - Currently os dependencies script will work on mac os & linux os & windows os (wsl)  
 > - For pure windows os setup please install the below list of softwares manually

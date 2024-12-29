@@ -42,4 +42,10 @@ npm install
 ```shell
 npm run android.app
 ```
+
+## 4. Test Report 
+```shell
+npm run allure-report # create report
+npm run allure-open # open report  allure-report/index.html is the report
+```
  

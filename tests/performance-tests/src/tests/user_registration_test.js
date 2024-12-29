@@ -94,7 +94,6 @@ export function setup() {
     const errorFilePath = "http-error.csv";
     const compareFilePath = "http-responses.csv";
     const requestFilePath = "http-requests.csv";
-    const requestName = __ENV.REQUEST_NAME || "create";
     const successFilePath = `${__ENV.TEST_ENV}-${requestName}-success.csv`;
     const testStartTimeFilePath = `${__ENV.TEST_ENV}-${requestName}-test-starttime.json`;
     exec.command("mkdir", ["-p", dirName]);
