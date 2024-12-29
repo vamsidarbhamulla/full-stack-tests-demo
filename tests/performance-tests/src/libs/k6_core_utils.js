@@ -102,16 +102,17 @@ export function customUtilGroup(name, f) {
 /**
  *
  * @param {*} data k6 summary results data object
- * @param {*} filename html filename along with path (including results folder)
+ * @param {*} foldername results foldername
  * @returns object with htmlreport, junit xml & stdout testsummary report
  */
-export function testSummary(data, filename) {
-    let dirname = `test-results/${filename}`;
+export function testSummary(data, foldername) {
+    let dirname = `test-results/${foldername}`;
     const props = listProperties(data);
     if (props.includes("setup_data.resultFiles.dirName")) {
-        dirname = `${data.setup_data.resultFiles.dirName}/${filename}`;
-    } else if (__ENV.IS_CI === "true" && props.includes("resultFiles.defaultDirName")) {
-        dirname = `${data.resultFiles.defaultDirName}/${filename}`;
+        dirname = `${data.setup_data.resultFiles.dirName}/${foldername}`;
+    } 
+    if (__ENV.IS_CI === "true" && props.includes("setup_data.resultFiles.defaultDirName")) {
+        dirname = `${data.setup_data.resultFiles.defaultDirName}/${foldername}`;
     }
     exec.command("mkdir", ["-p", dirname]);
     const htmlfilename = `${dirname}/index.html`;

@@ -53,13 +53,13 @@ jobs:
       - run: cd tests/performance-tests  && npm install && pwd && ls -la
               
       - name: Run k6 user registration load test
-        run: export IS_CI=true && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
+        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
         continue-on-error: true
         env:
           TEST_TYPE: ci
       
       - name: Run k6 user login stress test
-        run: export IS_CI=true && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
         continue-on-error: true
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -119,7 +119,11 @@ jobs:
       - name: Output Report URL as Worfklow Annotation
         run: |
           FULL_HTML_REPORT_URL_1=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/index.html
-          FULL_HTML_REPORT_URL_2=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/index.html
+          FULL_HTML_REPORT_URL_2=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/user_registration/index.html
+          FULL_HTML_REPORT_URL_3=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/index.html
+          FULL_HTML_REPORT_URL_4=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/user_login/index.html
 
-          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_1"
+          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_1"
+          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_2"
+          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_2"
           echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_2"

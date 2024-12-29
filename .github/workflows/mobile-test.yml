@@ -60,7 +60,7 @@ jobs:
           retention-days: 30     
 
   publish-mobile-test-report:
-    name: Publish Web Test HTML Report
+    name: Publish Mobile Test HTML Report
     # using always() is not ideal here, because it would also run if the workflow was cancelled
     if: "success() || needs.test.result == 'failure'"
     needs: [run-mobile-tests]
