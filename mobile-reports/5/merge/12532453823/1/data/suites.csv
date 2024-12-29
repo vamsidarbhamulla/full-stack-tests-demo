@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","11510","Then he should be able to toggle all settings successfully","","Sun Dec 29 04:28:01 UTC 2024","passed","Sun Dec 29 04:28:13 UTC 2024","","When User interacting with a Wikipidea Settings ,","",""
+"","8191","Then he should be able to search for a topic successfully","","Sun Dec 29 04:27:46 UTC 2024","passed","Sun Dec 29 04:27:54 UTC 2024","","When User interacts with  Wikipidea Search,","",""
+"","13035","Then he should be able to view and navigate all the wikipedia pages","","Sun Dec 29 04:27:26 UTC 2024","passed","Sun Dec 29 04:27:39 UTC 2024","","When User interacts with  Wikipidea app pages","",""
