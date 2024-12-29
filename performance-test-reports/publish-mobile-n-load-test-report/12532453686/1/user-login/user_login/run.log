@@ -1,0 +1,64 @@
+-    █ setup
+
+-      █ Given Multiple Users Can access the system
+
+-    █ And [Auth Service] Login Endpoint is accessible
+
+-      █ When more than 10 users are trying to login at the same time
+
+-        ✓ test start time : 2024-12-29T04:28:45Z
+-        ✓ request url : http://localhost:5500/client_login
+-        ✗ response status : 200
+-         ↳  97% — ✓ 326181 / ✗ 6808
+-        ✓ response: isJson
+-        ✓ Mock N/A
+-        ✓ response error : none
+-        ✗ response error : 
+		status-->0
+		error-->read: connection reset by peer
+-         ↳  0% — ✓ 0 / ✗ 2061
+-        ✗ response error : 
+		status-->0
+		error-->dial: i/o timeout
+-         ↳  0% — ✓ 0 / ✗ 1269
+-        ✗ response error : 
+		status-->0
+		error-->request timeout
+-         ↳  0% — ✓ 0 / ✗ 3478
+
+-      █ Then the system should be able to handle the load and respond with status 200
+
+-        ✗ expected response status to equal 200
+-         ↳  97% — ✓ 326181 / ✗ 6808
+-        ✓ has valid json body
+-        ✓ expected user login api auth token not to be null
+
+-      █ And verify the load test client should find the breaking point
+
+-        ✗ expected response status to equal 200
+-         ↳  97% — ✓ 326181 / ✗ 6808
+-        ✓ has valid json body
+-        ✓ expected user login api auth token not to be null
+
+-    _response_errors_cnt...........: 6808    7.722602/s
+-    _response_success_cnt..........: 326181  370.000897/s
+-    _response_total_cnt............: 332989  377.723499/s
+-    checks.........................: 99.31%  ✓ 3941404     ✗ 27232 
+-    data_received..................: 115 MB  131 kB/s
+-    data_sent......................: 77 MB   88 kB/s
+-    dropped_iterations.............: 1629040 1847.888938/s
+-    group_duration.................: avg=929.37ms min=234.84µs med=2.59ms   max=1m1s     p(90)=1.27s    p(95)=2.5s  
+-    http_req_blocked...............: avg=457.33ms min=0s       med=182.88µs max=19.66s   p(90)=1.03s    p(95)=2.05s 
+-    http_req_connecting............: avg=457.25ms min=0s       med=143.17µs max=19.66s   p(90)=1.03s    p(95)=2.05s 
+-  ✗ http_req_duration..............: avg=1.28s    min=0s       med=253.08ms max=1m0s     p(90)=734.33ms p(95)=1.51s 
+-      { expected_response:true }...: avg=524.16ms min=1.35ms   med=252.6ms  max=58.73s   p(90)=656.32ms p(95)=1.13s 
+-  ✗ http_req_failed................: 2.04%   ✓ 6808        ✗ 326181
+-    http_req_receiving.............: avg=1.4ms    min=0s       med=90.36µs  max=420.89ms p(90)=1.47ms   p(95)=3.81ms
+-    http_req_sending...............: avg=952.91µs min=0s       med=36µs     max=428.75ms p(90)=244.45µs p(95)=1.58ms
+-    http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s    
+-    http_req_waiting...............: avg=1.28s    min=0s       med=252.34ms max=1m0s     p(90)=726.23ms p(95)=1.51s 
+-    http_reqs......................: 332989  377.723499/s
+-    iteration_duration.............: avg=1.85s    min=3.36ms   med=260.98ms max=1m1s     p(90)=2.5s     p(95)=5.04s 
+-    iterations.....................: 332989  377.723499/s
+-    vus............................: 9       min=0         max=1000
+-    vus_max........................: 1000    min=389       max=1000
