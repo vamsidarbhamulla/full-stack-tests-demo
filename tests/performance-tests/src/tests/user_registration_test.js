@@ -21,7 +21,7 @@ function testOptions(testType) {
   switch (testType) {
     case TestType.hp:
       executionOptions = {
-          [`user_login_${TestType.hp}_test`]: {
+          [`user_registration_${TestType.hp}_test`]: {
             executor: 'per-vu-iterations',
             vus: 1,
             iterations: 1,
@@ -31,7 +31,7 @@ function testOptions(testType) {
       break;
     case TestType.std:
       executionOptions = {
-        [`user_login_${TestType.std}_stress_test`]: {
+        [`user_registration_${TestType.std}_stress_test`]: {
           executor: 'ramping-arrival-rate',
           startRate: 1,
           timeUnit: __ENV.REQUEST_DURATION || '1s', 
@@ -55,7 +55,7 @@ function testOptions(testType) {
     case TestType.ci:
     default:
       executionOptions = {
-        [`user_login_${TestType.ci}_load_test`]: {
+        [`user_registration_${TestType.ci}_load_test`]: {
           executor: 'constant-arrival-rate',
           duration: '1m',
           rate: 10,

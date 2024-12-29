@@ -13,11 +13,18 @@ env:
   TEST_TYPE: hp
   TEST_NAME: user_login_test
   CI: true  
+  IS_CI: true
   FLASK_APP: task.py
   BASE_URL: http://localhost:5500
+  K6_WEB_DASHBOARD: true 
+  K6_WEB_DASHBOARD_OPEN: false 
+  K6_DASHBOARD_EXPORT_1: tests/performance-tests/test-results/user-registration/index.html 
+  K6_DASHBOARD_EXPORT_2: tests/performance-tests/test-results/user-login/index.html 
+  K6_WEB_DASHBOARD_PERIOD: 2s
 
 jobs:
   run-load-tests:
+    name: Run Load Tests
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -46,13 +53,13 @@ jobs:
       - run: cd tests/performance-tests  && npm install && pwd && ls -la
               
       - name: Run k6 user registration load test
-        run: cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
+        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_1} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js 
         continue-on-error: true
         env:
           TEST_TYPE: ci
       
       - name: Run k6 user login stress test
-        run: cd tests/performance-tests && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
+        run: export IS_CI=true && mkdir -p ${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} && export K6_WEB_DASHBOARD=true && cd tests/performance-tests && TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
         continue-on-error: true
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -62,3 +69,61 @@ jobs:
           retention-days: 30
         env:
           TEST_TYPE: std
+
+  publish-performance-test-report:
+    name: Publish Performance Test HTML Report
+    # using always() is not ideal here, because it would also run if the workflow was cancelled
+    if: "success() || needs.test.result == 'failure'"
+    needs: [run-load-tests]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      # Unique URL path for each workflow run attempt
+      HTML_REPORT_URL_PATH: performance-test-reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+    steps:
+      - name: Checkout GitHub Pages Branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Set Git Hub Actions Bot User
+        # see: https://github.com/actions/checkout/issues/13#issuecomment-724415212
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Download zipped HTML report
+        uses: actions/download-artifact@v4
+        with:
+          name: performance-tests-report
+          path: ${{ env.HTML_REPORT_URL_PATH }}
+      - name: Push Performance Test HTML Report
+        timeout-minutes: 3
+        # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
+        # this is necessary when this job running at least twice at the same time (e.g. through two pushes at the same time)
+        run: |
+          git add .
+          git commit -m "workflow: add Performance Test HTML report for run-id ${{ github.run_id }} (attempt:  ${{ github.run_attempt }})"
+
+          while true; do
+            git pull --rebase
+            if [ $? -ne 0 ]; then
+              echo "Failed to rebase. Please review manually."
+              exit 1
+            fi
+
+            git push
+            if [ $? -eq 0 ]; then
+              echo "Successfully pushed HTML report to repo."
+              exit 0
+            fi
+          done
+      - name: Output Report URL as Worfklow Annotation
+        run: |
+          FULL_HTML_REPORT_URL_1=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/user_registration/index.html
+          FULL_HTML_REPORT_URL_2=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/user_login/index.html
+          FULL_HTML_REPORT_URL_3=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-registration/index.html
+          FULL_HTML_REPORT_URL_4=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/user-login/index.html
+
+          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_1"
+          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_2"
+          echo "::notice title=📋 Published K6 Live Monitor Test Report::$FULL_HTML_REPORT_URL_3"
+          echo "::notice title=📋 Published K6 HTML Test Report::$FULL_HTML_REPORT_URL_4"

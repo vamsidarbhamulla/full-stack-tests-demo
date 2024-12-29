@@ -31,7 +31,7 @@ export function httpLog({
     const jsonBodyFlag = isJsonBody != null ? isJsonBody : true;
     const isMockFlag = mockFlexible != null ? mockFlexible : false;
     const debug = __ENV.SHOULD_LOG === "true" || "false";
-    const dirname = dirName || "results";
+    const dirname = dirName || "test-results";
     // TODO: Handle this call differently for logging between actual test method vs setup and teardown methods as instance object is not avalable in later methods
     // const logStr = `[VU ${vu.idInTest} iterTotal: ${instance.iterationsCompleted}, iterScenario: ${vu.iterationInScenario}] - ${new Date().toUTCString()}: response: ${JSON.stringify(response)}`;
     const logStr = `[VU ${vu.idInTest}, iterScenario: ${vu.iterationInScenario}] - ${new Date().toUTCString()}: response: ${JSON.stringify(response)}`;
@@ -102,14 +102,17 @@ export function customUtilGroup(name, f) {
 /**
  *
  * @param {*} data k6 summary results data object
- * @param {*} filename html filename along with path (including results folder)
+ * @param {*} foldername results foldername
  * @returns object with htmlreport, junit xml & stdout testsummary report
  */
-export function testSummary(data, filename) {
-    let dirname = `results/${filename}`;
+export function testSummary(data, foldername) {
+    let dirname = `test-results/${foldername}`;
     const props = listProperties(data);
     if (props.includes("setup_data.resultFiles.dirName")) {
-        dirname = `${data.setup_data.resultFiles.dirName}/${filename}`;
+        dirname = `${data.setup_data.resultFiles.dirName}/${foldername}`;
+    } 
+    if (__ENV.IS_CI === "true" && props.includes("setup_data.resultFiles.defaultDirName")) {
+        dirname = `${data.setup_data.resultFiles.defaultDirName}/${foldername}`;
     }
     exec.command("mkdir", ["-p", dirname]);
     const htmlfilename = `${dirname}/index.html`;
@@ -162,9 +165,6 @@ export function defaultTestOptions() {
     [0.33, () => 'scenario 1 (33%)'],
     [0.34, () => 'scenario 2 (34%)'],
     ]);
-   * see the below example tests for actual usage:
-   * src/tests/examples/weighted_task_test.js
-   * src/tests/examples/api/seed_tracking_test.js
    */
 export function weightedSwitch(weightedFuncs) {
     const funcIntervals = new Array(weightedFuncs.length);

