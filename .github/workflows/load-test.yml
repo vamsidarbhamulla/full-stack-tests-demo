@@ -62,7 +62,6 @@ jobs:
           export K6_WEB_DASHBOARD=true
           mkdir -p ${K6_DASHBOARD_EXPORT_1}
           cd tests/performance-tests
-          npm run lint
           npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_registration_test.js
       
       - name: Run k6 user login stress test
@@ -72,8 +71,7 @@ jobs:
           export K6_WEB_DASHBOARD_EXPORT=${K6_DASHBOARD_EXPORT_2} 
           export K6_WEB_DASHBOARD=true 
           mkdir -p ${K6_DASHBOARD_EXPORT_2}
-          cd tests/performance-tests 
-          npm run lint
+          cd tests/performance-tests
           TEST_TYPE=std npx dotenv -e env/.local.env ./bin/k6 run src/tests/user_login_test.js
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
