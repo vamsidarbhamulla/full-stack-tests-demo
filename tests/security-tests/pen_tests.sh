@@ -33,7 +33,6 @@ function test_sql_injection_to_retrieve_account_details() {
     jwt $token
     json=$(jwt $token)
     password=$(echo "$json" | jq -r '.role' | cut -d':' -f1)
-    echo $password
     export password=$password
     export token=$token
     echo $token
