@@ -5,20 +5,20 @@ This is a test automation repo with web, mobile, rest-api, performance and secur
 ##### Table of Contents
 [0. repo-tour-videos](#repo-tour)<br />
 [1. repo-structure](#repo-structure)<br />
-[2. mobile-tests](./tests/mobile-tests/README.md)<br />
-[3. web-tests](./tests/web-tests/README.md)<br />
-[4. performance-tests](./tests/performance-tests/README.md)<br />
-[5. security-tests](./tests/security-tests/README.md)<br />
-[6. mobile-performance-tests](./tests/docs/mobile-performance-tests/README.md)<br />
-[7. web-app-functional-test-observations](./tests/docs/web-app/Web-app-observations.md)<br />
-[8. mobile-app-functional-test-observations](./tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
-[9. test-management](./tests/docs/test-management/README.md)<br />
+[2. mobile-tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/mobile-tests/README.md)<br />
+[3. web-tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/web-tests/README.md)<br />
+[4. performance-tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/performance-tests/README.md)<br />
+[5. security-tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/security-tests/README.md)<br />
+[6. mobile-performance-tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/mobile-performance-tests/README.md)<br />
+[7. web-app-functional-test-observations](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/web-app/Web-app-observations.md)<br />
+[8. mobile-app-functional-test-observations](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/mobile-app/Mobile-app-observations.md)<br /> 
+[9. test-management](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/test-management/README.md)<br />
 [10. mobile-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/mobile-reports/publish-mobile-n-load-test-report/12531729051/1/)<br />
 [11. web-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/reports/main/12523798224/1/)<br />
 [12. performance-tests-results](https://vamsidarbhamulla.github.io/full-stack-tests-demo/performance-test-reports/5/merge/12532453822/1/user-login/user_login/index.html)<br />
-[13. mobile-tests-results-screenshots](./tests/mobile-tests/docs)<br />
-[14. web-tests-results-screeshots](./tests/web-tests/docs)<br />
-[15. performance-tests-results-screenshots](./tests/performance-tests/docs)<br />
+[13. mobile-tests-results-screenshots](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/mobile-tests/docs)<br />
+[14. web-tests-results-screeshots](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/web-tests/docs)<br />
+[15. performance-tests-results-screenshots](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/performance-tests/docs)<br />
 [16. all-automation-tests-results](https://github.com/vamsidarbhamulla/full-stack-tests-demo/tree/gh-pages)<br />
 
 [![Android Emulator Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/mobile-test.yml) | [![Web & Api Tests](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml/badge.svg)](https://github.com/vamsidarbhamulla/full-stack-tests-demo/actions/workflows/web-test.yml)<br />
