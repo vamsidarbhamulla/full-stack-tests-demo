@@ -20,8 +20,6 @@ jobs:
       env:
         ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
         TZ: 'America/Winnipeg'
-      volumes:
-        - $GITHUB_WORKSPACE:/zap/wrk:rw 
     steps:
       - uses: actions/checkout@v2
       - name: 'Setup jq'
