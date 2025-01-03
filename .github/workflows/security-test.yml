@@ -15,6 +15,13 @@ jobs:
   run-docker-security-test:
     name: Run Security Tests on Docker
     runs-on: ubuntu-22.04
+    container: 
+      image: zaproxy/zap-stable
+      env:
+        ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
+        TZ: 'America/Winnipeg'
+      volumes:
+        - $GITHUB_WORKSPACE:/zap/wrk:rw 
     steps:
       - uses: actions/checkout@v2
       - name: 'Setup jq'
@@ -27,27 +34,29 @@ jobs:
         run: |
           which jq
           jq --version
-      - name: Install Docker using Docker's official script
-        run: |
-          curl -fsSL https://get.docker.com -o get-docker.sh
-          sudo sh get-docker.sh
-      - name: Install Docker Compose
-        run: |
-            sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            docker-compose --version
       - name: Run Flask Backend Server
         uses: actions/setup-python@v5
         with:
           python-version: '3.13' 
-      - run: cd backend && pip install -r requirments.txt && FLASK_APP=task_with_swagger.py flask run -h localhost -p 5500 &
-      - name: Run DAST Tests
-        run: |
-            cd tests/security-tests
-            mkdir -p ./test-results
-            echo "token=$(curl -X POST http://localhost:5500/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token')"
-            docker pull zaproxy/zap-stable
-            docker run --rm --network=host --add-host host.docker.internal:host-gateway -e TZ=America/Winnipeg -e app_domain=$app_domain -e api_auth_token=$token -v "$(pwd)":/zap/wrk/:rw zaproxy/zap-stable zap-api-scan.py -I -t http://host.docker.internal:5500/swagger.json -f openapi -P 5500 -r /zap/wrk/test-results/zaptestreport.html --hook=/zap/wrk/zap/zap_hook.py
+      - run: |
+            pwd 
+            ls -lR 
+            cd backend 
+            pip install -r requirments.txt 
+            FLASK_APP=task_with_swagger.py flask run -h localhost -p 5500 &
+            token=`curl -X POST http://localhost:5500/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token')`
+            echo "api_auth_token=$token" >> $GITHUB_ENV
+      - name: Run DAST Tests with API Scan
+        uses: zaproxy/action-api-scan@v0.9.0
+        env:
+          api_auth_token: ${{ env.api_auth_token }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+          format: openapi
+          fail_action: false
+          target: 'https://localhost:5500/swagger.json'
+          cmd_options: '--hook=tests/security-tests/zap/zap_hook.py -r tests/security-tests/test-results/zaptestreport.html'
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

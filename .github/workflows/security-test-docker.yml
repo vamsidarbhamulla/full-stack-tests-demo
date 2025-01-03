@@ -1,0 +1,56 @@
+# name: Dynamic Application Security Tests with Docker
+# on:
+#   push:
+#     paths:
+#       - backend/**
+#       - tests/security-tests/** 
+#       - .github/workflows/security-test.yml 
+#   pull_request:
+#     branches: [ main, master ]
+
+# env:
+#   TEST_ENV: local
+#   CI: true    
+# jobs:
+#   run-docker-security-test:
+#     name: Run Security Tests on Docker
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: 'Setup jq'
+#         uses: dcarbone/install-jq-action@v3
+#         with:
+#           version: '1.7'
+#           force: 'false'
+#       - name: 'Check jq'
+#         # language=sh
+#         run: |
+#           which jq
+#           jq --version
+#       - name: Install Docker using Docker's official script
+#         run: |
+#           curl -fsSL https://get.docker.com -o get-docker.sh
+#           sudo sh get-docker.sh
+#       - name: Install Docker Compose
+#         run: |
+#             sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#             sudo chmod +x /usr/local/bin/docker-compose
+#             docker-compose --version
+#       - name: Run Flask Backend Server
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.13' 
+#       - run: cd backend && pip install -r requirments.txt && FLASK_APP=task_with_swagger.py flask run -h localhost -p 5500 &
+#       - name: Run DAST Tests
+#         run: |
+#             cd tests/security-tests
+#             mkdir -p ./test-results
+#             token=`curl -X POST http://localhost:5500/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token')`
+#             docker pull zaproxy/zap-stable
+#             docker run --rm --network=host --add-host host.docker.internal:host-gateway -e TZ=America/Winnipeg -e app_domain=$app_domain -e api_auth_token=$token -v "$(pwd)":/zap/wrk/:rw zaproxy/zap-stable zap-api-scan.py -I -t http://host.docker.internal:5500/swagger.json -f openapi -P 5500 -r /zap/wrk/test-results/zaptestreport.html --hook=/zap/wrk/zap/zap_hook.py
+#       - uses: actions/upload-artifact@v4
+#         if: ${{ !cancelled() }}
+#         with:
+#           name: security-tests-report
+#           path: tests/security-tests/test-results/
+#           retention-days: 30  
