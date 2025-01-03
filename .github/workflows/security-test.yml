@@ -17,6 +17,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
+      - name: 'Setup jq'
+        uses: dcarbone/install-jq-action@v3
+        with:
+          version: '1.7'
+          force: 'false'
+      - name: 'Check jq'
+        # language=sh
+        run: |
+          which jq
+          jq --version
       - name: Install Docker using Docker's official script
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
