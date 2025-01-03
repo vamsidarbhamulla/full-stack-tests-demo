@@ -1,4 +1,4 @@
-# mobile-tests-demo
+# web-automation-tests
 
 ##### Table of Contents  
 [1. testing-stack](#testing-stack)  
@@ -20,6 +20,7 @@
 > Need to run this step to install steps once for every new repo level dependencies added/updated   
 ```shell
 npm install 
+npm run install:browsers
 ```
 
 <a name="test-run"></a>   
@@ -30,5 +31,11 @@ npm install
 ```shell
 npm run test:chromium
 npm run report
+
+# command to run tests against different browser
+npm run test:webkit 
+npm run report 
+
+npm run test:firefox
 ```
  

@@ -1,4 +1,4 @@
-# performance automation tests
+# performance-automation-tests
 
 ##### Table of Contents  
 [1. testing-stack](#testing-stack)  

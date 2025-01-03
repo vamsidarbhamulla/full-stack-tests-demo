@@ -7,7 +7,6 @@ function test_sql_injection_registration_endpoint_with_random_data() {
     echo "curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe$RANDOM&userName=newjohndoe$RANDOM&email=newnoname$RANDOM@maildrop.cc\" OR \"1\"=\"1&password=password&phone=1234567890'\n"
 
     curl -X POST http://localhost:5500/client_registeration -d 'fullName=John Doe$RANDOM&userName=johndoe$RANDOM&email=noname$RANDOM@notest.cc" OR "1"="1&password=password&phone=1234567890'
-    # curl -X POST http://localhost:5500/client_registeration -d 'fullName=John Doe&userName=johndoe&email=test@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
 
 }
 
