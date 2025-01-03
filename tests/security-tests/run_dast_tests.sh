@@ -1,4 +1,4 @@
-#! bin/bash
+#!/bin/bash
 echo "running owasp/zap docker to verify the application rest api endpoints with required checks"
 
 mkdir -p $(pwd)/test-results
