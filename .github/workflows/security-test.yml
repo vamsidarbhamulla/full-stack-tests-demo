@@ -10,18 +10,16 @@ on:
 
 env:
   TEST_ENV: local
-  CI: true    
+  CI: true 
+  ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
+  TZ: 'America/Winnipeg' 
+       
 jobs:
   run-docker-security-test:
     name: Run Security Tests on Docker
     runs-on: ubuntu-22.04
     outputs:
       api_scan_result: ${{ steps.store_api_scan_result.outputs.api_scan_result }}
-    # container: 
-    #   image: zaproxy/zap-stable
-    env:
-      ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
-      TZ: 'America/Winnipeg'
     steps:
       - uses: actions/checkout@v4
       - name: 'Setup jq'
