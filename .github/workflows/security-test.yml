@@ -15,13 +15,15 @@ jobs:
   run-docker-security-test:
     name: Run Security Tests on Docker
     runs-on: ubuntu-22.04
-    container: 
-      image: zaproxy/zap-stable
-      env:
-        ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
-        TZ: 'America/Winnipeg'
+    outputs:
+      api_scan_result: ${{ steps.store_api_scan_result.outputs.api_scan_result }}
+    # container: 
+    #   image: zaproxy/zap-stable
+    env:
+      ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
+      TZ: 'America/Winnipeg'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: 'Setup jq'
         uses: dcarbone/install-jq-action@v3
         with:
@@ -38,6 +40,7 @@ jobs:
           python-version: '3.13' 
       - run: |
             pwd 
+            mkdir -p tests/security-tests/test-results
             ls -lR 
             cd backend 
             pip install -r requirments.txt 
@@ -45,6 +48,7 @@ jobs:
             token=`curl -X POST http://localhost:5500/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token')`
             echo "api_auth_token=$token" >> $GITHUB_ENV
       - name: Run DAST Tests with API Scan
+        id: api_scan
         uses: zaproxy/action-api-scan@v0.9.0
         env:
           api_auth_token: ${{ env.api_auth_token }}
@@ -55,9 +59,25 @@ jobs:
           fail_action: false
           target: 'https://localhost:5500/swagger.json'
           cmd_options: '--hook=tests/security-tests/zap/zap_hook.py -r tests/security-tests/test-results/zaptestreport.html'
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+       - name: Store API Scan Result
+        id: store_api_scan_result
+        run: |
+          mkdir -p api_scan_results
+          ls -lR
+          cp tests/security-tests/test-results/zaptestreport.html api_scan_results/
+          ls -lR tests/security-tests/test-results
+          mv **/*.html api_scan_results/ || true
+          ls -lR
+          API_RESULT_FILE=$(find api_scan_results -name "*.html" -type f)
+          API_RESULT_FILE_1=tests/security-tests/test-results/zaptestreport.html
+          echo "::set-output name=api_scan_result::$API_RESULT_FILE"  
+          echo "::set-output name=api_scan_result_1::$API_RESULT_FILE_1"  
+  Upload_Artifacts:
+    needs: [api_scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload API Scan Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: security-tests-report
-          path: tests/security-tests/test-results/
-          retention-days: 30  
+          path: ${{ needs.api_scan.outputs.api_scan_result }}   
