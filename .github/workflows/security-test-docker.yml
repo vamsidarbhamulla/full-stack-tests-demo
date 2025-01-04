@@ -38,7 +38,7 @@ jobs:
             kill $(pgrep -f flask) || true && \
             FLASK_APP=/zap/wrk/backend/task_with_swagger.py /home/zap/.local/bin/flask run -h localhost -p 5500 & \
             sleep 10 && \
-            curl -X GET http://localhost:5500 | grep up && \
+            curl -X GET http://localhost:5500/health | grep up && \
             zap-api-scan.py -I -t http://localhost:5500/swagger.json \
             -f openapi -P 5500 \
             -J /zap/wrk/tests/security-tests/test-results/report_json.json \
