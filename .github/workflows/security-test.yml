@@ -71,8 +71,8 @@ jobs:
           echo "::set-output name=api_scan_result::$API_RESULT_FILE"  
           echo "::set-output name=api_scan_result_1::$API_RESULT_FILE_1"  
   Upload_Artifacts:
-    needs: [api_scan]
-    runs-on: ubuntu-latest
+    needs: [run-docker-security-test]
+    runs-on: ubuntu-22.04
     steps:
       - name: Upload API Scan Artifact
         uses: actions/upload-artifact@v4
