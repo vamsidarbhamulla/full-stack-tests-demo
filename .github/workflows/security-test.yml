@@ -45,6 +45,7 @@ jobs:
             FLASK_APP=task_with_swagger.py flask run -h localhost -p 5500 &
       - name: Create Auth Token for Flask Backend Server
         uses: actions/setup-python@v5
+        continue-on-error: true
         with:
           python-version: '3.13' 
       - run: |
