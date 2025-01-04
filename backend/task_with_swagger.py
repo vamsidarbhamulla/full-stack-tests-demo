@@ -6,6 +6,7 @@ import json
 import subprocess  # For executing a shell command
 import os
 from sys import stderr
+import dbinit
 from flask_restx import Api, Resource, fields
 
 app = Flask(__name__)
@@ -35,7 +36,7 @@ update_model = api.model('UpdatePassword', {
 })
 
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('./database.db')
     cursor = conn.cursor()
     return conn
 
@@ -101,13 +102,12 @@ class Login(Resource):
         """
         Client login
         """
-        print("request", file=stderr)
+        # print("request", file=stderr)
         userName = request.json.get('userName')
         email = request.json.get('email')
         password = request.json['password']
         qMail = 'select privillage from users where email = "' + email +'" and password = "' + password + '"'
         qUser = 'select privillage from users where userName = "' + userName +'"'
-        print(qMail)
         dbConn = get_db_connection()
         dbCursor = dbConn.cursor()
         if email:
@@ -193,4 +193,5 @@ class Products(Resource):
 api.add_namespace(ns)
 
 if __name__ == '__main__':
+    dbinit.initialize_database()
     app.run()
