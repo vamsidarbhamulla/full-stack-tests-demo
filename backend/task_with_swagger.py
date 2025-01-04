@@ -5,6 +5,7 @@ import requests
 import json
 import subprocess  # For executing a shell command
 import os
+from sys import stderr
 from flask_restx import Api, Resource, fields
 
 app = Flask(__name__)
@@ -52,7 +53,7 @@ def decodeNoneJwt(token):
     print(data)
     return data
 
-@app.route("/")
+@app.route("/health")
 def hello_world():
     """
     Get Hello World
@@ -62,7 +63,7 @@ def hello_world():
     testConn = dbConn.execute('select * from users').fetchall()
     dbConn.close()
     print(testConn)
-    return "<p>Hello, World!</p>"
+    return "{'status':'up'}"
 
 @ns.route('/client_registeration')
 class Register(Resource):
@@ -100,11 +101,13 @@ class Login(Resource):
         """
         Client login
         """
+        print("request", file=stderr)
         userName = request.json.get('userName')
         email = request.json.get('email')
         password = request.json['password']
         qMail = 'select privillage from users where email = "' + email +'" and password = "' + password + '"'
         qUser = 'select privillage from users where userName = "' + userName +'"'
+        print(qMail)
         dbConn = get_db_connection()
         dbCursor = dbConn.cursor()
         if email:
