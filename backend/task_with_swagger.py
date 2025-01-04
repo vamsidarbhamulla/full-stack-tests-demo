@@ -61,7 +61,7 @@ def hello_world():
     """
     dbConn = get_db_connection()
     testConn = dbConn.cursor()
-    testConn = dbConn.execute('select * from users').fetchall()
+    testConn = dbConn.execute('SELECT name FROM sqlite_master WHERE type="table"').fetchall()
     dbConn.close()
     print(testConn)
     return "{'status':'up'}"
