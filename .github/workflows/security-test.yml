@@ -57,7 +57,7 @@ jobs:
           fail_action: false
           target: 'https://localhost:5500/swagger.json'
           cmd_options: '--hook=tests/security-tests/zap/zap_hook.py -r tests/security-tests/test-results/zaptestreport.html'
-       - name: Store API Scan Result
+      - name: Store API Scan Result
         id: store_api_scan_result
         run: |
           mkdir -p api_scan_results
