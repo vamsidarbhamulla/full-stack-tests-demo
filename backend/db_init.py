@@ -1,10 +1,10 @@
 import sqlite3
 
 def initialize_database():
-    connection = sqlite3.connect('./database.db')
+    connection = sqlite3.connect('database.db')
 
 
-    with open('./schema.sql') as f:
+    with open('schema.sql') as f:
         connection.executescript(f.read())
 
     cur = connection.cursor()
@@ -19,4 +19,4 @@ def initialize_database():
     connection.close()
 
 if __name__ == '__main__':
-    initialize_database
+    initialize_database()

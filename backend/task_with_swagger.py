@@ -6,7 +6,7 @@ import json
 import subprocess  # For executing a shell command
 import os
 from sys import stderr
-import dbinit
+import db_init
 from flask_restx import Api, Resource, fields
 
 app = Flask(__name__)
@@ -36,7 +36,7 @@ update_model = api.model('UpdatePassword', {
 })
 
 def get_db_connection():
-    conn = sqlite3.connect('./database.db')
+    conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     return conn
 
@@ -193,5 +193,5 @@ class Products(Resource):
 api.add_namespace(ns)
 
 if __name__ == '__main__':
-    dbinit.initialize_database()
+    db_init.initialize_database()
     app.run()
