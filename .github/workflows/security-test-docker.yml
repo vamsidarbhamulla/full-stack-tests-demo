@@ -53,8 +53,7 @@ jobs:
             -f openapi -P 5500 \
             -J /zap/wrk/tests/security-tests/test-results/report_json.json \
             -w /zap/wrk/tests/security-tests/test-results/report_md.md \
-            -r /zap/wrk/tests/security-tests/test-results/report_html.html \
-            --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py || true && \
+            -r /zap/wrk/tests/security-tests/test-results/report_html.html  || true && \
             find / -type f -name "zap.log" -exec dirname {} \;  || true && \
             ls -lR /home/zap/.ZAP/zap.log || true  && \
             ls -lR /root/.ZAP/zap.log || true  && \
