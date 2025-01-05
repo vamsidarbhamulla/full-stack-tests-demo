@@ -49,9 +49,9 @@ jobs:
             zap-api-scan.py -I -d -t http://localhost:5500/swagger.json \
             -f openapi -P 5500 \
             -J /zap/wrk/tests/security-tests/test-results/report_json.json \
-            -w /zap/wrk/test/security-tests/test-results/report_md.md \
-            -r /zap/wrk/test/security-tests/test-results/report_html.html \
-            --hook=tests/security-tests/zap/zap_hook.py"
+            -w /zap/wrk/tests/security-tests/test-results/report_md.md \
+            -r /zap/wrk/tests/security-tests/test-results/report_html.html \
+            --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py"
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
