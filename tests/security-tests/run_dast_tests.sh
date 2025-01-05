@@ -16,9 +16,11 @@ docker run --rm --network=host \
   -e API_AUTH_TOKEN=$token \
   -v "$(pwd)":/zap/wrk/:rw \
   -t zaproxy/zap-stable \
-  zap-api-scan.py -I \
+  zap-api-scan.py -I -d \
   -t http://host.docker.internal:5500/swagger.json \
   -f openapi \
   -P 5500 \
-  -r /zap/wrk/test-results/zaptestreport.html \
+  -J /zap/wrk/test-results/report_json.json \
+  -w /zap/wrk/test-results/report_md.md \
+  -r /zap/wrk/test-results/report_html.html \
   --hook=/zap/wrk/zap/zap_hook.py

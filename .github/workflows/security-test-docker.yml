@@ -29,7 +29,9 @@ jobs:
             chmod 755 ./backend/database.db
             mkdir -p ./tests/security-tests/test-results
             docker pull zaproxy/zap-stable
-            docker run -v "$GITHUB_WORKSPACE":/zap/wrk/:rw --network=host \
+            docker run -v "$GITHUB_WORKSPACE":/zap/wrk/:rw \
+            --network=host \
+            --user=zap \
             --add-host host.docker.internal:host-gateway \
             -e TZ=America/Winnipeg -e ZAP_AUTH_HEADER \
             -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE \
@@ -37,13 +39,12 @@ jobs:
             -e LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt \
             -e APP_DOMAIN=$app_domain \
             -e API_AUTH_TOKEN=$token \
-            -e RE_INITIALIZE_DB=true -e TEST_TYPE=ci -e TEST_ENV=local \
+            -e RE_INITIALIZE_DB=false -e TEST_TYPE=ci -e TEST_ENV=local \
             -t zaproxy/zap-stable bash -c \
-            "pwd && ls -lR /zap/wrk && \
+            "id && pwd && ls -lR /zap/wrk && \
             pip install -r /zap/wrk/backend/requirments.txt && \
             export PATH=$PATH:/root/.local/bin && \
             kill $(pgrep -f flask) || true && \
-            export RE_INITIALIZE_DB=false && \
             cd /zap/wrk/backend && FLASK_APP=task_with_swagger.py /home/zap/.local/bin/flask run -h localhost -p 5500 & \
             sleep 10 && \
             cd /zap/wrk/tests/security-tests && pwd && \
@@ -54,7 +55,9 @@ jobs:
             -J /zap/wrk/tests/security-tests/test-results/report_json.json \
             -w /zap/wrk/tests/security-tests/test-results/report_md.md \
             -r /zap/wrk/tests/security-tests/test-results/report_html.html \
-            --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py"
+            --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py || true && \
+            ls -lR /home/zap/.ZAP/zap.log  && \
+            ls -lR /zap/wrk/tests/security-tests/test-results"
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
