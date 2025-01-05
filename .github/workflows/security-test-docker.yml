@@ -49,8 +49,7 @@ jobs:
             -f openapi -P 5500 \
             -J /zap/wrk/tests/security-tests/test-results/report_json.json \
             -w /zap/wrk/test/security-tests/test-results/report_md.md \
-            -r /zap/wrk/test/security-tests/test-results/report_html.html \
-            --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py"
+            -r /zap/wrk/test/security-tests/test-results/report_html.html"
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
