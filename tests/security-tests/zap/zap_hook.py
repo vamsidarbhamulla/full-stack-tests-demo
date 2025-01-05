@@ -5,7 +5,7 @@
 # The requests and responses should be written to a req-resp-log.txt file in the CWD.
 # Note that not all hooks will be called in all scans.
 def zap_started(zap, target):
-    zap.script.load('httpHandler.js', 'httpsender', 'Oracle Nashorn', '/zap/wrk/zap/httpHandler.js')
+    zap.script.load('httpHandler.js', 'httpsender', 'Oracle Nashorn', 'zap/httpHandler.js')
     zap.script.enable('httpHandler.js')
     # print("zap_started({}, {})".format(zap, target))
 
