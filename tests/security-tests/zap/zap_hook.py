@@ -7,10 +7,10 @@
 def zap_started(zap, target):
     zap.script.load('httpHandler.js', 'httpsender', 'Oracle Nashorn', '/zap/wrk/zap/httpHandler.js')
     zap.script.enable('httpHandler.js')
-    print("zap_started({}, {})".format(zap, target))
+    # print("zap_started({}, {})".format(zap, target))
 
-def load_config(config, config_dict, config_msg, out_of_scope_dict):
-	print("load_config({}, {}, {}, {})".format(config, config_dict, config_msg, out_of_scope_dict))
+# def load_config(config, config_dict, config_msg, out_of_scope_dict):
+# 	print("load_config({}, {}, {}, {})".format(config, config_dict, config_msg, out_of_scope_dict))
 
 
 
