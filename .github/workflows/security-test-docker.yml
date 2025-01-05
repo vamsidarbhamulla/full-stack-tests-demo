@@ -56,7 +56,8 @@ jobs:
             -w /zap/wrk/tests/security-tests/test-results/report_md.md \
             -r /zap/wrk/tests/security-tests/test-results/report_html.html \
             --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py || true && \
-            ls -lR /home/zap/.ZAP/zap.log  && \
+            find / -type f -name "zap.log" -exec dirname {} \;  && \
+            ls -lR /home/zap/.ZAP/zap.log || true  && \
             ls -lR /zap/wrk/tests/security-tests/test-results"
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
