@@ -31,7 +31,6 @@ jobs:
             docker pull zaproxy/zap-stable
             docker run -v "$GITHUB_WORKSPACE":/zap/wrk/:rw \
             --network=host \
-            --user=zap \
             --add-host host.docker.internal:host-gateway \
             -e TZ=America/Winnipeg -e ZAP_AUTH_HEADER \
             -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE \
@@ -56,8 +55,9 @@ jobs:
             -w /zap/wrk/tests/security-tests/test-results/report_md.md \
             -r /zap/wrk/tests/security-tests/test-results/report_html.html \
             --hook=/zap/wrk/tests/security-tests/zap/zap_hook.py || true && \
-            find / -type f -name "zap.log" -exec dirname {} \;  && \
+            find / -type f -name "zap.log" -exec dirname {} \;  || true && \
             ls -lR /home/zap/.ZAP/zap.log || true  && \
+            ls -lR /root/.ZAP/zap.log || true  && \
             ls -lR /zap/wrk/tests/security-tests/test-results"
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
