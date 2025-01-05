@@ -20,12 +20,12 @@ user_model = api.model('User', {
     'userName': fields.String(required=True, description="The client's username"),
     'email': fields.String(required=True, description="The client's email"),
     'password': fields.String(required=True, description="The client's password"),
-    'phone': fields.String(required=True, description="The client's phone number"),
+    'phone': fields.String(required=False, description="The client's phone number"),
 })
 
 login_model = api.model('Login', {
-    'userName': fields.String(description="The client's username"),
-    'email': fields.String(description="The client's email"),
+    'userName': fields.String(required=True, description="The client's username"),
+    'email': fields.String(required=True, description="The client's email"),
     'password': fields.String(required=True, description="The client's password"),
 })
 
@@ -67,17 +67,18 @@ def hello_world():
     return "{'status':'up'}"
 
 @ns.route('/client_registeration')
+@api.route('/client_registeration')
 class Register(Resource):
     @api.expect(user_model)
     def post(self):
         """
         Register a new client
         """
-        fullName = request.json['fullName']
-        userName = request.json['userName']
-        email = request.json['email']
-        password = request.json['password']
-        phone = request.json['phone']
+        fullName = request.form['fullName']
+        userName = request.form['userName']
+        email = request.form['email']
+        password = request.form['password']
+        phone = request.form['phone']
         if fullName != '' and userName != '' and email != '' and password != '' and phone != '':
             dbConn = get_db_connection()
             dbCursor = dbConn.cursor()
@@ -96,16 +97,16 @@ class Register(Resource):
             return {'msg':'Invalid Data'}
 
 @ns.route('/client_login')
+@api.route('/client_login')
 class Login(Resource):
     @api.expect(login_model)
     def post(self):
         """
         Client login
         """
-        # print("request", file=stderr)
-        userName = request.json.get('userName')
-        email = request.json.get('email')
-        password = request.json['password']
+        userName = request.form['userName']
+        email = request.form['email']
+        password = request.form['password']
         qMail = 'select privillage from users where email = "' + email +'" and password = "' + password + '"'
         qUser = 'select privillage from users where userName = "' + userName +'"'
         dbConn = get_db_connection()
@@ -134,15 +135,16 @@ class Login(Resource):
             return {'msg':'Failed'}
 
 @ns.route('/update_info')
+@api.route('/update_info')
 class UpdatePassword(Resource):
     @api.expect(update_model)
     def post(self):
         """
         Update user password
         """
-        token = request.json['token']
-        currentPassword = request.json['currentPassword']
-        newPassword = request.json['newPassword']
+        token = request.form['token']
+        currentPassword = request.form['currentPassword']
+        newPassword = request.form['newPassword']
         
         try:
             data = decodeNoneJwt(token)
@@ -172,6 +174,7 @@ class UpdatePassword(Resource):
         return {'msg':'Error'}
 
 @ns.route('/products')
+@api.route('/products')
 class Products(Resource):
     @api.doc(params={'source': 'The source URL for the product list'})
     def get(self):
@@ -193,5 +196,7 @@ class Products(Resource):
 api.add_namespace(ns)
 
 if __name__ == '__main__':
-    db_init.initialize_database()
-    app.run()
+    initialize_database = bool(os.environ.get('RE_INITIALIZE_DB', 'False'))
+    if initialize_database == True:
+        db_init.initialize_database()
+    app.run(debug=True)

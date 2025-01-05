@@ -40,3 +40,4 @@ chromeDriver
 
 # backend
 **/*.pyc
+**/__pycache__/
