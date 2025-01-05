@@ -10,8 +10,10 @@ docker pull zaproxy/zap-stable
 docker run --rm --network=host \
   --add-host host.docker.internal:host-gateway \
   -e TZ=America/Winnipeg \
-  -e app_domain=$app_domain \
-  -e api_auth_token=$token \
+  -e BASE_FOLDER_PATH=/zap/wrk \
+  -e LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt \
+  -e APP_DOMAIN=$app_domain \
+  -e API_AUTH_TOKEN=$token \
   -v "$(pwd)":/zap/wrk/:rw \
   -t zaproxy/zap-stable \
   zap-api-scan.py -I \

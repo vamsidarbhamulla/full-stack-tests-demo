@@ -35,18 +35,24 @@ var Files = Java.type('java.nio.file.Files');
 var Paths = Java.type('java.nio.file.Paths');
 var StandardOpenOption = Java.type('java.nio.file.StandardOpenOption');
 var System = Java.type('java.lang.System');
+var String = Java.type("java.lang.String");
 var env = System.getenv();
 
-// Expected to create a folder path build/zap with right permissions to create the log file or append to it if one
-// already exists
-var f = Paths.get('/zap/wrk/test-results/req-resp-log.txt');
+// Expected to create a folder path test-results with right permissions to create the log file
+var filePathStr = System.getenv("LOG_FILE_PATH");
+// System.out.print("basePath in js:" + basePath);
+// var currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+// var f = Paths.get(currentPath +'../test-results/req-resp-log.txt');
+// var f = Paths.get(filePath);
+var filePath = Paths.get(filePathStr);
+
 function appendToFile(str) {
-    Files.write(f, str.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+    Files.write(filePath, str.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 }
 
 function sendingRequest(msg, initiator, helper) {
     var urlRegEx = /client_login/;
-    var targetDomain = System.getenv("app_domain");
+    var targetDomain = System.getenv("APP_DOMAIN");
     var header = msg.getRequestHeader()
     var headerParts = header.toString().split(' ')
     var url = headerParts[1]
@@ -55,12 +61,12 @@ function sendingRequest(msg, initiator, helper) {
         // logic to override localhost with docker network service/container/hostname to access fis app inside zap
         // docker container
         msg.getRequestHeader().setHeader('X-ZAP-Forward', urlParts)
-        headerParts[1] = urlParts.join(System.getenv("app_domain") + '/')
+        headerParts[1] = urlParts.join(System.getenv("APP_DOMAIN") + '/')
         msg.setRequestHeader(headerParts.join(' '))
 
         // logic to handle different token for management and oracle token endpoints
         if(urlParts[1].toString().match(urlRegEx) != null) {
-            msg.getRequestHeader().setHeader("Authorization", "Bearer " + System.getenv("api_auth_token"));
+            msg.getRequestHeader().setHeader("Authorization", "Bearer " + System.getenv("API_AUTH_TOKEN"));
         } 
     }
 

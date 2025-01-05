@@ -31,9 +31,12 @@ jobs:
             docker pull zaproxy/zap-stable
             docker run -v "$GITHUB_WORKSPACE":/zap/wrk/:rw --network=host \
             --add-host host.docker.internal:host-gateway \
-            -e TZ=America/Winnipeg -e app_domain=$app_domain \
-            -e api_auth_token=token -e ZAP_AUTH_HEADER \
+            -e TZ=America/Winnipeg -e ZAP_AUTH_HEADER \
             -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE \
+            -e BASE_FOLDER_PATH=/zap/wrk \
+            -e LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt \
+            -e APP_DOMAIN=$app_domain \
+            -e API_AUTH_TOKEN=$token \
             -e RE_INITIALIZE_DB=true -e TEST_TYPE=ci -e TEST_ENV=local \
             -t zaproxy/zap-stable bash -c \
             "pwd && ls -lR /zap/wrk && \

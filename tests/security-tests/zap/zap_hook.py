@@ -4,10 +4,16 @@
 #     -f openapi --hook=zap_hook.py
 # The requests and responses should be written to a req-resp-log.txt file in the CWD.
 # Note that not all hooks will be called in all scans.
+
+import os
 def zap_started(zap, target):
-    zap.script.load('httpHandler.js', 'httpsender', 'Oracle Nashorn', 'zap/httpHandler.js')
+    basePath = os.getenv("BASE_FOLDER_PATH", "/zap/wrk")
+    print("basePath:({})".format(basePath))
+    filePath = "{}/{}".format(basePath, 'zap/httpHandler.js')
+    print("fullFilePath:({})".format(filePath))
+    zap.script.load('httpHandler.js', 'httpsender', 'Oracle Nashorn',  filePath)
     zap.script.enable('httpHandler.js')
-    # print("zap_started({}, {})".format(zap, target))
+    print("zap_started({}, {})".format(zap, target))
 
 # def load_config(config, config_dict, config_msg, out_of_scope_dict):
 # 	print("load_config({}, {}, {}, {})".format(config, config_dict, config_msg, out_of_scope_dict))

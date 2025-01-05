@@ -13,7 +13,7 @@ app = Flask(__name__)
 api = Api(app, version='1.0', title='Python Flask API', 
           description='API documentation')
 
-ns = api.namespace('api', description='API operations')
+# ns = api.namespace(description='API operations')
 
 user_model = api.model('User', {
     'fullName': fields.String(required=True, description="The client's full name"),
@@ -66,7 +66,6 @@ def hello_world():
     print(testConn)
     return "{'status':'up'}"
 
-@ns.route('/client_registeration')
 @api.route('/client_registeration')
 class Register(Resource):
     @api.expect(user_model)
@@ -96,7 +95,6 @@ class Register(Resource):
         else:
             return {'msg':'Invalid Data'}
 
-@ns.route('/client_login')
 @api.route('/client_login')
 class Login(Resource):
     @api.expect(login_model)
@@ -134,7 +132,6 @@ class Login(Resource):
         else:
             return {'msg':'Failed'}
 
-@ns.route('/update_info')
 @api.route('/update_info')
 class UpdatePassword(Resource):
     @api.expect(update_model)
@@ -173,7 +170,6 @@ class UpdatePassword(Resource):
 
         return {'msg':'Error'}
 
-@ns.route('/products')
 @api.route('/products')
 class Products(Resource):
     @api.doc(params={'source': 'The source URL for the product list'})
@@ -193,7 +189,7 @@ class Products(Resource):
         except:
             return {'msg':'Error'}
 
-api.add_namespace(ns)
+# api.add_namespace(ns)
 
 if __name__ == '__main__':
     initialize_database = bool(os.environ.get('RE_INITIALIZE_DB', 'False'))
