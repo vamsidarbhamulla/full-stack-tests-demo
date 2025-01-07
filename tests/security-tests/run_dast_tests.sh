@@ -24,9 +24,9 @@ echo "
       BASE_FOLDER_PATH=$BASE_FOLDER_PATH \n
       LOG_FILE_PATH=$LOG_FILE_PATH"
 
-mkdir -p $BASE_FOLDER_PATH/test-results
-touch $BASE_FOLDER_PATH/test-results/pen-test-results.txt
-chmod a+w $BASE_FOLDER_PATH/test-results/pen-test-results.txt
+mkdir -p $DOCKER_VOLUME_SRC_PATH/test-results
+touch $DOCKER_VOLUME_SRC_PATH/test-results/pen-test-results.txt
+chmod a+w $DOCKER_VOLUME_SRC_PATH/test-results/pen-test-results.txt
 
 docker run --rm --network=$DOCKER_NETWORK \
   --add-host host.docker.internal:host-gateway \
