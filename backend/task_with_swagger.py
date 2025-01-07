@@ -54,7 +54,7 @@ def decodeNoneJwt(token):
 
 @ns.route("/")
 class Hello(Resource):
-    def get():
+    def get(self):
         """
         Get Hello World
         """
@@ -67,7 +67,7 @@ class Hello(Resource):
 
 @ns.route("/health")
 class Health(Resource):
-    def get():
+    def get(self):
         """
         Get Health Status
         """
