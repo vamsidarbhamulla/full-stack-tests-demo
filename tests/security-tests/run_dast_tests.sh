@@ -24,6 +24,9 @@ echo "
       BASE_FOLDER_PATH=$BASE_FOLDER_PATH \n
       LOG_FILE_PATH=$LOG_FILE_PATH"
 
+mkdir -p $BASE_FOLDER_PATH/test-results
+touch $BASE_FOLDER_PATH/test-results/pen-test-results.txt
+chmod a+w $BASE_FOLDER_PATH/test-results/pen-test-results.txt
 
 docker run --rm --network=$DOCKER_NETWORK \
   --add-host host.docker.internal:host-gateway \
@@ -47,8 +50,6 @@ docker run --rm --network=$DOCKER_NETWORK \
   -w $BASE_FOLDER_PATH/test-results/report_md.md \
   -r $BASE_FOLDER_PATH/test-results/report_html.html \
   --hook=$BASE_FOLDER_PATH/zap/zap_hook.py || true && \
-  touch $BASE_FOLDER_PATH/test-results/pen-test-results.txt && \
-  chmod a+w $BASE_FOLDER_PATH/test-results/pen-test-results.txt && \
   curl --location --output /home/zap/jq https://github.com/jqlang/jq/releases/latest/download/jq-linux-amd64 && \
   chmod +x /home/zap/jq && \
   /home/zap/jq --version && \
