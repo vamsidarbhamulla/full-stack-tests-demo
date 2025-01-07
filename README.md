@@ -98,6 +98,7 @@ The repo structure is shown below:
     d. Reference screenshots provided below <br />
 
 **Screenshots**: 
+
 ***1. Web-Tests-Pipeline-Reports***
 ![1.1.Web-Test-Job-Run.png](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/pipeline-test-reports/1.1.Web-Test-Job-Run.png)<br /><br /> 
 ![1.2.Web-Test-Job-Run-Report-URL.png](https://github.com/vamsidarbhamulla/full-stack-tests-demo/blob/main/tests/docs/pipeline-test-reports/1.2.Web-Test-Job-Run-Report-URL.png)<br /><br />
