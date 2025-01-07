@@ -14,6 +14,7 @@ env:
   RE_INITIALIZE_DB: true  
 jobs:
   run-docker-security-test:
+    id: security-test
     name: Run Automated Application Security Tests on Docker
     runs-on: ubuntu-22.04
     steps:
@@ -47,7 +48,7 @@ jobs:
     name: Publish Security Test Report
     # using always() is not ideal here, because it would also run if the workflow was cancelled
     if: "success() || needs.test.result == 'failure'"
-    needs: [run-docker-security-tests]
+    needs: [security-test]
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
