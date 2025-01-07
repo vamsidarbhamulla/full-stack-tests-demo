@@ -16,8 +16,6 @@ FROM golang:1.22-bullseye as go-builder
 WORKDIR /app
 
 # setting up xk6 and build k6 bundler with extensions
-
-
 RUN GO_ENABLED=1 go install -trimpath go.k6.io/xk6/cmd/xk6@latest && \
     rm -rf $GOPATH/go.mod && \
     CGO_ENABLED=1 xk6 build --output '/bin/k6' \
@@ -29,7 +27,7 @@ RUN GO_ENABLED=1 go install -trimpath go.k6.io/xk6/cmd/xk6@latest && \
     --with github.com/grafana/xk6-sql-driver-sqlite3@v0.1.0 \
     --with github.com/grafana/xk6-exec@v0.4.1
 
-# final load test container that will be used in gitlab pipelines
+# final load test container that will be used in github actions
 FROM debian:bullseye
 
 SHELL ["/bin/bash", "-c"] 

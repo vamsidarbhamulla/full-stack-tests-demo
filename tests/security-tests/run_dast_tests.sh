@@ -3,24 +3,46 @@ echo "running owasp/zap docker to verify the application rest api endpoints with
 
 mkdir -p $(pwd)/test-results
 
-token=$(curl -X POST http://localhost:5500/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token')
-
 docker pull zaproxy/zap-stable
 
-docker run --rm --network=host \
+HOST_URL=http://host.docker.internal:5500
+DOCKER_NETWORK=host
+DOCKER_VOLUME_SRC_PATH=$(pwd)
+BASE_FOLDER_PATH=/zap/wrk
+LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt
+
+# Check if the CI environment variable is set to true 
+if [ -n "${CI}" ] && [ "${CI}" = "true" ]; then 
+    HOST_URL=http://backend:5500
+    DOCKER_NETWORK=zap
+fi
+
+echo "
+      HOST_URL=$HOST_URL \n
+      DOCKER_NETWORK=$DOCKER_NETWORK \n
+      DOCKER_VOLUME_SRC_PATH=$DOCKER_VOLUME_SRC_PATH \n
+      BASE_FOLDER_PATH=$BASE_FOLDER_PATH \n
+      LOG_FILE_PATH=$LOG_FILE_PATH"
+
+
+docker run --rm --network=$DOCKER_NETWORK \
   --add-host host.docker.internal:host-gateway \
   -e TZ=America/Winnipeg \
-  -e BASE_FOLDER_PATH=/zap/wrk \
-  -e LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt \
-  -e APP_DOMAIN=$app_domain \
-  -e API_AUTH_TOKEN=$token \
-  -v "$(pwd)":/zap/wrk/:rw \
+  -e HOST_URL=$HOST_URL \
+  -e BASE_FOLDER_PATH=$BASE_FOLDER_PATH \
+  -e LOG_FILE_PATH=$LOG_FILE_PATH \
+  -e APP_DOMAIN=$HOST_URL \
+  -v "$DOCKER_VOLUME_SRC_PATH":/zap/wrk/:rw \
   -t zaproxy/zap-stable \
+  bash -c "
+  curl $HOST_URL/health && \
+  token=$(curl -X POST $HOST_URL/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token') && \
+  export API_AUTH_TOKEN=$token && \
   zap-api-scan.py -I -d \
-  -t http://host.docker.internal:5500/swagger.json \
+  -t $HOST_URL/swagger.json \
   -f openapi \
   -P 5500 \
   -J /zap/wrk/test-results/report_json.json \
   -w /zap/wrk/test-results/report_md.md \
   -r /zap/wrk/test-results/report_html.html \
-  --hook=/zap/wrk/zap/zap_hook.py
+  --hook=/zap/wrk/zap/zap_hook.py"

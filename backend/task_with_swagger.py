@@ -5,27 +5,25 @@ import requests
 import json
 import subprocess  # For executing a shell command
 import os
-from sys import stderr
 import db_init
 from flask_restx import Api, Resource, fields
 
 app = Flask(__name__)
-api = Api(app, version='1.0', title='Python Flask API', 
-          description='API documentation')
+api = Api(app, version='1.0', title='Python Flask API', description='API documentation')
 
-# ns = api.namespace(description='API operations')
+ns = api.namespace('api', description='API operations')
 
 user_model = api.model('User', {
     'fullName': fields.String(required=True, description="The client's full name"),
     'userName': fields.String(required=True, description="The client's username"),
     'email': fields.String(required=True, description="The client's email"),
     'password': fields.String(required=True, description="The client's password"),
-    'phone': fields.String(required=False, description="The client's phone number"),
+    'phone': fields.String(required=True, description="The client's phone number"),
 })
 
 login_model = api.model('Login', {
-    'userName': fields.String(required=True, description="The client's username"),
-    'email': fields.String(required=True, description="The client's email"),
+    'userName': fields.String(description="The client's username"),
+    'email': fields.String(description="The client's email"),
     'password': fields.String(required=True, description="The client's password"),
 })
 
@@ -54,30 +52,30 @@ def decodeNoneJwt(token):
     print(data)
     return data
 
-@app.route("/health")
+@app.route("/")
 def hello_world():
     """
     Get Hello World
     """
     dbConn = get_db_connection()
     testConn = dbConn.cursor()
-    testConn = dbConn.execute('SELECT name FROM sqlite_master WHERE type="table"').fetchall()
+    testConn = dbConn.execute('select * from users').fetchall()
     dbConn.close()
     print(testConn)
-    return "{'status':'up'}"
+    return "<p>Hello, World!</p>"
 
-@api.route('/client_registeration')
+@ns.route('/client_registeration')
 class Register(Resource):
     @api.expect(user_model)
     def post(self):
         """
         Register a new client
         """
-        fullName = request.form['fullName']
-        userName = request.form['userName']
-        email = request.form['email']
-        password = request.form['password']
-        phone = request.form['phone']
+        fullName = request.json['fullName']
+        userName = request.json['userName']
+        email = request.json['email']
+        password = request.json['password']
+        phone = request.json['phone']
         if fullName != '' and userName != '' and email != '' and password != '' and phone != '':
             dbConn = get_db_connection()
             dbCursor = dbConn.cursor()
@@ -95,16 +93,19 @@ class Register(Resource):
         else:
             return {'msg':'Invalid Data'}
 
-@api.route('/client_login')
+@ns.route('/client_login')
 class Login(Resource):
     @api.expect(login_model)
     def post(self):
         """
         Client login
         """
-        userName = request.form['userName']
-        email = request.form['email']
-        password = request.form['password']
+        print('request.json')
+        print('request.json',request.json.get('userName'))
+        # print(request.json.get('userName'))
+        userName = request.json.get('userName')
+        email = request.json.get('email')
+        password = request.json['password']
         qMail = 'select privillage from users where email = "' + email +'" and password = "' + password + '"'
         qUser = 'select privillage from users where userName = "' + userName +'"'
         dbConn = get_db_connection()
@@ -132,16 +133,16 @@ class Login(Resource):
         else:
             return {'msg':'Failed'}
 
-@api.route('/update_info')
+@ns.route('/update_info')
 class UpdatePassword(Resource):
     @api.expect(update_model)
     def post(self):
         """
         Update user password
         """
-        token = request.form['token']
-        currentPassword = request.form['currentPassword']
-        newPassword = request.form['newPassword']
+        token = request.json['token']
+        currentPassword = request.json['currentPassword']
+        newPassword = request.json['newPassword']
         
         try:
             data = decodeNoneJwt(token)
@@ -170,7 +171,7 @@ class UpdatePassword(Resource):
 
         return {'msg':'Error'}
 
-@api.route('/products')
+@ns.route('/products')
 class Products(Resource):
     @api.doc(params={'source': 'The source URL for the product list'})
     def get(self):
@@ -189,10 +190,12 @@ class Products(Resource):
         except:
             return {'msg':'Error'}
 
-# api.add_namespace(ns)
+api.add_namespace(ns)
 
 if __name__ == '__main__':
+    print('Starting Server')
     initialize_database = bool(os.environ.get('RE_INITIALIZE_DB', 'False'))
+    print('initialize_database:', initialize_database)
     if initialize_database == True:
         db_init.initialize_database()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
