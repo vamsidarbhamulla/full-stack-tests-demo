@@ -1,0 +1,27 @@
+-    █ [Create Account Service]
+
+-      █ should be able to register new user successfully
+
+-        ✓ is status 200
+-        ✓ response body
+-        ✓ expected status to equal 200
+-        ✓ expected user registration api response to equal 'User Registered'
+
+-    checks.........................: 100.00% ✓ 2400     ✗ 0    
+-    data_received..................: 115 kB  1.9 kB/s
+-    data_sent......................: 166 kB  2.8 kB/s
+-    group_duration.................: avg=6.22ms   min=2.74ms   med=3.36ms   max=263.25ms p(90)=3.93ms   p(95)=4.47ms  
+-    http_req_blocked...............: avg=209.61µs min=137.41µs med=204.57µs max=355.79µs p(90)=258.77µs p(95)=276.73µs
+-    http_req_connecting............: avg=152.21µs min=102.31µs med=147.25µs max=263.92µs p(90)=191.61µs p(95)=207.62µs
+-  ✓ http_req_duration..............: avg=5.08ms   min=1.79ms   med=2.25ms   max=261.77ms p(90)=2.66ms   p(95)=3.18ms  
+-      { expected_response:true }...: avg=5.08ms   min=1.79ms   med=2.25ms   max=261.77ms p(90)=2.66ms   p(95)=3.18ms  
+-  ✓ http_req_failed................: 0.00%   ✓ 0        ✗ 600  
+-    http_req_receiving.............: avg=67.34µs  min=37.81µs  med=65.64µs  max=274.6µs  p(90)=84.3µs   p(95)=89.19µs 
+-    http_req_sending...............: avg=48.52µs  min=19.42µs  med=46.48µs  max=306.53µs p(90)=64.37µs  p(95)=71.19µs 
+-    http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s      
+-    http_req_waiting...............: avg=4.97ms   min=1.69ms   med=2.13ms   max=261.62ms p(90)=2.54ms   p(95)=3.06ms  
+-    http_reqs......................: 600     9.998864/s
+-    iteration_duration.............: avg=6.28ms   min=2.8ms    med=3.41ms   max=263.34ms p(90)=4.01ms   p(95)=4.54ms  
+-    iterations.....................: 600     9.998864/s
+-    vus............................: 0       min=0      max=0  
+-    vus_max........................: 200     min=200    max=200

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<testsuites tests="17" failures="8">
+  <testsuite id="0" name="When more than 10 users are trying to login at the same time" tests="9" failures="4">
+    <testcase name="test start time : 2025-01-07T10:49:57Z" classname="When more than 10 users are trying to login at the same time" />
+    <testcase name="request url : http://localhost:5500/client_login" classname="When more than 10 users are trying to login at the same time" />
+    <testcase name="response status : 200" classname="When more than 10 users are trying to login at the same time" >
+      <failure message="369193 / 6192 (98.35%) checks passed">369193 / 6192 (98.35%) checks passed</failure>
+    </testcase>
+    <testcase name="response: isJson" classname="When more than 10 users are trying to login at the same time" />
+    <testcase name="Mock N/A" classname="When more than 10 users are trying to login at the same time" />
+    <testcase name="response error : none" classname="When more than 10 users are trying to login at the same time" />
+    <testcase name="response error : 
+		status--&gt;0
+		error--&gt;read: connection reset by peer" classname="When more than 10 users are trying to login at the same time" >
+      <failure message="0 / 1954 (0.00%) checks passed">0 / 1954 (0.00%) checks passed</failure>
+    </testcase>
+    <testcase name="response error : 
+		status--&gt;0
+		error--&gt;dial: i/o timeout" classname="When more than 10 users are trying to login at the same time" >
+      <failure message="0 / 1469 (0.00%) checks passed">0 / 1469 (0.00%) checks passed</failure>
+    </testcase>
+    <testcase name="response error : 
+		status--&gt;0
+		error--&gt;request timeout" classname="When more than 10 users are trying to login at the same time" >
+      <failure message="0 / 2769 (0.00%) checks passed">0 / 2769 (0.00%) checks passed</failure>
+    </testcase>
+  </testsuite>
+  <testsuite id="1" name="Then the system should be able to handle the load and respond with status 200" tests="3" failures="1">
+    <testcase name="expected response status to equal 200" classname="Then the system should be able to handle the load and respond with status 200" >
+      <failure message="369193 / 6192 (98.35%) checks passed">369193 / 6192 (98.35%) checks passed</failure>
+    </testcase>
+    <testcase name="has valid json body" classname="Then the system should be able to handle the load and respond with status 200" />
+    <testcase name="expected user login api auth token not to be null" classname="Then the system should be able to handle the load and respond with status 200" />
+  </testsuite>
+  <testsuite id="2" name="And verify the load test client should find the breaking point" tests="3" failures="1">
+    <testcase name="expected response status to equal 200" classname="And verify the load test client should find the breaking point" >
+      <failure message="369193 / 6192 (98.35%) checks passed">369193 / 6192 (98.35%) checks passed</failure>
+    </testcase>
+    <testcase name="has valid json body" classname="And verify the load test client should find the breaking point" />
+    <testcase name="expected user login api auth token not to be null" classname="And verify the load test client should find the breaking point" />
+  </testsuite>
+  <testsuite id="3" name="Thresholds" tests="2" failures="2">
+    <testcase name="http_req_failed: rate&lt;0.01" classname="Thresholds" >
+      <failure message="threshold exceeded">threshold exceeded</failure>
+    </testcase>
+    <testcase name="http_req_duration: p(95)&lt;122" classname="Thresholds" >
+      <failure message="threshold exceeded">threshold exceeded</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
