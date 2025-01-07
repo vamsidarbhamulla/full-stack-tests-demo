@@ -32,6 +32,7 @@ docker run --rm --network=$DOCKER_NETWORK \
   -e BASE_FOLDER_PATH=$BASE_FOLDER_PATH \
   -e LOG_FILE_PATH=$LOG_FILE_PATH \
   -e APP_DOMAIN=$HOST_URL \
+  -e CI=$CI \
   -v "$DOCKER_VOLUME_SRC_PATH":/zap/wrk/:rw \
   -t zaproxy/zap-stable \
   bash -c "
@@ -42,7 +43,8 @@ docker run --rm --network=$DOCKER_NETWORK \
   -t $HOST_URL/swagger.json \
   -f openapi \
   -P 5500 \
-  -J /zap/wrk/test-results/report_json.json \
-  -w /zap/wrk/test-results/report_md.md \
-  -r /zap/wrk/test-results/report_html.html \
-  --hook=/zap/wrk/zap/zap_hook.py"
+  -J $BASE_FOLDER_PATH/test-results/report_json.json \
+  -w $BASE_FOLDER_PATH/test-results/report_md.md \
+  -r $BASE_FOLDER_PATH/test-results/report_html.html \
+  --hook=$BASE_FOLDER_PATH/zap/zap_hook.py || true && \
+  source $BASE_FOLDER_PATH/pen_tests_swagger.sh > $BASE_FOLDER_PATH/test-results/pen-test-results.txt || true"

@@ -35,7 +35,6 @@ jobs:
             cd tests/security-tests && pwd
             export CI=true
             sleep 5
-            source pen_tests_swagger.sh > test-results/pen-test-results.txt
             source run_dast_tests.sh
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

