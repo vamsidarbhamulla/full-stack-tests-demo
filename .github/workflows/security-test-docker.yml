@@ -37,58 +37,68 @@ jobs:
             export CI=true
             sleep 5
             source run_dast_tests.sh
-            pwd && ls -lR . || true && ls -lR ./tests/security-tests/test-results || true
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: security-tests-report
           path: tests/security-tests/test-results/
           retention-days: 30    
-#   run-docker-security-test:
-#     name: Run Automated Application Security Tests on Docker
-#     runs-on: ubuntu-22.04
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Install Docker using Docker's official script
-#         run: |
-#           curl -fsSL https://get.docker.com -o get-docker.sh
-#           sudo sh get-docker.sh
-#       - name: Run DAST Tests
-#         continue-on-error: true
-#         run: |
-#             chmod a+w $GITHUB_WORKSPACE 
-#             chmod 755 ./backend/database.db
-#             mkdir -p ./tests/security-tests/test-results
-#             docker pull zaproxy/zap-stable
-#             docker run -v "$GITHUB_WORKSPACE":/zap/wrk/:rw \
-#             --network=host \
-#             --add-host host.docker.internal:host-gateway \
-#             -e TZ=America/Winnipeg -e ZAP_AUTH_HEADER \
-#             -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE \
-#             -e BASE_FOLDER_PATH=/zap/wrk \
-#             -e LOG_FILE_PATH=/zap/wrk/test-results/req-resp-log.txt \
-#             -e APP_DOMAIN=$app_domain \
-#             -e API_AUTH_TOKEN=$token \
-#             -e RE_INITIALIZE_DB=false -e TEST_TYPE=ci -e TEST_ENV=local \
-#             -t zaproxy/zap-stable bash -c \
-#             "id && pwd && ls -lR /zap/wrk && \
-#             pip install -r /zap/wrk/backend/requirments.txt && \
-#             export PATH=$PATH:/root/.local/bin && \
-#             kill $(pgrep -f flask) || true && \
-#             cd /zap/wrk/backend && FLASK_APP=task_with_swagger.py /home/zap/.local/bin/flask run -h localhost -p 5500 & \
-#             sleep 10 && \
-#             cd /zap/wrk/tests/security-tests && pwd && \
-#             curl -X GET http://localhost:5500/health && \
-#             curl -X GET http://localhost:5500/swagger.json && \
-#             zap-api-scan.py -d -t http://localhost:5500/swagger.json \
-#             -f openapi || true && \
-#             find / -type f -name "zap.log" -exec dirname {} \;  || true && \
-#             ls -lR /home/zap/.ZAP/zap.log || true  && \
-#             ls -lR /root/.ZAP/zap.log || true  && \
-#             ls -lR /zap/wrk/tests/security-tests/test-results"
-#       - uses: actions/upload-artifact@v4
-#         if: ${{ !cancelled() }}
-#         with:
-#           name: security-tests-report
-#           path: tests/security-tests/test-results/
-#           retention-days: 30  
+  publish-security-test-report:
+    name: Publish Security Test Report
+    # using always() is not ideal here, because it would also run if the workflow was cancelled
+    if: "success() || needs.test.result == 'failure'"
+    needs: [run-docker-security-tests]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      # Unique URL path for each workflow run attempt
+      HTML_REPORT_URL_PATH: security-test-reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+    steps:
+      - name: Checkout GitHub Pages Branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Set Git Hub Actions Bot User
+        # see: https://github.com/actions/checkout/issues/13#issuecomment-724415212
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Download zipped HTML report
+        uses: actions/download-artifact@v4
+        with:
+          name: security-tests-report
+          path: ${{ env.HTML_REPORT_URL_PATH }}
+      - name: Push Security Test HTML Report
+        timeout-minutes: 3
+        # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
+        # this is necessary when this job running at least twice at the same time (e.g. through two pushes at the same time)
+        run: |
+          git add .
+          git commit -m "workflow: add Security Test HTML report for run-id ${{ github.run_id }} (attempt:  ${{ github.run_attempt }})"
+
+          while true; do
+            git pull --rebase
+            if [ $? -ne 0 ]; then
+              echo "Failed to rebase. Please review manually."
+              exit 1
+            fi
+
+            git push
+            if [ $? -eq 0 ]; then
+              echo "Successfully pushed HTML report to repo."
+              exit 0
+            fi
+          done
+      - name: Output Report URL as Worfklow Annotation
+        run: |
+          FULL_HTML_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/index.html
+          FULL_PEN_TEST_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATHn/pen-test-results.txt
+          FULL_REQ_RES_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATHn/req-resp-log.txt
+          FULL_MARKDOWN_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/report_md.md
+          FULL_JSON_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/report_json.json
+
+          echo "::notice title=📋 Published DAST ZAP HTML Test Report::$FULL_HTML_REPORT_URL"
+          echo "::notice title=📋 Published Pen Test Report::$FULL_PEN_TEST_REPORT_URL"
+          echo "::notice title=📋 Published DAST REQUEST RESPONSE List Report::$FULL_REQ_RES_REPORT_URL"
+          echo "::notice title=📋 Published DAST ZAP MARKDOWN Test Report::$FULL_MARKDOWN_REPORT_URL" 
+          echo "::notice title=📋 Published DAST ZAP JSON Test Report::$FULL_JSON_REPORT_URL" 

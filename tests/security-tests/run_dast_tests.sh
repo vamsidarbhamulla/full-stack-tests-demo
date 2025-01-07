@@ -25,8 +25,8 @@ echo "
       LOG_FILE_PATH=$LOG_FILE_PATH"
 
 mkdir -p $DOCKER_VOLUME_SRC_PATH/test-results
-touch $DOCKER_VOLUME_SRC_PATH/test-results/pen-test-results.txt
-chmod a+w $DOCKER_VOLUME_SRC_PATH/test-results/pen-test-results.txt
+touch $DOCKER_VOLUME_SRC_PATH/test-results/pen-test-results.txt || true
+chmod -R a+w $DOCKER_VOLUME_SRC_PATH/test-results
 
 docker run --rm --network=$DOCKER_NETWORK \
   --add-host host.docker.internal:host-gateway \
@@ -48,10 +48,9 @@ docker run --rm --network=$DOCKER_NETWORK \
   -P 5500 \
   -J $BASE_FOLDER_PATH/test-results/report_json.json \
   -w $BASE_FOLDER_PATH/test-results/report_md.md \
-  -r $BASE_FOLDER_PATH/test-results/report_html.html \
+  -r $BASE_FOLDER_PATH/test-results/index.html \
   --hook=$BASE_FOLDER_PATH/zap/zap_hook.py || true && \
   curl --location --output /home/zap/jq https://github.com/jqlang/jq/releases/latest/download/jq-linux-amd64 && \
   chmod +x /home/zap/jq && \
   /home/zap/jq --version && \
-  source $BASE_FOLDER_PATH/pen_tests_swagger.sh > $BASE_FOLDER_PATH/test-results/pen-test-results.txt || true && \
-  ls -lR $BASE_FOLDER_PATH || true"
+  source $BASE_FOLDER_PATH/pen_tests_swagger.sh > $BASE_FOLDER_PATH/test-results/pen-test-results.txt"
