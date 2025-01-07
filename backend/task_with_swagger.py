@@ -52,7 +52,7 @@ def decodeNoneJwt(token):
     print(data)
     return data
 
-@app.route("/")
+@ns.route("/")
 def hello_world():
     """
     Get Hello World
@@ -63,6 +63,18 @@ def hello_world():
     dbConn.close()
     print(testConn)
     return "<p>Hello, World!</p>"
+
+@ns.route("/health")
+def health():
+    """
+    Get Hello World
+    """
+    dbConn = get_db_connection()
+    testConn = dbConn.cursor()
+    testConn = dbConn.execute('SELECT name FROM sqlite_master WHERE type="table"').fetchall()
+    dbConn.close()
+    print(testConn)
+    return "{'status':'up'}"
 
 @ns.route('/client_registeration')
 class Register(Resource):

