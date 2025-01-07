@@ -6,10 +6,11 @@ Automated Dynamic Application Security Tests (DAST)
 [1. testing-stack](#testing-stack)<br />
 [2. test-repo-dependencies](#repo-deps)<br />
 [3. test-run-setup](#test-run)<br />
-[4. security-test-observations](./docs/security_test_observations.md)<br />
-[5. penetration-test-results-doc](./docs/pen_test_results.txt)<br />
-[6. penetration-test-results-explanation](#test-results)<br />
-[7. security-test-results-screenshots](#test-results-screenshots)<br />
+[4. docker-test-run-setup](#docker-test-run)<br />
+[5. security-test-observations](./docs/security_test_observations.md)<br />
+[6. penetration-test-results-doc](./docs/pen_test_results.txt)<br />
+[7. penetration-test-results-explanation](#test-results)<br />
+[8. security-test-results-screenshots](#test-results-screenshots)<br />
 
 <a name="testing-stack"></a>  
 
@@ -54,9 +55,39 @@ source run_dast_tests.sh
 ```
 
 > **Info**
-> Script to run automated dynamic application security tests
+> Script to run actual penetration tests specific to this backend implementation
 ```shell
 source pen_tests.sh > pen_test_results.txt
+```
+<a name="test-run"></a>   
+
+## 4. Docker Test run setup  
+> **Info** 
+> Start Backend Server before running pen-tests
+```bash
+docker buildx build --platform=linux/amd64 -t backend:v1  -f backend/Dockerfile . # from root folder
+docker create network zap
+ docker run --platform=linux/amd64 --network=zap -e TASK_NAME=task_with_swagger.py --name backend --rm -t backend:v1 
+``` 
+
+> **Info**
+> Script to run automated dynamic application security tests
+> **Warning**  
+> Script will create an auth token using admin credentials
+> In actual test setup the username and password should read from envrionment variables
+```shell
+cd tests/security-tests # from root folder
+export CI=true # docker setup expected to be run in ci mode as the same steps will be executed in github actions
+source run_dast_tests.sh
+```
+
+> **Info**
+> Script to run actual penetration tests specific to this backend implementation
+```shell
+cd tests/security-tests # from root folder
+mkdir -p test-results
+export CI=true # docker setup expected to be run in ci mode as the same steps will be executed in github actions
+source pen_tests_swagger.sh > test-results/pen_test_results_swagger.txt
 ```
 
 <a name="test-results"></a> 
@@ -73,7 +104,7 @@ Testing SQL Injection by passing default data validation to access the registrat
 
 curl -X POST http://localhost:5500/client_registeration -d 'fullName=newJohnDoe23186&userName=newjohndoe22521&password=password&phone=1234567890&email=newnoname18464@maildrop.cc" OR "1"="1'
 
-{"msg":"Email already Exist"}
+{"msg": "User Registered"}
 ------------------------------------------------
 ------------------------------------------------
 

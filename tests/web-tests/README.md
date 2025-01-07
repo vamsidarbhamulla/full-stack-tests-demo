@@ -4,6 +4,7 @@
 [1. testing-stack](#testing-stack)  
 [2. test-repo-dependencies](#repo-deps)  
 [3. test-run-setup](#test-run)  
+[4. test-report](#test-report)  
 
 <a name="testing-stack"></a>  
 
@@ -37,5 +38,12 @@ npm run test:webkit
 npm run report 
 
 npm run test:firefox
+```
+
+<a name="test-report"></a>  
+
+## 4. Test Report 
+```shell
+npm run report
 ```
  

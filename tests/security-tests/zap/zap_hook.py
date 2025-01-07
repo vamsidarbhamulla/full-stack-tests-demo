@@ -1,8 +1,8 @@
 # A scan hook (https://www.zaproxy.org/docs/docker/scan-hooks/) which adds a script for logging all requests.
 # Then run ZAP like this:
-#     docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap_hook.py -t http://host.docker.internal:5500/swagger.json
+#     docker run -v $(pwd):/zap/wrk/:rw -t zaproxy/zap-stable zap_hook.py -t http://host.docker.internal:5500/swagger.json
 #     -f openapi --hook=zap_hook.py
-# The requests and responses should be written to a req-resp-log.txt file in the CWD.
+# The requests and responses should be written to a req-resp-log.txt file in the CWD/test-results directory.
 # Note that not all hooks will be called in all scans.
 
 import os
