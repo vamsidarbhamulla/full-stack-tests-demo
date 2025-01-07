@@ -40,10 +40,6 @@ var env = System.getenv();
 
 // Expected to create a folder path test-results with right permissions to create the log file
 var filePathStr = System.getenv("LOG_FILE_PATH");
-// System.out.print("basePath in js:" + basePath);
-// var currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
-// var f = Paths.get(currentPath +'../test-results/req-resp-log.txt');
-// var f = Paths.get(filePath);
 var filePath = Paths.get(filePathStr);
 
 function appendToFile(str) {

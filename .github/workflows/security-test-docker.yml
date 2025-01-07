@@ -25,7 +25,8 @@ jobs:
       - name: Run DAST Tests
         continue-on-error: true
         run: |
-            chmod a+w $GITHUB_WORKSPACE 
+            chmod -R a+w $GITHUB_WORKSPACE 
+            umask 000
             chmod 755 ./backend/database.db
             docker buildx build --platform=linux/amd64 -t backend:v1  -f backend/Dockerfile .
             export CI=true

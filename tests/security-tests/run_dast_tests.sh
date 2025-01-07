@@ -39,7 +39,7 @@ docker run --rm --network=$DOCKER_NETWORK \
   -v "$DOCKER_VOLUME_SRC_PATH":/zap/wrk/:rw \
   -t zaproxy/zap-stable \
   bash -c "
-  curl $HOST_URL/health && \
+  curl $HOST_URL/api/health && \
   token=$(curl -X POST $HOST_URL/api/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token') && \
   export API_AUTH_TOKEN=$token && \
   zap-api-scan.py -I -d \
