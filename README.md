@@ -1,4 +1,4 @@
-# full-stack-tests-demo
+# Full-stack-tests-demo
 
 This is a test automation repo with web, mobile, rest-api, performance and security testing.
 
@@ -81,19 +81,35 @@ The repo structure is shown below:
 
 <a name="pipeline-reports"></a>
 
-## pipeline-reports
+## Test-Pipeline-Job-reports
 
-Each pipeline test run job followed by a published report job published to github pages branch using github-bot username and commit
+1. Each Test Type has a specific github action run pipeline job 
 
-To access the exact test run report access the links from the step: 
-Output Report URL as Workflow Annotation
+2. Each pipeline test run job followed by a published report job 
+
+3. These published reports are served from gh-pages branch that is being pushed to gh-pages branch using github-bot username and with a valid commit message
+
+4. To access the exact test run report access the links specific to test job 
+    
+    a. Access the specific published html report job <br />
+    b. From the step: Output Report URL as Workflow Annotation <br />
+    c. You will be able to get the latest test run report url<br />
+    d. Reference screenshots provided below <br />
 
 **Screenshots**: 
+
+***1. Web-Tests-Pipeline-Reports*** 
 ![1.1.Web-Test-Job-Run.png](./tests/docs/pipeline-test-reports/1.1.Web-Test-Job-Run.png)<br /><br /> 
 ![1.2.Web-Test-Job-Run-Report-URL.png](./tests/docs/pipeline-test-reports/1.2.Web-Test-Job-Run-Report-URL.png)<br /><br /> 
+
+***2. Mobile-Tests-Reports***
 ![2.1.Mobile-Test-Job-Run.png](./tests/docs/pipeline-test-reports/2.1.Mobile-Test-Job-Run.png)<br /><br /> 
 ![2.2.Mobile-Test-Job-Run-Report-URL.png](./tests/docs/pipeline-test-reports/2.2.Mobile-Test-Job-Run-Report-URL.png)<br /><br /> 
+
+***3. Performance-Tests-Reports***
 ![3.1.Performance-Test-Job-Run.png](./tests/docs/pipeline-test-reports/3.1.Performance-Test-Job-Run.png)<br /><br /> 
 ![3.2.Performance-Test-Job-Run-Report-URL.png](./tests/docs/pipeline-test-reports/3.2.Performance-Test-Job-Run-Report-URL.png)<br /><br /> 
+
+***4. Security-Tests-Reports***
 ![4.1.Security-Test-Job-Run.png](./tests/docs/pipeline-test-reports/4.1.Security-Test-Job-Run.png)<br /><br /> 
 ![4.2.Security-Test-Job-Run-Report-URL.png](./tests/docs/pipeline-test-reports/4.2.Security-Test-Job-Run-Report-URL.png)<br /><br /> 
