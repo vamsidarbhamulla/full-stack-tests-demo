@@ -40,7 +40,7 @@ docker run --rm --network=$DOCKER_NETWORK \
   -t zaproxy/zap-stable \
   bash -c "
   curl $HOST_URL/health && \
-  token=$(curl -X POST $HOST_URL/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token') && \
+  token=$(curl -X POST $HOST_URL/api/client_login -d 'userName=Admin&email=admin@test.com&password=admin@1234' | jq -j '.token') && \
   export API_AUTH_TOKEN=$token && \
   zap-api-scan.py -I -d \
   -t $HOST_URL/swagger.json \
@@ -53,4 +53,5 @@ docker run --rm --network=$DOCKER_NETWORK \
   curl --location --output /home/zap/jq https://github.com/jqlang/jq/releases/latest/download/jq-linux-amd64 && \
   chmod +x /home/zap/jq && \
   /home/zap/jq --version && \
-  source $BASE_FOLDER_PATH/pen_tests_swagger.sh > $BASE_FOLDER_PATH/test-results/pen-test-results.txt || true"
+  source $BASE_FOLDER_PATH/pen_tests_swagger.sh > $BASE_FOLDER_PATH/test-results/pen-test-results.txt || true && \
+  ls -lR $BASE_FOLDER_PATH || true"
