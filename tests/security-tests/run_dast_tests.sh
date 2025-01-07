@@ -47,7 +47,7 @@ docker run --rm --network=$DOCKER_NETWORK \
   -w $BASE_FOLDER_PATH/test-results/report_md.md \
   -r $BASE_FOLDER_PATH/test-results/report_html.html \
   --hook=$BASE_FOLDER_PATH/zap/zap_hook.py || true && \
-  echo 'DAST Tests Report\n' >> $BASE_FOLDER_PATH/test-results/pen-test-results.txt && \
+  touch $BASE_FOLDER_PATH/test-results/pen-test-results.txt && \
   chmod a+w $BASE_FOLDER_PATH/test-results/pen-test-results.txt && \
   curl --location --output /home/zap/jq https://github.com/jqlang/jq/releases/latest/download/jq-linux-amd64 && \
   chmod +x /home/zap/jq && \

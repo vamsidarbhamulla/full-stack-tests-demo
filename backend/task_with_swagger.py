@@ -53,28 +53,30 @@ def decodeNoneJwt(token):
     return data
 
 @ns.route("/")
-def hello_world():
-    """
-    Get Hello World
-    """
-    dbConn = get_db_connection()
-    testConn = dbConn.cursor()
-    testConn = dbConn.execute('select * from users').fetchall()
-    dbConn.close()
-    print(testConn)
-    return "<p>Hello, World!</p>"
+class Hello(Resource):
+    def get():
+        """
+        Get Hello World
+        """
+        dbConn = get_db_connection()
+        testConn = dbConn.cursor()
+        testConn = dbConn.execute('select * from users').fetchall()
+        dbConn.close()
+        print(testConn)
+        return "<p>Hello, World!</p>"
 
 @ns.route("/health")
-def health():
-    """
-    Get Hello World
-    """
-    dbConn = get_db_connection()
-    testConn = dbConn.cursor()
-    testConn = dbConn.execute('SELECT name FROM sqlite_master WHERE type="table"').fetchall()
-    dbConn.close()
-    print(testConn)
-    return "{'status':'up'}"
+class Health(Resource):
+    def get():
+        """
+        Get Health Status
+        """
+        dbConn = get_db_connection()
+        testConn = dbConn.cursor()
+        testConn = dbConn.execute('SELECT name FROM sqlite_master WHERE type="table"').fetchall()
+        dbConn.close()
+        print(testConn)
+        return "{'status':'up'}"
 
 @ns.route('/client_registeration')
 class Register(Resource):
