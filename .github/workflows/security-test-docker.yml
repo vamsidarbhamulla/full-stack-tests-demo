@@ -36,7 +36,7 @@ jobs:
             export CI=true
             sleep 5
             source run_dast_tests.sh
-            pwd && ls -lR tests/security-tests
+            pwd && ls -lR . || true && ls -lR ./tests/security-tests/test-results || true
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
