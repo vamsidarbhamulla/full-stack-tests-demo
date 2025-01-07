@@ -92,8 +92,8 @@ jobs:
       - name: Output Report URL as Worfklow Annotation
         run: |
           FULL_HTML_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/index.html
-          FULL_PEN_TEST_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATHn/pen-test-results.txt
-          FULL_REQ_RES_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATHn/req-resp-log.txt
+          FULL_PEN_TEST_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/pen-test-results.txt
+          FULL_REQ_RES_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/req-resp-log.txt
           FULL_MARKDOWN_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/report_md.md
           FULL_JSON_REPORT_URL=https://vamsidarbhamulla.github.io/full-stack-tests-demo/$HTML_REPORT_URL_PATH/report_json.json
 
