@@ -1,6 +1,6 @@
 #!/bin/bash
    
-HOST_URL=http://localhost:5600/api
+HOST_URL=http://localhost:5500/api
 
 # Check if the CI environment variable is set to true 
 if [ -n "${CI}" ] && [ "${CI}" = "true" ]; then 

@@ -21,15 +21,7 @@ jobs:
       - name: Install Docker using Docker's official script
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
-          sudo sh get-docker.sh
-      - name: Start Backend Server in Docker
-        run: |
-          chmod a+w $GITHUB_WORKSPACE 
-          chmod 755 ./backend/database.db
-          docker buildx build --platform=linux/amd64 -t backend:v1  -f backend/Dockerfile .
-          export CI=true
-          docker network create zap || true
-          docker run --platform=linux/amd64 --network=zap -p 5500:5500 -e TASK_NAME=task_with_swagger.py --name backend --rm -t backend:v1 &    
+          sudo sh get-docker.sh 
       - name: Run DAST Tests
         continue-on-error: true
         run: |
