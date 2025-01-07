@@ -29,7 +29,7 @@ jobs:
           docker buildx build --platform=linux/amd64 -t backend:v1  -f backend/Dockerfile .
           export CI=true
           docker network create zap || true
-          docker run --platform=linux/amd64 --network=zap -p 5500:5500 -e TASK_NAME=task_with_swagger.py --name backend --rm -t backend:v1             
+          docker run --platform=linux/amd64 --network=zap -p 5500:5500 -e TASK_NAME=task_with_swagger.py --name backend --rm -t backend:v1 &    
       - name: Run DAST Tests
         continue-on-error: true
         run: |
@@ -37,6 +37,7 @@ jobs:
             mkdir -p ./tests/security-tests/test-results
             cd tests/security-tests && pwd
             export CI=true
+            sleep 5
             source pen_tests_swagger.sh > test-results/pen-test-results.txt
             source run_dast_tests.sh
       - uses: actions/upload-artifact@v4
