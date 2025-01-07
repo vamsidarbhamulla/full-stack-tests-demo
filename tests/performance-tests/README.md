@@ -1,9 +1,10 @@
-# performance automation tests
+# performance-automation-tests
 
 ##### Table of Contents  
 [1. testing-stack](#testing-stack)  
 [2. test-repo-dependencies](#repo-deps)  
 [3. test-run-setup](#test-run)  
+[3. test-report](#test-report)  
 
 <a name="testing-stack"></a>  
 
@@ -87,3 +88,7 @@ TEST_ENV=local TEST_NAME=user_registration_test docker-compose up --build  --for
 ./run_tests_from_docker.sh
 ```
  
+<a name="test-report"></a>  
+
+## 4. Test Report 
+Available in the test-results folder

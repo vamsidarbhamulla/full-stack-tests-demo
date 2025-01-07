@@ -37,3 +37,7 @@ chromeDriver
 **/performance-tests/bin
 **/performance-tests/**/req-res.json
 **/test-results*/
+
+# backend
+**/*.pyc
+**/__pycache__/

@@ -1,9 +1,10 @@
-# mobile-tests-demo
+# web-automation-tests
 
 ##### Table of Contents  
 [1. testing-stack](#testing-stack)  
 [2. test-repo-dependencies](#repo-deps)  
 [3. test-run-setup](#test-run)  
+[4. test-report](#test-report)  
 
 <a name="testing-stack"></a>  
 
@@ -20,6 +21,7 @@
 > Need to run this step to install steps once for every new repo level dependencies added/updated   
 ```shell
 npm install 
+npm run install:browsers
 ```
 
 <a name="test-run"></a>   
@@ -29,6 +31,19 @@ npm install
 > Need to create a local file named **.local.env**  for config values under env folder
 ```shell
 npm run test:chromium
+npm run report
+
+# command to run tests against different browser
+npm run test:webkit 
+npm run report 
+
+npm run test:firefox
+```
+
+<a name="test-report"></a>  
+
+## 4. Test Report 
+```shell
 npm run report
 ```
  

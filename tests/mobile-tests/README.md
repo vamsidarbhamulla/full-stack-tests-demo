@@ -1,4 +1,4 @@
-# mobile-tests-demo
+# mobile-automation-tests
 
 ##### Table of Contents  
 [1. testing-stack](#testing-stack)  

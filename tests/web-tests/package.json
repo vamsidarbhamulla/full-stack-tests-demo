@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint src --config eslint.config.mjs --fix && eslint tests --config eslint.config.mjs --fix",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "install:browsers": "npx playwright install --with-deps",
     "test": "npx playwright test",
     "test-ui": "npx playwright test --workers 1 --project=chromium --ui",
     "test:chromium": "CREATE_NEW_USER=true npx playwright test --project=chromium",
