@@ -3,7 +3,7 @@
 This is a test automation repo with web, mobile, rest-api, performance and security testing.
 
 ##### Table of Contents
-[0. repo-tour-videos](#repo-tour)<br />
+[0. repo-tour-videos](#repo-tour)<br /> 
 [1. repo-structure](#repo-structure)<br />
 [2. mobile-tests](./tests/mobile-tests/README.md)<br />
 [3. web-tests](./tests/web-tests/README.md)<br />
