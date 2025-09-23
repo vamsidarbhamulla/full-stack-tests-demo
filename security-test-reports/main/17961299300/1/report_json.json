@@ -1,0 +1,621 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.16.1",
+	"@generated": "Tue, 23 Sept 2025 18:08:25",
+	"created": "2025-09-23T23:08:25.989443088Z",
+	"site":[ 
+		{
+			"@name": "http://backend:5500",
+			"@host": "backend",
+			"@port": "5500",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "40018",
+					"alertRef": "40018",
+					"alert": "SQL Injection",
+					"name": "SQL Injection",
+					"riskcode": "3",
+					"confidence": "1",
+					"riskdesc": "High (Low)",
+					"desc": "<p>SQL injection may be possible.</p>",
+					"instances":[ 
+						{
+							"id": "41",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "email",
+							"attack": "\"",
+							"evidence": "HTTP/1.1 500 INTERNAL SERVER ERROR",
+							"otherinfo": ""
+						},
+						{
+							"id": "42",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "password",
+							"attack": "\"",
+							"evidence": "HTTP/1.1 500 INTERNAL SERVER ERROR",
+							"otherinfo": ""
+						},
+						{
+							"id": "43",
+							"uri": "http://backend:5500/api/client_registeration",
+							"method": "POST",
+							"param": "email",
+							"attack": "\"",
+							"evidence": "HTTP/1.1 500 INTERNAL SERVER ERROR",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Do not trust client side input, even if there is client side validation in place.</p><p>In general, type check all data on the server side.</p><p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by '?'</p><p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p><p>If database Stored Procedures can be used, use them.</p><p>Do *not* concatenate strings into queries in the stored procedure, or use 'exec', 'exec immediate', or equivalent functionality!</p><p>Do not create dynamic SQL queries using simple string concatenation.</p><p>Escape all data received from the client.</p><p>Apply an 'allow list' of allowed characters, or a 'deny list' of disallowed characters in user input.</p><p>Apply the principle of least privilege by using the least privileged database user possible.</p><p>In particular, avoid using the 'sa' or 'db-owner' database users. This does not eliminate SQL injection, but minimizes its impact.</p><p>Grant the minimum database access that is necessary for the application.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>",
+					"cweid": "89",
+					"wascid": "19",
+					"sourceid": "403"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-1",
+					"alert": "Insufficient Site Isolation Against Spectre Vulnerability",
+					"name": "Insufficient Site Isolation Against Spectre Vulnerability",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+					"instances":[ 
+						{
+							"id": "14",
+							"uri": "http://backend:5500/api/",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "27",
+							"uri": "http://backend:5500/api/health",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "26",
+							"uri": "http://backend:5500/api/products?source=source",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "18",
+							"uri": "http://backend:5500/swagger.json",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "13",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "10",
+							"uri": "http://backend:5500/api/client_registeration",
+							"method": "POST",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "30",
+							"uri": "http://backend:5500/api/update_info",
+							"method": "POST",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "7",
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "3"
+				},
+				{
+					"pluginid": "10036",
+					"alertRef": "10036-2",
+					"alert": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+					"name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+					"instances":[ 
+						{
+							"id": "4",
+							"uri": "http://backend:5500/api/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "19",
+							"uri": "http://backend:5500/api/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "http://backend:5500/api/products?source=source",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "12",
+							"uri": "http://backend:5500/swagger.json",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://backend:5500/api/client_registeration",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						},
+						{
+							"id": "22",
+							"uri": "http://backend:5500/api/update_info",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "Werkzeug/2.3.7 Python/3.11.13",
+							"otherinfo": ""
+						}
+					],
+					"count": "7",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "3"
+				},
+				{
+					"pluginid": "100001",
+					"alertRef": "100001",
+					"alert": "Unexpected Content-Type was returned",
+					"name": "Unexpected Content-Type was returned",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>A Content-Type of text/html was returned by the server.</p><p>This is not one of the types expected to be returned by an API.</p><p>Raised by the 'Alert on Unexpected Content Types' script</p>",
+					"instances":[ 
+						{
+							"id": "33",
+							"uri": "http://backend:5500",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "70",
+							"uri": "http://backend:5500/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "http://backend:5500/2861060040869327426",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "34",
+							"uri": "http://backend:5500/api",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "32",
+							"uri": "http://backend:5500/api/5970265202738689369",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "82",
+							"uri": "http://backend:5500/api/actuator/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "71",
+							"uri": "http://backend:5500/api/health/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "72",
+							"uri": "http://backend:5500/api/products/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "73",
+							"uri": "http://backend:5500/swagger.json/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "65",
+							"uri": "http://backend:5500/api/client_login/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "66",
+							"uri": "http://backend:5500/api/client_registeration/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "67",
+							"uri": "http://backend:5500/api/update_info/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "55",
+							"uri": "http://backend:5500/computeMetadata/v1/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "http://backend:5500/latest/meta-data/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "62",
+							"uri": "http://backend:5500/metadata/instance",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "58",
+							"uri": "http://backend:5500/opc/v1/instance/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						}
+					],
+					"count": "16",
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "14"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"id": "5",
+							"uri": "http://backend:5500/api/",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "21",
+							"uri": "http://backend:5500/api/health",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "23",
+							"uri": "http://backend:5500/api/products?source=source",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "16",
+							"uri": "http://backend:5500/swagger.json",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "6",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "7",
+							"uri": "http://backend:5500/api/client_registeration",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"id": "28",
+							"uri": "http://backend:5500/api/update_info",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "7",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "3"
+				},
+				{
+					"pluginid": "10111",
+					"alertRef": "10111",
+					"alert": "Authentication Request Identified",
+					"name": "Authentication Request Identified",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
+					"instances":[ 
+						{
+							"id": "0",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "email",
+							"attack": "",
+							"evidence": "password",
+							"otherinfo": "userParam=email\nuserValue=zaproxy@example.com\npasswordParam=password"
+						}
+					],
+					"count": "1",
+					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+					"otherinfo": "<p>userParam=email</p><p>userValue=zaproxy@example.com</p><p>passwordParam=password</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "5"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "Session Management Response Identified",
+					"name": "Session Management Response Identified",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The given response has been identified as containing a session management token. The 'Other Info' field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to \"Auto-Detect\" then this rule will change the session management to use the tokens identified.</p>",
+					"instances":[ 
+						{
+							"id": "1",
+							"uri": "http://backend:5500/api/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "json:"
+						},
+						{
+							"id": "15",
+							"uri": "http://backend:5500/api/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "json:"
+						}
+					],
+					"count": "2",
+					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+					"otherinfo": "<p>json:</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id/</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "3"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-3",
+					"alert": "Storable and Cacheable Content",
+					"name": "Storable and Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+					"instances":[ 
+						{
+							"id": "11",
+							"uri": "http://backend:5500/api/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "24",
+							"uri": "http://backend:5500/api/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "25",
+							"uri": "http://backend:5500/api/products?source=source",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "17",
+							"uri": "http://backend:5500/swagger.json",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "8",
+							"uri": "http://backend:5500/api/client_login",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "9",
+							"uri": "http://backend:5500/api/client_registeration",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						},
+						{
+							"id": "29",
+							"uri": "http://backend:5500/api/update_info",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+						}
+					],
+					"count": "7",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "3"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}
