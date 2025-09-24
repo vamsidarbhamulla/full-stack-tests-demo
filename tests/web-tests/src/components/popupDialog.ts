@@ -4,7 +4,7 @@ import { expect } from '@playwright/test';
 import { clickWithRetry, isElementVisible } from '@utils/locatorUtils';
 
 const SELECTORS = () => ({
-  popupDialog: getPage().locator('.mat-dialog-container'),
+  popupDialog: getPage().locator('mat-dialog-content'),
   appleJuiceImg: getPage().locator('.mat-dialog-container').getByRole('img', { name: 'Apple Juice (1000ml)' }),
   get appleJuiceImg1() {
     return this.popupDialog.getByRole('img', { name: 'Apple Juice (1000ml)' });

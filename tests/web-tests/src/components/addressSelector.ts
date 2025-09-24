@@ -1,4 +1,5 @@
 import { getPage, waitForPageLoad } from '@utils/pageUtils';
+import { get } from 'http';
 
 const SELECTORS = () => ({
   addNewAdressButton: getPage().getByLabel('Add a new address'),
@@ -8,6 +9,7 @@ const SELECTORS = () => ({
 });
 
 export async function addNewAdress() {
+  // await getPage().pause();
   await SELECTORS().addNewAdressButton.waitFor({ state: 'visible', timeout: 2000 });
   await SELECTORS().addNewAdressButton.click();
   await waitForPageLoad();

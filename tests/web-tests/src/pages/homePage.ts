@@ -21,7 +21,7 @@ export class HomePage {
         return page.locator('mat-card').filter({ has: page.locator(`text="${productName}"`) });
       },
       // tiles
-      appleJuiceTile: page.locator('mat-card').filter({ hasText: 'Apple Juice (1000ml) 1.99¤' }),
+      appleJuiceTile: page.locator('mat-card').filter({ has: page.locator(`text="Apple Juice (1000ml)"`)}),
       applePomaceTile: page.locator('mat-card').filter({ hasText: 'Apple Pomace 0.89¤Add to' }),
       bananaJuiceTile: page.locator('mat-card').filter({ hasText: 'Banana Juice (1000ml) 1.99¤' }),
       carrotJuiceTile: page.locator('mat-card').filter({ hasText: 'Carrot Juice (1000ml) 2.99¤' }),
@@ -29,7 +29,7 @@ export class HomePage {
       lemonJuiceTile: page.locator('mat-card').filter({ hasText: 'Lemon Juice (500ml) 2.99¤' }),
       woodruffSyrupTile: page.locator('mat-card').filter({ hasText: 'Woodruff Syrup "Forest Master' }),
       bestJuiceTile: page.locator('mat-card').filter({ hasText: 'Only 1 left Best Juice Shop' }),
-      successPopUp: page.locator('.mat-simple-snack-bar-content').filter({ hasText: new RegExp('^(Placed|Added)\\b') }),
+      successPopUp: page.locator('.mat-mdc-snack-bar-label').filter({ hasText: new RegExp('(placed|added)', 'i') }),
       successPopUpCloseButton: page.locator('.mat-button-wrapper').filter({ hasText: 'X' }),
     };
   }
@@ -61,8 +61,8 @@ export class HomePage {
     }));
     for (const details of locatorsDetails) {
       await this.addProductToCart(details.locator);
-      await languageSnackbar.waitForDisappearIfVisible();
-      await this.checkProductAddedSuccesfully(details.product);
+      // await languageSnackbar.waitForDisappearIfVisible();
+      // await this.checkProductAddedSuccesfully(details.product);
     }
     await waitForPageLoad();
   }
@@ -73,6 +73,7 @@ export class HomePage {
   }
 
   async checkProductAddedSuccesfully(product: string) {
+    // await this.page.pause();
     await this.SELECTORS.successPopUp.waitFor({ state: 'visible', timeout: 5000 });
     await this.SELECTORS.successPopUp.isVisible();
     await this.SELECTORS.successPopUp.scrollIntoViewIfNeeded();

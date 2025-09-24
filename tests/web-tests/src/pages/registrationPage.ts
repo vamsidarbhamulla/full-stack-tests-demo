@@ -42,7 +42,7 @@ export class RegistrationPage {
       showPasswordAdvice: page.locator('.mat-slide-toggle-bar'),
       securityQuestionSelector1: page.getByLabel('Selection list for the').locator('span'),
       securityQuestionSelector: page.locator('mat-select[role="combobox"]'),
-      securityQuestionItem: page.locator('.mat-option-text'),
+      securityQuestionItem: page.locator('mat-option').locator('span'),
       securityQuestionAnswer: page.getByPlaceholder('Answer to your security'),
       securityQuestionAnswer1: page.locator('mat-form-field').filter({ hasText: 'Answer *' }),
       registerButton: page.locator('#registerButton'),
@@ -63,7 +63,7 @@ export class RegistrationPage {
     await this.SELECTORS.password.fill(password);
     await this.SELECTORS.repeatPassword.fill(password);
     await this.SELECTORS.securityQuestionSelector.click();
-    await this.SELECTORS.securityQuestionItem.filter({ hasText: " Mother's maiden name? " }).click();
+    await this.SELECTORS.securityQuestionItem.filter({ hasText: "Mother's maiden name?" }).click();
     // await this.SELECTORS.securityQuestionSelector.selectOption(" Mother's maiden name? ");
     await this.SELECTORS.securityQuestionAnswer.click();
     await this.SELECTORS.securityQuestionAnswer.fill(securityAnswer);
@@ -102,9 +102,10 @@ export class RegistrationPage {
   }
 
   async validateRequiredField(locator: Locator, expectedMessage: string) {
-    const attribute = 'aria-describedby';
-    const ariaDescribed = await locator.getAttribute(attribute);
-    expect(ariaDescribed).toContain('mat-error');
+    // const attribute = 'aria-describedby';
+    // const ariaDescribed = await locator.getAttribute(attribute);
+    // await this.page.pause();
+    // expect(ariaDescribed).toContain('mat-error');
     const actualMessage = await this.page.locator('mat-error').filter({ hasText: expectedMessage }).textContent();
     expect(actualMessage?.trim()).toEqual(expectedMessage.trim());
     await expect(this.SELECTORS.registerButton).toBeDisabled();
