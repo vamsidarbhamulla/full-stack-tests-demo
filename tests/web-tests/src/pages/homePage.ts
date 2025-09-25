@@ -2,7 +2,6 @@ import { type Locator, type Page, expect } from '@playwright/test';
 import { openPage, waitForPageLoad } from '@utils/pageUtils';
 import * as footerBar from '@components/footerBar';
 import { productListFromApi } from '@testdata/productData';
-import * as languageSnackbar from '@components/languageSnackbar';
 
 export class HomePage {
   readonly page: Page;
@@ -21,7 +20,7 @@ export class HomePage {
         return page.locator('mat-card').filter({ has: page.locator(`text="${productName}"`) });
       },
       // tiles
-      appleJuiceTile: page.locator('mat-card').filter({ has: page.locator(`text="Apple Juice (1000ml)"`)}),
+      appleJuiceTile: page.locator('mat-card').filter({ has: page.locator(`text="Apple Juice (1000ml)"`) }),
       applePomaceTile: page.locator('mat-card').filter({ hasText: 'Apple Pomace 0.89¤Add to' }),
       bananaJuiceTile: page.locator('mat-card').filter({ hasText: 'Banana Juice (1000ml) 1.99¤' }),
       carrotJuiceTile: page.locator('mat-card').filter({ hasText: 'Carrot Juice (1000ml) 2.99¤' }),

@@ -1,5 +1,4 @@
 import { getPage, waitForPageLoad } from '@utils/pageUtils';
-import { get } from 'http';
 
 const SELECTORS = () => ({
   addNewAdressButton: getPage().getByLabel('Add a new address'),
