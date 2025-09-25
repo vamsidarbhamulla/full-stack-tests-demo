@@ -4,7 +4,7 @@ import { get } from 'http';
 const SELECTORS = () => ({
   addNewAdressButton: getPage().getByLabel('Add a new address'),
   addressRadioButton1: getPage().locator('radio[class="mat-radio-input"]'),
-  addressRadioButton: getPage().locator('.mat-radio-container').first(),
+  addressRadioButton: getPage().locator('.mdc-radio__native-control').first(),
   continueButton: getPage().locator('button[aria-label="Proceed to payment selection"]'),
 });
 

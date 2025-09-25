@@ -21,6 +21,7 @@
     "test-a": "npx playwright test --project=chromium --headed newUserLogin.spec --trace on",
     "test-c": "CREATE_NEW_USER=true npx playwright test --project=chromium --headed checkout.spec --trace on",
     "test-d": "PWDEBUG=console DEBUG=pw:browser CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on",
+    "test-debug": "PWDEBUG=console DEBUG=pw:browser CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on --debug",
     "test-e": "CREATE_NEW_USER=true npx playwright test --project=chromium --headed --grep @pi --trace on"
   },
   "keywords": [],

@@ -5,13 +5,13 @@ const SELECTORS = () => ({
   headerTitle: getPage().getByRole('heading', { name: 'My Payment Options' }),
   addNewCreditCardButton: getPage().getByRole('button', { name: 'Add new card Add a credit or' }),
 
-  creditCardName: getPage().getByLabel('Name *'),
-  creditCardNumber: getPage().getByLabel('Card Number *'),
-  creditCardExpiryMonth: getPage().getByLabel('Expiry Month *'),
-  creditCardExpiryYear: getPage().getByLabel('Expiry Year *'),
-  creditCardSubmitButton: getPage().getByRole('button', { name: 'send Submit' }),
+  creditCardName: getPage().getByLabel('Name'),
+  creditCardNumber: getPage().getByLabel('Card Number'),
+  creditCardExpiryMonth: getPage().getByLabel('Expiry Month'),
+  creditCardExpiryYear: getPage().getByLabel('Expiry Year'),
+  creditCardSubmitButton: getPage().locator('button#submitButton'),
 
-  creditCardSelectRadioButton: getPage().locator('span[class="mat-radio-container"]').first(),
+  creditCardSelectRadioButton: getPage().locator('input[class="mdc-radio__native-control"]').first(),
   continueButton: getPage().locator('button[aria-label="Proceed to review"]'),
 });
 
@@ -31,6 +31,7 @@ export async function selectCreditCardPaymentOption() {
 }
 
 export async function addCreditCard() {
+  // await getPage().pause();
   await SELECTORS().creditCardName.fill('test user1');
   await SELECTORS().creditCardNumber.fill('4444444444444444');
   await SELECTORS().creditCardExpiryMonth.selectOption('10');

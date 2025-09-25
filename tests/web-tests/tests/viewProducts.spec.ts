@@ -13,18 +13,20 @@ test.describe('verify the home page', () => {
       );
 
       //
-      let itemCount = '37';
+      let itemCount = '48';
       // intercepting network calls to fetch the actual rest api response body count to match against front-end
       // intercepting request that gets redirected is not working in webkit safari
-      if (testInfo.project.name === 'chromium') {
-        const productSearchPromise = page.waitForResponse(resp => resp.url().includes('/rest/products/search'));
+      // if (testInfo.project.name === 'chromium') {
+        const productSearchPromise = page.waitForResponse(resp => 
+          resp.status() === 200 &&
+          resp.url().includes('/rest/products/search'));
 
         await page.reload();
         await waitForPageLoad();
         const productSearchRes = await productSearchPromise;
         const searchResponseBody = await productSearchRes.json();
         itemCount = `${searchResponseBody.data.length}`;
-      }
+      // }
 
       await footerBar.selectItemsPerPage();
       await homePage.checkAllTheItemsAreAvailable({ count: itemCount });
