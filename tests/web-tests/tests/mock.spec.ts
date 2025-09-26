@@ -1,5 +1,5 @@
 import { test } from '@setup/pageSetup';
-import { expect } from '@playwright/test';
+// import { expect } from '@playwright/test';
 
 test.describe('verify the home page mock api', () => {
   test('gets the json from api and adds a new fruit', async ({ homePage, page }) => {
