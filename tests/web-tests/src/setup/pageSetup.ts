@@ -5,7 +5,7 @@
  * with a beforeEach hook already set up. This can be used to define tests with the page context set up.
  */
 
-import { test as baseTest, type Page } from '@playwright/test';
+import { test as baseTest } from '@playwright/test';
 import { setPage } from '@utils/pageUtils';
 
 import { HomePage } from '@pages/homePage';
@@ -58,24 +58,25 @@ export const test = baseTest.extend<AppFixtures>({
 
   createMockApi: async ({ page }, use) => {
     const mockedProduct: Product = {
-        id: 55555,
-        name: 'Random Mock Juice',
-        description: 'Adding a random mock juice to test the intercept and mock api feature',
-        price: 66.66,
-        deluxePrice: 66.66,
-        image: 'https://picsum.photos/100/150',
-        createdAt: '2025-09-23 23:08:04.874 +00:00',
-        updatedAt: '2025-09-23 23:08:04.874 +00:00',
-        deletedAt: null,
-      }
+      id: 55555,
+      name: 'Random Mock Juice',
+      description: 'Adding a random mock juice to test the intercept and mock api feature',
+      price: 66.66,
+      deluxePrice: 66.66,
+      image: 'https://picsum.photos/100/150',
+      createdAt: '2025-09-23 23:08:04.874 +00:00',
+      updatedAt: '2025-09-23 23:08:04.874 +00:00',
+      deletedAt: null,
+    };
     await page.route('rest/products/search', async route => {
       const response = await route.fetch();
-      const json = await response.json();
+      const json: Product[] = await response.json();
       json.unshift(mockedProduct);
       // Fulfill using the original response, while patching the response body
       // with the given JSON object.
       await route.fulfill({ response, json });
-      });
+    });
+    setPage({ pageInstance: page });
     // This `use` call allows the test to run after the route is set up
     await use();
     // const createAddressPage = new CreateAddressPage(page);

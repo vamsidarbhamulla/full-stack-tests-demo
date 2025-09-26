@@ -8,8 +8,7 @@ test.describe('verify the home page', () => {
     { tag: ['@product', '@intercept'] },
     async ({ homePage, page }) => {
       test.setTimeout(10 * 1000);
-     
-     
+
       page.on('response', response =>
         response.url().includes('rest/products/search') ? console.log('<<', response.status(), response.url()) : null,
       );
@@ -21,7 +20,7 @@ test.describe('verify the home page', () => {
       // if (testInfo.project.name === 'chromium') {
       const productSearchPromise = page.waitForResponse(
         resp => resp.status() === 200 && resp.url().includes('rest/products/search'),
-        { timeout: 10000, }
+        { timeout: 10000 },
       );
 
       await homePage.open();
