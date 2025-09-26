@@ -33,10 +33,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
       
-      - name: Install C build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential  
+      - name: Create output directory
+        run: mkdir -p tests/performance-tests/bin  
 
       - name: Install xk6
         run: go install go.k6.io/xk6/cmd/xk6@latest
